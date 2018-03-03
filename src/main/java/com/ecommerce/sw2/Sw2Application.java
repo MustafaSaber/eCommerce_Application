@@ -26,3 +26,4 @@ public class Sw2Application {
 		SpringApplication.run(Sw2Application.class, args);
 	}
 }
+
