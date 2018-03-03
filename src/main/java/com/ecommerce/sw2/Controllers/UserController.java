@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
@@ -22,20 +23,19 @@ public class UserController {
 
     @Autowired
     private UserRepo userRepository;
-    @RequestMapping("/")
+
+    @RequestMapping("")
     public String index(){
         return "index";
     }
 
     @RequestMapping("/register")
-    public @ResponseBody String addNewUser (@RequestParam String name
-            , @RequestParam String email) {
+    public @ResponseBody String addNewUser (@RequestParam("Name") String name
+            , @RequestParam("Email") String email , @RequestParam("Username") String username , @RequestParam("password") String password  ) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
 
-        User n = new User();
-        n.setName(name);
-        n.setEmail(email);
+        User n = new User(name , email , username , password);
         userRepository.save(n);
         return "Saved";
     }

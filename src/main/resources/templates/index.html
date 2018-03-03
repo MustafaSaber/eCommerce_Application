@@ -5,21 +5,17 @@
 <title>Calculator Application</title>
 </head>
 <body>
-	<form action = "/register">
-		Name: <br>
-		<input type  = "text" name = "Name" /><br>
-		Email:<br>
-		<input type  = "text" name = "Email" /><br>
-		Username:<br>
-		<input type  = "text" name = "Username" /><br>
-		Password:<br>
-		<input type  = "text" name = "password" /><br>
-		<input type  = "submit" value = "Submit" /><br>
+	<form action = "/system/register">
+		Name: <br/>
+		<input type  = "text" name = "Name" /><br/>
+		Email:<br/>
+		<input type  = "text" name = "Email" /><br/>
+		Username:<br/>
+		<input type  = "text" name = "Username" /><br/>
+		Password:<br/>
+		<input type  = "password" name = "password" /><br/>
+		<input type  = "submit" value = "Submit" /><br/>
 	</form>
-	
-	<p th:if="${result}"
-	
-	th:inline="text"
-	> The result is [[${result}]]  </p>
+
 </body>
 </html>
