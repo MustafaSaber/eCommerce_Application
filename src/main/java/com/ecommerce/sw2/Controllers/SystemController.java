@@ -22,4 +22,10 @@ public class SystemController {
     String redirectstoreOwner(){
         return "storeOwnerRegister";
     }
+
+
+    @RequestMapping("/addproduct")
+    public String renderAddProduct(){
+        return "AddProduct";
+    }
 }
