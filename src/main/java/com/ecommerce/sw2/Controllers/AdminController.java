@@ -1,9 +1,10 @@
 package com.ecommerce.sw2.Controllers;
 
-import com.ecommerce.sw2.Models.AdminUser;
-import com.ecommerce.sw2.Models.NormalUser;
-import com.ecommerce.sw2.Models.User;
+import com.ecommerce.sw2.Models.*;
 import com.ecommerce.sw2.Repositories.AdminRepo;
+import com.ecommerce.sw2.Repositories.BrandRepo;
+import com.ecommerce.sw2.Repositories.ModelRepo;
+import com.ecommerce.sw2.Repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminController {
     @Autowired
     private AdminRepo adminRepo;
+    @Autowired
+    private BrandRepo brandRepo;
+    @Autowired
+    private ModelRepo modelRepo;
+    @Autowired
+    private ProductRepo productRepo;
+
     @RequestMapping("/register")
     public String addAdmin(
             @RequestParam("Name") String name
@@ -39,4 +47,39 @@ public class AdminController {
         Iterable<AdminUser> iu = adminRepo.findAll();
         return iu;
     }
+
+    @RequestMapping("/add")
+    public String AddNewProduct(
+            @RequestParam("productID") Integer productID
+            , @RequestParam("model") String modelName
+            , @RequestParam("price") Double price
+            , @RequestParam("brand")  String brandname) {
+        // This returns a JSON or XML with the users
+
+        Product p = new Product();
+
+        if(productRepo.exists(productID))
+            return "NotSavedProduct";
+        else {
+            p.setProductID(productID);
+            p.setPrice(price);
+            if (brandRepo.exists(brandname)) {
+                p.setBrand(brandname);
+            } else {
+                Brand brand = new Brand(brandname);
+                p.setBrand(brandname);
+                brandRepo.save(brand);
+            }
+            if (modelRepo.exists(modelName)) {
+                p.setModel(modelName);
+            } else {
+                Model model = new Model(modelName, p.getBrand());
+                p.setModel(modelName);
+                modelRepo.save(model);
+            }
+            productRepo.save(p);
+            return "SaveProduct";
+        }
+    }
 }
+
