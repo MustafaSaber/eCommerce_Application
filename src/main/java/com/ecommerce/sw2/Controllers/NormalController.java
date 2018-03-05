@@ -3,12 +3,13 @@ package com.ecommerce.sw2.Controllers;
 import com.ecommerce.sw2.Models.NormalUser;
 import com.ecommerce.sw2.Models.User;
 import com.ecommerce.sw2.Repositories.NormalRepo;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Null;
 
 /**
  * Created by Mina_Yousry on 03/03/2018.
@@ -20,6 +21,11 @@ public class NormalController {
     private NormalRepo normalRepo;
 
 
+    @RequestMapping("")
+    public String enter()
+    {
+        return "normalLogin";
+    }
 
     @RequestMapping("/register")
     public String addNewUser (
@@ -35,7 +41,29 @@ public class NormalController {
         normalRepo.save(n);
         return "Saved";
     }
+    @GetMapping("/login")
+    public String login(
+            @RequestParam("Username") String username,
+            @RequestParam("password") String password) {
+        NormalUser nu =normalRepo.findNormalUserByNameAndPassword(username, password);
+        if(nu.getUsername()==username && nu.getPassword() == password)
+            return "HomePage";
+        else return "normalLogin";
+    }
 
+    @PostMapping("/login")
+    public String loginSucc(
+            @RequestParam("Username") String username,
+            @RequestParam("password") String password) {
+            return "HomePage";
+    }
+
+
+    /*@RequestMapping("/login?Username={val1}&password={val2}")
+    public String loginSucc(@PathVariable String username , @PathVariable String pass)
+    {
+        return "HomePage";
+    }*/
     @RequestMapping("/all")
     public @ResponseBody Iterable<NormalUser> getAllUsers() {
         // This returns a JSON or XML with the users

@@ -13,6 +13,8 @@ public class SystemController {
     public String index(){
         return "index";
     }
+    @RequestMapping("/Login")
+    public String login() { return "normalLogin";}
 
     @RequestMapping("/adminRegister")
     String redirectadmin(){
