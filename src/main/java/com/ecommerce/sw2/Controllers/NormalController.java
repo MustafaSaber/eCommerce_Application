@@ -27,6 +27,7 @@ public class NormalController {
         return "normalLogin";
     }
 
+
     @RequestMapping("/register")
     public String addNewUser (
             @RequestParam("Name") String name
@@ -52,19 +53,8 @@ public class NormalController {
             return "normalLogin";
     }
 
-    @PostMapping("/login1")
-    public String loginSucc(
-            @RequestParam("Username") String username,
-            @RequestParam("password") String password) {
-            return "HomePage";
-    }
 
 
-    /*@RequestMapping("/login?Username={val1}&password={val2}")
-    public String loginSucc(@PathVariable String username , @PathVariable String pass)
-    {
-        return "HomePage";
-    }*/
     @RequestMapping("/all")
     public @ResponseBody Iterable<NormalUser> getAllUsers() {
         // This returns a JSON or XML with the users
