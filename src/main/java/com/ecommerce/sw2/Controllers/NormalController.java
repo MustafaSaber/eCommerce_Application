@@ -41,17 +41,18 @@ public class NormalController {
         normalRepo.save(n);
         return "Saved";
     }
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(
             @RequestParam("Username") String username,
             @RequestParam("password") String password) {
         NormalUser nu =normalRepo.findNormalUserByNameAndPassword(username, password);
-        if(nu.getUsername()==username && nu.getPassword() == password)
+        if(nu != null)
             return "HomePage";
-        else return "normalLogin";
+        else
+            return "normalLogin";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login1")
     public String loginSucc(
             @RequestParam("Username") String username,
             @RequestParam("password") String password) {
