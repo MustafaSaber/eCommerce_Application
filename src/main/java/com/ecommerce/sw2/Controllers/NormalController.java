@@ -36,7 +36,7 @@ public class NormalController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         NormalUser n = new NormalUser(name , email , username , password);
-        if (normalRepo.exists(username))
+        if (normalRepo.existsById(username))
             return "index";
         normalRepo.save(n);
         return "Saved";
