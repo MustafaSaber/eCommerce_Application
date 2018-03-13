@@ -7,12 +7,10 @@ public class Store {
     String name;
     @javax.persistence.Id
     String storeID;
-    Vector<Product> products = new Vector<>();
 
-    public Store(String name, String storeID, Vector<Product> products) {
+    public Store(String name, String storeID) {
         this.name = name;
         this.storeID = storeID;
-        this.products = products;
     }
 
     public Store() { }
@@ -33,11 +31,4 @@ public class Store {
         this.storeID = storeID;
     }
 
-    public Vector<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Vector<Product> products) {
-        this.products = products;
-    }
 }

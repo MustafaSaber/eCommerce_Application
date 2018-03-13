@@ -1,6 +1,4 @@
 package com.ecommerce.sw2.Models;
-
-import org.codehaus.groovy.runtime.dgmimpl.arrays.IntegerArrayGetAtMetaMethod;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
