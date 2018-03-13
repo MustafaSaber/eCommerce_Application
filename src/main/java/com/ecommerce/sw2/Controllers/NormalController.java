@@ -45,7 +45,7 @@ public class NormalController {
     public String login(
             @RequestParam("Username") String username,
             @RequestParam("password") String password) {
-        NormalUser nu =normalRepo.findNormalUserByNameAndPassword(username, password);
+        NormalUser nu =normalRepo.findNormalUserByUsernameAndPassword(username, password);
         if(nu != null)
             return "HomePage";
         else

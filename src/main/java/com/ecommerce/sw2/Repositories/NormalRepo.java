@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface NormalRepo extends CrudRepository<NormalUser, String> {
-    public NormalUser findByUsernameAndAndPassword(String Name, String Pass);
+    public NormalUser findNormalUserByUsernameAndPassword(String Name, String Pass);
 }
