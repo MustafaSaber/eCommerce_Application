@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created by Mina_Yousry on 03/03/2018.
- */
+
 @RequestMapping("/admin")
 @Controller
 public class AdminController {
@@ -48,7 +46,7 @@ public class AdminController {
         return iu;
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("/addNewProduct")
     public String AddNewProduct(
             @RequestParam("productID") Integer productID
             , @RequestParam("model") String modelName
@@ -79,6 +77,18 @@ public class AdminController {
             }
             productRepo.save(p);
             return "SaveProduct";
+        }
+    }
+
+    @RequestMapping("/addNewBrand")
+    public String AddNewBrand(@RequestParam("brand")  String brandname)
+    {
+        if(brandRepo.existsById(brandname))
+            return "NotSavedBrand";
+        else {
+            Brand brand = new Brand(brandname);
+            brandRepo.save(brand);
+            return "SaveBrand";
         }
     }
 }
