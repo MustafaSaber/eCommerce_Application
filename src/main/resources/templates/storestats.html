@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text = "${sname}"></title>
+</head>
+<body>
+    <div th:if = "${found} == 0">
+        <h1>This Store Dosn't have any products</h1>
+    </div>
+    <table th:if = "${found} == 1" border="1">
+        <tr>
+            <th>Name</th>
+            <th>brand</th>
+            <th>Price</th>
+            <th>views</th>
+            <th>Sold</th>
+        </tr>
+        <tr th:each = "row : ${rows}">
+            <td th:text = "${row.model}"/>
+            <td th:text = "${row.brand}"/>
+            <td th:text = "${row.price}"/>
+            <td th:text = "${row.no_of_views}"/>
+            <td th:text = "${row.no_of_sold_out}"/>
+        </tr>
+    </table>
+</body>
+</html>

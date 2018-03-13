@@ -4,7 +4,12 @@ import com.ecommerce.sw2.Models.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Vector;
+
 @Repository
 public interface ProductRepo extends CrudRepository<Product , Integer> {
+    public Product findByProductID(Integer id);
+    public Vector<Product> findByStore(String id);
+
 
 }

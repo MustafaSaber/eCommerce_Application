@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="ISO-8859-1"></meta>
-<title>Calculator Application</title>
+    <meta charset="UTF-8">
+    <title>Welcome to A2Z</title>
 </head>
 <body>
-	<form action = "/normal/register">
-		Name: <br/>
-		<input type  = "text" name = "Name" /><br/>
-		Email:<br/>
-		<input type  = "text" name = "Email" /><br/>
-		Username:<br/>
-		<input type  = "text" name = "Username" /><br/>
-		Password:<br/>
-		<input type  = "text" name = "password" /><br/>
-		<input type  = "submit" value = "Submit" /><br/>
-	</form>
-
-	<a href="/system/adminRegister">Register as admin</a>
-	<a href="/system/storeOwnerRegister">Register as Store Owner</a>
-
-
-
+<div style="text-align: center;">
+    <h1>A2Z</h1>
+</div>
+<div class = "row">
+    <div class = "column" th:each = "row : ${rows}">
+        <div style="background-color:grey;
+             border-color: black;
+             color:white;
+             padding:20px;">
+            <h1 th:text = "${row.model}"></h1>
+            <span th:text = "${row.brand}"> </span>
+            <span th:text = "${row.store}"> </span>
+            <span th:text = "${row.price}"> </span>
+            <a th:href="@{/product/view(ID=${row.productID})}">view</a>
+        </div>
+        <br>
+    </div>
+    <div>
+        <a href="/normal">Login</a>
+        <a href="/normal/register">Register</a>
+    <div>
 </body>
 </html>

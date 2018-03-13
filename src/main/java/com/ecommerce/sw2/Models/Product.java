@@ -1,6 +1,5 @@
 package com.ecommerce.sw2.Models;
 
-import org.codehaus.groovy.runtime.dgmimpl.arrays.IntegerArrayGetAtMetaMethod;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -14,6 +13,21 @@ public class Product {
     Double price;
     String store;
     String brand;
+    Integer no_of_views;
+    Integer no_of_sold_out;
+
+    public Product(Integer productID, String model,
+                   Double price, String store,
+                   String brand, int no_of_views, int no_of_sold_out) {
+        this.productID = productID;
+        this.model = model;
+        this.price = price;
+        this.store = store;
+        this.brand = brand;
+        this.no_of_views = no_of_views;
+        this.no_of_sold_out = no_of_sold_out;
+
+    }
 
     public Product(){}
     public Product(Integer productID, String model, Double price, String store, String brand) {
@@ -22,6 +36,8 @@ public class Product {
         this.price = price;
         this.store = store;
         this.brand = brand;
+        no_of_views = 0;
+        no_of_sold_out = 0;
     }
 
     public Integer getProductID() {
@@ -63,4 +79,21 @@ public class Product {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+
+    public int getNo_of_views() {
+        return no_of_views;
+    }
+
+    public void setNo_of_views(int no_of_views) {
+        this.no_of_views = no_of_views;
+    }
+
+    public int getNo_of_sold_out() {
+        return no_of_sold_out;
+    }
+
+    public void setNo_of_sold_out(int no_of_sold_out) {
+        this.no_of_sold_out = no_of_sold_out;
+    }
+
 }
