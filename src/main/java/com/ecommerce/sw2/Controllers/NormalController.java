@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Null;
 
 /**
- *
  * Created by Mina_Yousry on 03/03/2018.
  */
 @RequestMapping("/normal")
@@ -28,12 +27,7 @@ public class NormalController {
         return "normalLogin";
     }
 
-    @GetMapping("/register")
-    public String ViewRegisterPage(){
-        return "index";
-    }
-
-    @PostMapping("/register")
+    @RequestMapping("/register")
     public String addNewUser (
             @RequestParam("Name") String name
             , @RequestParam("Email") String email
@@ -42,7 +36,7 @@ public class NormalController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         NormalUser n = new NormalUser(name , email , username , password);
-        if (normalRepo.existsById(username))
+        if (normalRepo.exists(username))
             return "index";
         normalRepo.save(n);
         return "Saved";
@@ -51,19 +45,26 @@ public class NormalController {
     public String login(
             @RequestParam("Username") String username,
             @RequestParam("password") String password) {
-        NormalUser nu =normalRepo.findByUsernameAndAndPassword(username, password);
+        NormalUser nu =normalRepo.findNormalUserByNameAndPassword(username, password);
         if(nu != null)
             return "HomePage";
         else
             return "normalLogin";
     }
-    /*
-    @RequestMapping("/login?Username={val1}&password={val2}")
+
+    @PostMapping("/login1")
+    public String loginSucc(
+            @RequestParam("Username") String username,
+            @RequestParam("password") String password) {
+            return "HomePage";
+    }
+
+
+    /*@RequestMapping("/login?Username={val1}&password={val2}")
     public String loginSucc(@PathVariable String username , @PathVariable String pass)
     {
         return "HomePage";
-    }
-    */
+    }*/
     @RequestMapping("/all")
     public @ResponseBody Iterable<NormalUser> getAllUsers() {
         // This returns a JSON or XML with the users
