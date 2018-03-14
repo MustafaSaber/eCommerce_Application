@@ -4,16 +4,14 @@ import javax.persistence.Entity;
 import java.util.Vector;
 @Entity
 public class Store {
-    String name;
     @javax.persistence.Id
-    String storeID;
+    String name;
+    String storeOwner;
 
-    public Store(String name, String storeID) {
+    public Store(String name, String storeOwner) {
         this.name = name;
-        this.storeID = storeID;
+        this.storeOwner = storeOwner;
     }
-
-    public Store() { }
 
     public String getName() {
         return name;
@@ -23,12 +21,12 @@ public class Store {
         this.name = name;
     }
 
-    public String getStoreID() {
-        return storeID;
+
+    public String getStoreOwner() {
+        return storeOwner;
     }
 
-    public void setStoreID(String storeID) {
-        this.storeID = storeID;
+    public void setStoreOwner(String storeOwner) {
+        this.storeOwner = storeOwner;
     }
-
 }
