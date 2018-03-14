@@ -1,5 +1,4 @@
 package com.ecommerce.sw2.Models;
-
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
