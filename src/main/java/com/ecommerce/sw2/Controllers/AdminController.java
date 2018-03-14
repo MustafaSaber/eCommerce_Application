@@ -37,7 +37,7 @@ public class AdminController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         AdminUser n = new AdminUser(name , email , username , password);
-        if (adminRepo.exists(username))
+        if (adminRepo.existsById(username))
             return "index";
         adminRepo.save(n);
         return "Saved";
@@ -70,19 +70,19 @@ public class AdminController {
 
         Product p = new Product();
 
-        if(productRepo.exists(productID))
+        if(productRepo.existsById(productID))
             return "NotSavedProduct";
         else {
             p.setProductID(productID);
             p.setPrice(price);
-            if (brandRepo.exists(brandname)) {
+            if (brandRepo.existsById(brandname)) {
                 p.setBrand(brandname);
             } else {
                 Brand brand = new Brand(brandname);
                 p.setBrand(brandname);
                 brandRepo.save(brand);
             }
-            if (modelRepo.exists(modelName)) {
+            if (modelRepo.existsById(modelName)) {
                 p.setModel(modelName);
             } else {
                 Model model = new Model(modelName, p.getBrand());
@@ -97,7 +97,7 @@ public class AdminController {
     @RequestMapping("/addNewBrand")
     public String AddNewBrand(@RequestParam("brand")  String brandname)
     {
-        if(brandRepo.exists(brandname))
+        if(brandRepo.existsById(brandname))
             return "NotSavedBrand";
         else {
             Brand brand = new Brand(brandname);
