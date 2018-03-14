@@ -19,8 +19,6 @@ public class AdminController {
     private BrandRepo brandRepo;
     @Autowired
     private ModelRepo modelRepo;
-    @Autowired
-    private ProductRepo productRepo;
 
     @GetMapping("/adminLogin")
     public String Login()
@@ -59,38 +57,22 @@ public class AdminController {
         Iterable<AdminUser> iu = adminRepo.findAll();
         return iu;
     }
-
-    @RequestMapping("/addNewProduct")
-    public String AddNewProduct(
-            @RequestParam("productID") Integer productID
-            , @RequestParam("model") String modelName
-            , @RequestParam("price") Double price
+    @RequestMapping("/addNewModel")
+    public String AddNewModel(
+              @RequestParam("model") String modelName
             , @RequestParam("brand")  String brandname) {
-        // This returns a JSON or XML with the users
 
-        Product p = new Product();
-
-        if(productRepo.existsById(productID))
-            return "NotSavedProduct";
+        if (modelRepo.existsById(modelName.toLowerCase()))
+            return "NotSavedModel";
         else {
-            p.setProductID(productID);
-            p.setPrice(price);
-            if (brandRepo.existsById(brandname)) {
-                p.setBrand(brandname);
-            } else {
+            Model model = new Model(modelName, brandname);
+
+            if (!brandRepo.existsById(brandname)) {
                 Brand brand = new Brand(brandname);
-                p.setBrand(brandname);
                 brandRepo.save(brand);
             }
-            if (modelRepo.existsById(modelName)) {
-                p.setModel(modelName);
-            } else {
-                Model model = new Model(modelName, p.getBrand());
-                p.setModel(modelName);
-                modelRepo.save(model);
-            }
-            productRepo.save(p);
-            return "SaveProduct";
+            modelRepo.save(model);
+            return "SaveModel";
         }
     }
 

@@ -2,10 +2,14 @@ package com.ecommerce.sw2.Models;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 public class Product {
     @javax.persistence.Id
+    @GeneratedValue(strategy = AUTO)
     Integer productID;
 
     String model;
@@ -15,10 +19,9 @@ public class Product {
     Integer no_of_views;
     Integer no_of_sold_out;
 
-    public Product(Integer productID, String model,
+    public Product( String model,
                    Double price, String store,
                    String brand, int no_of_views, int no_of_sold_out) {
-        this.productID = productID;
         this.model = model;
         this.price = price;
         this.store = store;
@@ -29,8 +32,7 @@ public class Product {
     }
 
     public Product(){}
-    public Product(Integer productID, String model, Double price, String store, String brand) {
-        this.productID = productID;
+    public Product(String model, Double price, String store, String brand) {
         this.model = model;
         this.price = price;
         this.store = store;

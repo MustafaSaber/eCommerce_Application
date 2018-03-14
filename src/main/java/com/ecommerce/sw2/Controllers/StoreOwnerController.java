@@ -1,18 +1,15 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.NormalUser;
-import com.ecommerce.sw2.Models.Store;
 import com.ecommerce.sw2.Models.StoreOwnerUser;
 import com.ecommerce.sw2.Models.User;
 import com.ecommerce.sw2.Repositories.StoreOwnerRepo;
-import com.ecommerce.sw2.Repositories.StoreRepo;
 import com.ecommerce.sw2.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Vector;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by Mina_Yousry on 03/03/2018.
@@ -22,8 +19,7 @@ import java.util.Vector;
 public class StoreOwnerController {
     @Autowired
     private StoreOwnerRepo storeOwnerRepo;
-    @Autowired
-    private StoreRepo stRe;
+
 
     @RequestMapping("/register")
     public String addStoreOwner(
@@ -45,32 +41,5 @@ public class StoreOwnerController {
         // This returns a JSON or XML with the users
         Iterable<StoreOwnerUser> iu = storeOwnerRepo.findAll();
         return iu;
-    }
-
-
-    @PostMapping("/logged")
-    public String HomeAfterLogin(@RequestParam String storeowner , Model model)
-    {
-        Vector<Store> stores = stRe.findByStoreOwner(storeowner);
-        model.addAttribute("sname",storeowner);
-        if (stores == null || stores.size() <=0) {
-            model.addAttribute("found", "0");
-            return "StoreOwnerAfterLogin";
-        }
-        model.addAttribute("found","1");
-        model.addAttribute("rows",stores);
-        return "StoreOwnerAfterLogin";
-    }
-
-    @GetMapping("/addStore")
-    public String getAddStore()
-    {
-        return "AddStore";
-    }
-
-    @PostMapping("/addStore")
-    public String postAddStore()
-    {
-        return "AddStore";
     }
 }
