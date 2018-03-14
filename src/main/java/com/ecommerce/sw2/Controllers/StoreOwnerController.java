@@ -34,7 +34,7 @@ public class StoreOwnerController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         StoreOwnerUser n = new StoreOwnerUser(name , email , username , password);
-        if (storeOwnerRepo.existsById(username))
+        if (storeOwnerRepo.exists(username))
             return "index";
 
         storeOwnerRepo.save(n);

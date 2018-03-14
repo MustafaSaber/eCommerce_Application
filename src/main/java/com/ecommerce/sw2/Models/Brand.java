@@ -7,18 +7,12 @@ import java.util.Vector;
 public class Brand {
     @Id
     String name;
-    //Vector<Model> models = new Vector<Model>();
 
+    public Brand() { }
     public Brand(String name) {
         this.name = name;
     }
 
-//    public Brand(String name, Vector<Model> models) {
-//        this.name = name;
-//        //this.models = models;
-//    }
-
-    public Brand() { }
 
     public String getName() {
         return name;
@@ -28,11 +22,4 @@ public class Brand {
         this.name = name;
     }
 
-    //public Vector<Model> getModels() {
-      //  return models;
-    //}
-
-    //public void setModels(Vector<Model> models) {
-      //  this.models = models;
-    //}
 }

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Null;
+//import javax.validation.constraints.Null;
 
 /**
  * Created by Mina_Yousry on 03/03/2018.
@@ -36,7 +36,7 @@ public class NormalController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         NormalUser n = new NormalUser(name , email , username , password);
-        if (normalRepo.existsById(username))
+        if (normalRepo.exists(username))
             return "index";
         normalRepo.save(n);
         return "Saved";

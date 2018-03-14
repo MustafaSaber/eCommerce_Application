@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StoreOwnerRepo extends CrudRepository<StoreOwnerUser,String> {
+    public StoreOwnerUser findStoreOwnerUserByUsernameAndPassword(String username , String pass);
 }
