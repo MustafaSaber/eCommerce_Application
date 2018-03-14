@@ -3,15 +3,14 @@ package com.ecommerce.sw2.Models;
 import javax.persistence.Entity;
 
 @Entity
-public class Store {
+public class SuggestedStore {
     @javax.persistence.Id
     String name;
     String storeOwner;
 
-    public Store() {}
+    public SuggestedStore(){}
 
-
-    public Store(String name, String storeOwner) {
+    public SuggestedStore(String name, String storeOwner) {
         this.name = name;
         this.storeOwner = storeOwner;
     }

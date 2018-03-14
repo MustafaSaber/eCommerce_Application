@@ -1,13 +1,14 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.*;
-import com.ecommerce.sw2.Repositories.AdminRepo;
-import com.ecommerce.sw2.Repositories.BrandRepo;
-import com.ecommerce.sw2.Repositories.ModelRepo;
-import com.ecommerce.sw2.Repositories.ProductRepo;
+import com.ecommerce.sw2.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 
 @RequestMapping("/admin")
@@ -19,6 +20,12 @@ public class AdminController {
     private BrandRepo brandRepo;
     @Autowired
     private ModelRepo modelRepo;
+    @Autowired
+    private ProductRepo productRepo;
+    @Autowired
+    private SuggestedStoreRepo ssr;
+    @Autowired
+    private StoreRepo storeRepo;
 
     @GetMapping("/adminLogin")
     public String Login()
@@ -38,7 +45,7 @@ public class AdminController {
         if (adminRepo.existsById(username))
             return "index";
         adminRepo.save(n);
-        return "Saved";
+        return "index";
     }
 
     @PostMapping("/adminLogin")
@@ -47,7 +54,7 @@ public class AdminController {
             @RequestParam("password") String password) {
         AdminUser na = adminRepo.findAdminUserByUsernameAndPassword(username, password);
         if(na != null)
-            return "HomePage";
+            return "AdminAfterLogin";
         else
             return "adminLogin";
     }
@@ -57,22 +64,38 @@ public class AdminController {
         Iterable<AdminUser> iu = adminRepo.findAll();
         return iu;
     }
-    @RequestMapping("/addNewModel")
-    public String AddNewModel(
-              @RequestParam("model") String modelName
+
+    @RequestMapping("/addNewProduct")
+    public String AddNewProduct(
+            @RequestParam("productID") Integer productID
+            , @RequestParam("model") String modelName
+            , @RequestParam("price") Double price
             , @RequestParam("brand")  String brandname) {
+        // This returns a JSON or XML with the users
 
-        if (modelRepo.existsById(modelName.toLowerCase()))
-            return "NotSavedModel";
+        Product p = new Product();
+
+        if(productRepo.existsById(productID))
+            return "NotSavedProduct";
         else {
-            Model model = new Model(modelName, brandname);
-
-            if (!brandRepo.existsById(brandname)) {
+            p.setProductID(productID);
+            p.setPrice(price);
+            if (brandRepo.existsById(brandname)) {
+                p.setBrand(brandname);
+            } else {
                 Brand brand = new Brand(brandname);
+                p.setBrand(brandname);
                 brandRepo.save(brand);
             }
-            modelRepo.save(model);
-            return "SaveModel";
+            if (modelRepo.existsById(modelName)) {
+                p.setModel(modelName);
+            } else {
+                com.ecommerce.sw2.Models.Model model = new com.ecommerce.sw2.Models.Model(modelName, p.getBrand());
+                p.setModel(modelName);
+                modelRepo.save(model);
+            }
+            productRepo.save(p);
+            return "SaveProduct";
         }
     }
 
@@ -87,5 +110,45 @@ public class AdminController {
             return "SaveBrand";
         }
     }
+
+    @GetMapping("/confirmStores")
+    public String GetAddNewStore(Model model)
+    {
+        Iterable<SuggestedStore> stores = ssr.findAll();
+        Vector<SuggestedStore> list = new Vector();
+        for(SuggestedStore s :stores) list.add(s);
+        if (list == null || list.size() <=0) {
+            model.addAttribute("found", "0");
+            return "suggestedStores";
+        }
+        model.addAttribute("found","1");
+        model.addAttribute("rows",list);
+        return "suggestedStores";
+    }
+
+    @PostMapping("/confirmStores")
+    public String postAddNewStore(@RequestParam("storeName") String sn,
+                                  @RequestParam("store_owner_name") String son ,
+                                  Model model)
+    {
+
+        SuggestedStore s = ssr.findByNameAndStoreOwner(sn , son);
+        if(s != null) {
+            storeRepo.save(new Store(s.getName(), s.getStoreOwner()));
+             ssr.delete(s);
+        }
+
+        Iterable<SuggestedStore> stores = ssr.findAll();
+        Vector<SuggestedStore> list = new Vector();
+        for (SuggestedStore temp : stores) list.add(temp);
+        if (list == null || list.size() <= 0) {
+            model.addAttribute("found", "0");
+            return "suggestedStores";
+        }
+        model.addAttribute("found", "1");
+        model.addAttribute("rows", list);
+        return "suggestedStores";
+    }
+
 }
 
