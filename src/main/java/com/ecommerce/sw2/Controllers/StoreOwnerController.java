@@ -1,10 +1,7 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.*;
-import com.ecommerce.sw2.Repositories.StoreOwnerRepo;
-import com.ecommerce.sw2.Repositories.StoreRepo;
-import com.ecommerce.sw2.Repositories.SuggestedStoreRepo;
-import com.ecommerce.sw2.Repositories.UserRepo;
+import com.ecommerce.sw2.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +23,12 @@ public class StoreOwnerController {
     private StoreRepo stRe;
     @Autowired
     private SuggestedStoreRepo ssr;
+    @Autowired
+    private ProductRepo  productRepo;
+    @Autowired
+    private BrandRepo brandRepo;
+    @Autowired
+    private ModelRepo modelRepo;
 
     @GetMapping("/storeOwnerLogin")
     public String Login()
@@ -54,7 +57,10 @@ public class StoreOwnerController {
             return "storeOwnerLogin";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
+    public String RedirectRegister() { return "storeOwnerRegister"; }
+
+    @PostMapping("/register")
     public String addStoreOwner(
             @RequestParam("Name") String name
             , @RequestParam("Email") String email
@@ -84,6 +90,7 @@ public class StoreOwnerController {
         return "AddStore";
     }
 
+
     @PostMapping("/addStore")
     public String postAddStore(@RequestParam("Name") String storename ,
                                @RequestParam("StoreOwnerName") String son , Model model)
@@ -103,6 +110,26 @@ public class StoreOwnerController {
         model.addAttribute("found","1");
         model.addAttribute("rows",stores);
         return "StoreOwnerAfterLogin";
+    }
+    @GetMapping("/addNewProduct")
+    public String openAddProduct(){
+        return "AddProduct";
+    }
+    @RequestMapping("/addNewProduct")
+    public String AddNewProduct(
+            @RequestParam("model") String modelName
+            , @RequestParam("price") Double price
+            , @RequestParam("store") String store
+            , @RequestParam("brand")  String brandname) {
+        // This returns a JSON or XML with the users
+
+        if(!modelRepo.existsById(modelName))
+            return "NotSavedProduct";
+        else {
+            Product p = new Product(modelName,price,store,brandname);
+            productRepo.save(p);
+            return "SaveProduct";
+        }
     }
 
 }

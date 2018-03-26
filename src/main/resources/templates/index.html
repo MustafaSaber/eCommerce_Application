@@ -5,9 +5,14 @@
     <title>Welcome to A2Z</title>
 </head>
 <body>
+<div>
+    <a href="/normal">Login</a>
+    <a href="/normal/register">Register</a>
+</div>
 <div style="text-align: center;">
     <h1>A2Z</h1>
 </div>
+
 <div class = "row">
     <div class = "column" th:each = "row : ${rows}">
         <div style="background-color:grey;
@@ -22,9 +27,7 @@
         </div>
         <br>
     </div>
-    <div>
-        <a href="/normal">Login</a>
-        <a href="/normal/register">Register</a>
-    <div>
+</div>
+
 </body>
 </html>

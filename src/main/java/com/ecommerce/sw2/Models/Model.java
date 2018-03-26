@@ -7,7 +7,9 @@ public class Model {
     @Id
     String name;
     String brand;
+    public Model(){
 
+    }
     public Model(String name, String brand) {
         this.name = name;
         this.brand = brand;

@@ -33,6 +33,12 @@ public class AdminController {
         return "adminLogin";
     }
 
+    @GetMapping("/register")
+    public String adminRegister()
+    {
+        return "adminRegister";
+    }
+
     @RequestMapping("/register")
     public String addAdmin(
             @RequestParam("Name") String name
@@ -65,41 +71,12 @@ public class AdminController {
         return iu;
     }
 
-    @RequestMapping("/addNewProduct")
-    public String AddNewProduct(
-            @RequestParam("productID") Integer productID
-            , @RequestParam("model") String modelName
-            , @RequestParam("price") Double price
-            , @RequestParam("brand")  String brandname) {
-        // This returns a JSON or XML with the users
-
-        Product p = new Product();
-
-        if(productRepo.existsById(productID))
-            return "NotSavedProduct";
-        else {
-            p.setProductID(productID);
-            p.setPrice(price);
-            if (brandRepo.existsById(brandname)) {
-                p.setBrand(brandname);
-            } else {
-                Brand brand = new Brand(brandname);
-                p.setBrand(brandname);
-                brandRepo.save(brand);
-            }
-            if (modelRepo.existsById(modelName)) {
-                p.setModel(modelName);
-            } else {
-                com.ecommerce.sw2.Models.Model model = new com.ecommerce.sw2.Models.Model(modelName, p.getBrand());
-                p.setModel(modelName);
-                modelRepo.save(model);
-            }
-            productRepo.save(p);
-            return "SaveProduct";
-        }
+    @GetMapping("/addNewBrand")
+    public String openAddBrand(){
+        return "AddBrand";
     }
 
-    @RequestMapping("/addNewBrand")
+    @PostMapping("/addNewBrand")
     public String AddNewBrand(@RequestParam("brand")  String brandname)
     {
         if(brandRepo.existsById(brandname))
@@ -110,6 +87,30 @@ public class AdminController {
             return "SaveBrand";
         }
     }
+
+    @GetMapping("/addNewModel")
+    public String addnewModel(){
+        return "AddModel";
+    }
+    @PostMapping("/addNewModel")
+    public String AddNewModel(
+            @RequestParam("model") String modelName
+            , @RequestParam("brand")  String brandname) {
+
+        if (modelRepo.existsById(modelName.toLowerCase()))
+            return "NotSavedModel";
+        else {
+            com.ecommerce.sw2.Models.Model model = new com.ecommerce.sw2.Models.Model(modelName, brandname);
+
+            if (!brandRepo.existsById(brandname)) {
+                Brand brand = new Brand(brandname);
+                brandRepo.save(brand);
+            }
+            modelRepo.save(model);
+            return "SaveModel";
+        }
+    }
+
 
     @GetMapping("/confirmStores")
     public String GetAddNewStore(Model model)
@@ -135,7 +136,8 @@ public class AdminController {
         SuggestedStore s = ssr.findByNameAndStoreOwner(sn , son);
         if(s != null) {
             storeRepo.save(new Store(s.getName(), s.getStoreOwner()));
-             ssr.delete(s);
+            System.out.println(s.getName() + " " + sn + "" + son);
+            ssr.delete(s);
         }
 
         Iterable<SuggestedStore> stores = ssr.findAll();

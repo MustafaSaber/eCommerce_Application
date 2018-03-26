@@ -27,7 +27,13 @@ public class NormalController {
         return "normalLogin";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
+    public String redirectRegister(){
+        return "register";
+    }
+
+
+    @PostMapping("/register")
     public String addNewUser (
             @RequestParam("Name") String name
             , @RequestParam("Email") String email
