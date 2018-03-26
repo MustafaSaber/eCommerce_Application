@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Homepage</title>
+</head>
+<body>
+<h1>Welcome Home!.</h1>
+
+<form role="form" method="post" autocomplete="on" action="/login">
+    <fieldset>
+        <label  for="username">username</label>
+        <input type="text" name="username" id="username"  placeholder="username"  autocomplete="on"/>
+
+        <label class="col-form-label" for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password"  autocomplete="on"/>
+        <br/>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </fieldset>
+</form>
+
+</body>
+</html>
+

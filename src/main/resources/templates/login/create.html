@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Homepage</title>
+</head>
+<body>
+<h1>Register</h1>
+<hr/>
+<form method="post" autocomplete="on" th:object="${registerForm}" action="/create">
+    <fieldset>
+        <label class="col-form-label">Name</label>
+        <input type="text" class="form-control" placeholder="Name"
+               th:field="*{name}" th:errorclass="is-invalid"/>
+
+        <label class="col-form-label">Password</label>
+        <input type="password" autocomplete="off" class="form-control" placeholder="Password"
+               th:field="*{password}" th:errorclass="is-invalid"/>
+
+        <label class="col-form-label">Username</label>
+        <input type="text" class="form-control" placeholder="Username"
+               th:field="*{username}" th:errorclass="is-invalid"/>
+
+        <label class="col-form-label">Email</label>
+        <input type="text" class="form-control" placeholder="Email"
+               th:field="*{email}" th:errorclass="is-invalid"/>
+
+        <br/>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </fieldset>
+</form>
+
+</body>
+</html>
+
