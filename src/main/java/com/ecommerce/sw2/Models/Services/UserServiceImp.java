@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.Models.Services;
 
+import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.RegisterForm;
@@ -8,7 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -45,7 +48,10 @@ public class UserServiceImp implements UserService {
         user.setEmail(form.getEmail());
         user.setUsername(form.getUsername());
         user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-        user.setRole("USER");
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.USER);
+        user.setRole(roles);
         return userRepository.save(user);
     }
 

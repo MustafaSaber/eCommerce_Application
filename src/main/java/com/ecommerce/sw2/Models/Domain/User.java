@@ -1,9 +1,10 @@
 package com.ecommerce.sw2.Models.Domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-//@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,14 +17,27 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @Column(name = "name", nullable = false, unique = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "id"))
     @Column(name = "role", nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
+    public User(){}
+
+    public User(String email, String passwordHash, String name, String username, Set<Role> roles) {
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.name = name;
+        this.username = username;
+        this.roles = roles;
+    }
 
     public int getId() {
         return id;
@@ -65,11 +79,17 @@ public class User {
         this.username = username;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRole() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Set<Role> role) {
+        this.roles = role;
+    }
+
+    public void addRole(Role role)
+    {
+        if(roles == null) roles = new HashSet<>();
+        roles.add(role);
     }
 }

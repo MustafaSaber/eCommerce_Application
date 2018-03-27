@@ -44,6 +44,7 @@ public class LoginController {
         userService.create(RegisterForm);
 
         try {
+            //request.changeSessionId();
             request.login(RegisterForm.getUsername(), RegisterForm.getPassword());
         } catch (ServletException e) {
             e.printStackTrace();
