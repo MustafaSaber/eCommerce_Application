@@ -15,6 +15,7 @@ import java.util.Vector;
  */
 @RequestMapping("/storeowner")
 @Controller
+@SessionAttributes("User")
 public class StoreOwnerController {
 
     @Autowired
@@ -42,7 +43,8 @@ public class StoreOwnerController {
             @RequestParam("password") String password , Model model) {
         StoreOwnerUser na = storeOwnerRepo.findStoreOwnerUserByUsernameAndPassword(username, password);
         if(na != null) {
-
+            if(!model.containsAttribute("User"))
+                model.addAttribute("User" , new StoreOwnerUser("", "" , na.getUsername(), ""));
             Vector<Store> stores = stRe.findByStoreOwner(na.getUsername());
             model.addAttribute("sname",na.getName());
             if (stores == null || stores.size() <=0) {
@@ -92,17 +94,17 @@ public class StoreOwnerController {
 
 
     @PostMapping("/addStore")
-    public String postAddStore(@RequestParam("Name") String storename ,
-                               @RequestParam("StoreOwnerName") String son , Model model)
+    public String postAddStore(@RequestParam("Name") String storename, Model model,
+                               @ModelAttribute("User") StoreOwnerUser storeOwnerUser)
     {
-        Store temp = stRe.findByNameAndAndStoreOwner(storename , son);
+        Store temp = stRe.findByNameAndAndStoreOwner(storename , storeOwnerUser.getUsername());
         if(temp == null)
         {
-            SuggestedStore s = new SuggestedStore(storename , son);
+            SuggestedStore s = new SuggestedStore(storename , storeOwnerUser.getUsername());
             ssr.save(s);
         }
-        Vector<Store> stores = stRe.findByStoreOwner(son);
-        model.addAttribute("sname",son);
+        Vector<Store> stores = stRe.findByStoreOwner(storeOwnerUser.getUsername());
+        model.addAttribute("sname",storeOwnerUser.getUsername());
         if (stores == null || stores.size() <=0) {
             model.addAttribute("found", "0");
             return "StoreOwnerAfterLogin";
@@ -126,7 +128,10 @@ public class StoreOwnerController {
         if(!modelRepo.existsById(modelName))
             return "NotSavedProduct";
         else {
-            Product p = new Product(modelName,price,store,brandname);
+            com.ecommerce.sw2.Models.Model model = modelRepo.findByName(modelName);
+            Brand brand = brandRepo.findByName(brandname);
+            Store store1 = stRe.findByName(store);
+            Product p = new Product(model,price,store1,brand);
             productRepo.save(p);
             return "SaveProduct";
         }

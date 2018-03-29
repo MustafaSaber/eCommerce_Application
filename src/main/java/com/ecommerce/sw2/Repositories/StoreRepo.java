@@ -15,4 +15,6 @@ import java.util.Vector;
 public interface StoreRepo extends CrudRepository<Store, String> {
     public Vector<Store> findByStoreOwner(String id);
     public  Store findByNameAndAndStoreOwner(String name , String so);
+
+    public Store findByName(String name);
 }

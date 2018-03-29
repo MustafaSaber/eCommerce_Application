@@ -5,8 +5,8 @@
     <title>Welcome to A2Z</title>
 </head>
 <body>
-<div>
-    <a href="/normal">Login</a>
+<div th:if = "${User} == null">
+    <a href="/normal/login">Login</a>
     <a href="/normal/register">Register</a>
 </div>
 <div style="text-align: center;">
@@ -14,16 +14,33 @@
 </div>
 
 <div class = "row">
+    <div th:if = "${User} != null">
+        <h1> Welcome </h1>
+        <h1 th:text = "${User.getUsername()}"></h1>
+        <form action="/cart/view" method="post">
+            <input type="text" name = "userid" th:value="${User.getUsername()}" hidden>
+            <input type="submit" value = "Cart">
+        </form>
+        <form action = "/logout" method="get">
+            <input type="submit" value="Log out">
+        </form>
+    </div>
     <div class = "column" th:each = "row : ${rows}">
         <div style="background-color:grey;
              border-color: black;
              color:white;
              padding:20px;">
-            <h1 th:text = "${row.model}"></h1>
-            <span th:text = "${row.brand}"> </span>
-            <span th:text = "${row.store}"> </span>
+            <h1 th:text = "${row.model.getName()}"></h1>
+            <span th:text = "${row.brand.getName()}"> </span>
+            <span th:text = "${row.store.getName()}"> </span>
             <span th:text = "${row.price}"> </span>
-            <a th:href="@{/product/view(ID=${row.productID})}">view</a>
+            <!--<a th:href="@{/product/view(ID=${row.productID})}">view</a>-->
+            <form action="/product/view" method="post">
+                <div>
+                    <input type = "text" name = "ID" th:value = "${row.productID}" hidden>
+                    <input type="submit" value = "view">
+                </div>
+            </form>
         </div>
         <br>
     </div>

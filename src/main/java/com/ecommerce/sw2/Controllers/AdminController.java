@@ -13,6 +13,7 @@ import java.util.Vector;
 
 @RequestMapping("/admin")
 @Controller
+@SessionAttributes("User")
 public class AdminController {
     @Autowired
     private AdminRepo adminRepo;
@@ -57,10 +58,13 @@ public class AdminController {
     @PostMapping("/adminLogin")
     public String login(
             @RequestParam("Username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password, Model model) {
         AdminUser na = adminRepo.findAdminUserByUsernameAndPassword(username, password);
-        if(na != null)
+        if(na != null) {
+            if(!model.containsAttribute("User"))
+                model.addAttribute("User" , new AdminUser("", "" , na.getUsername() , ""));
             return "AdminAfterLogin";
+        }
         else
             return "adminLogin";
     }
@@ -100,12 +104,12 @@ public class AdminController {
         if (modelRepo.existsById(modelName.toLowerCase()))
             return "NotSavedModel";
         else {
-            com.ecommerce.sw2.Models.Model model = new com.ecommerce.sw2.Models.Model(modelName, brandname);
-
             if (!brandRepo.existsById(brandname)) {
                 Brand brand = new Brand(brandname);
                 brandRepo.save(brand);
             }
+            Brand brand = brandRepo.findByName(brandname);
+            com.ecommerce.sw2.Models.Model model = new com.ecommerce.sw2.Models.Model(modelName, brand);
             modelRepo.save(model);
             return "SaveModel";
         }
@@ -132,7 +136,6 @@ public class AdminController {
                                   @RequestParam("store_owner_name") String son ,
                                   Model model)
     {
-
         SuggestedStore s = ssr.findByNameAndStoreOwner(sn , son);
         if(s != null) {
             storeRepo.save(new Store(s.getName(), s.getStoreOwner()));

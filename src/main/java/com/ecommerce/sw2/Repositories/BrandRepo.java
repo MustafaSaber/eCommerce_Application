@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BrandRepo extends CrudRepository<Brand, String> {
+    public Brand findByName(String id);
 }

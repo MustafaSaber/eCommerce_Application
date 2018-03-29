@@ -12,7 +12,7 @@ public class StoreOwnerUser extends User {
     {
         super();
     }
-    public StoreOwnerUser(String username,String email, String name, String password) {
-        super(username,email,name,password);
+    public StoreOwnerUser(String name,String email, String username, String password) {
+        super(name,email,username,password);
     }
 }

@@ -6,10 +6,18 @@
 </head>
 <body>
 <div>
+    <form action="/" method="post">
+        <div>
+            <input type="submit" value = "Home">
+        </div>
+    </form>
+
+</div>
+<div>
     <table border="1">
         <tr>
             <th>Name</th>
-            <th th:text = "${product.model}"/>
+            <th th:text = "${product.model.getName()}"/>
         </tr>
         <tr>
             <th>Price</th>
@@ -21,21 +29,30 @@
         </tr>
         <tr>
             <th>Brand</th>
-            <th th:text = "${brand}"/>
+            <th th:text = "${product.brand.getName()}"/>
         </tr>
         <tr>
             <th>Store</th>
-            <th th:text = "${store}"/>
+            <th th:text = "${product.store.getName()}"/>
         </tr>
         <tr>
             <th>Views</th>
-            <th th:text = "${views}"/>
+            <th th:text = "${product.getNo_of_views()}"/>
         </tr>
         <tr>
             <th>Solded</th>
-            <th th:text = "${sold}"/>
+            <th th:text = "${product.getNo_of_sold_out()}"/>
         </tr>
     </table>
+</div>
+<div>
+    <form action="/cart/addtocart" method="post">
+        <div>
+            <input type = "text" name = "productID" th:value = "${id}" hidden>
+            <input type="submit" value="Add to cart">
+        </div>
+    </form>
+
 </div>
 </body>
 </html>

@@ -14,6 +14,10 @@ public class User {
     private String username;
     private String password;
 
+//    @OneToOne
+//    @PrimaryKeyJoinColumn
+//    private Cart cart;
+
     public User() {
     }
 

@@ -1,13 +1,16 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.NormalUser;
+import com.ecommerce.sw2.Models.StoreOwnerUser;
 import com.ecommerce.sw2.Models.User;
 import com.ecommerce.sw2.Repositories.NormalRepo;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 //import javax.validation.constraints.Null;
 
@@ -16,22 +19,18 @@ import org.springframework.web.bind.annotation.*;
  */
 @RequestMapping("/normal")
 @Controller
+@SessionAttributes("User")
 public class NormalController {
     @Autowired
     private NormalRepo normalRepo;
 
-
-    @RequestMapping("")
-    public String enter()
-    {
-        return "normalLogin";
-    }
+    @Autowired
+    private SystemController systemController;
 
     @GetMapping("/register")
-    public String redirectRegister(){
+    public String addNewUser(){
         return "register";
     }
-
 
     @PostMapping("/register")
     public String addNewUser (
@@ -47,13 +46,29 @@ public class NormalController {
         normalRepo.save(n);
         return "Saved";
     }
+
+    @GetMapping("/login")
+    public String login(Model model)
+    {
+        return "normalLogin";
+    }
+
     @PostMapping("/login")
     public String login(
             @RequestParam("Username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String password, Model model) {
         NormalUser nu =normalRepo.findNormalUserByUsernameAndPassword(username, password);
-        if(nu != null)
-            return "HomePage";
+        if(nu != null) {
+            if(!model.containsAttribute("User")) {
+                model.addAttribute("User" , new NormalUser(nu.getName(), nu.getEmail() , nu.getUsername() , ""));
+//                return new ModelAndView(systemController.index(model),
+//                        "User",new NormalUser(nu.getName(), nu.getEmail() , nu.getUsername() , ""));
+                return systemController.index(model);
+            }
+            else
+                return "index";
+
+        }
         else
             return "normalLogin";
     }

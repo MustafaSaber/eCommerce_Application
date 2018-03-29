@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Cart</h1>
+    <form action="../../", method="post">
+        <input type="submit" value="Home">
+    </form>
+    <div class = "row">
+        <div class = "column" th:each = "row : ${cart.getProducts()}">
+            <div style="background-color:grey;
+             border-color: black;
+             color:white;
+             padding:20px;">
+                <h1 th:text = "${row.model.getName()}"></h1>
+                <span th:text = "${row.brand.getName()}"> </span>
+                <span th:text = "${row.store.getName()}"> </span>
+                <span th:text = "${row.price}"> </span>
+                <form action="/cart/remove" method="post">
+                    <input type="text" name="cartid" th:value =  "${cart.getCartID()}" hidden>
+                    <input type="text" name="id" th:value =  "${row.getProductID()}" hidden>
+                    <input type="submit" value = "Remove">
+                </form>
+                <form action="/product/view" method="post">
+                    <div>
+                        <input type = "text" name = "ID" th:value = "${row.productID}" hidden>
+                        <input type="submit" value = "view">
+                    </div>
+                </form>
+            </div>
+            <br>
+        </div>
+        <div>
+            <h3>Price</h3>
+            <div th:text = "${cart.getTotal_price()}">Price</div>
+        </div>
+        <div>
+            <form action="/cart/checkout" method="post">
+                <input type="text" name = "cartid" th:value =  "${cart.getCartID()}" hidden>
+                <input type="submit" value="Checkout">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

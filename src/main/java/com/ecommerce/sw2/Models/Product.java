@@ -3,6 +3,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -10,18 +11,25 @@ import static javax.persistence.GenerationType.AUTO;
 public class Product {
     @javax.persistence.Id
     @GeneratedValue(strategy = AUTO)
-    Integer productID;
+    private Integer productID;
 
-    String model;
-    Double price;
-    String store;
-    String brand;
-    Integer no_of_views;
-    Integer no_of_sold_out;
+    @ManyToOne
+    private Model model;
 
-    public Product( String model,
-                   Double price, String store,
-                   String brand, int no_of_views, int no_of_sold_out) {
+    private Double price;
+
+    @ManyToOne
+    private Store  store;
+
+    @ManyToOne
+    private Brand brand;
+
+    private Integer no_of_views;
+    private Integer no_of_sold_out;
+
+    public Product( Model model,
+                   Double price, Store store,
+                   Brand brand, int no_of_views, int no_of_sold_out) {
         this.model = model;
         this.price = price;
         this.store = store;
@@ -32,7 +40,7 @@ public class Product {
     }
 
     public Product(){}
-    public Product(String model, Double price, String store, String brand) {
+    public Product(Model model, Double price, Store store, Brand brand) {
         this.model = model;
         this.price = price;
         this.store = store;
@@ -49,11 +57,11 @@ public class Product {
         this.productID = productID;
     }
 
-    public String getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(Model model) {
         this.model = model;
     }
 
@@ -65,19 +73,19 @@ public class Product {
         this.price = price;
     }
 
-    public String getStore() {
+    public Store getStore() {
         return store;
     }
 
-    public void setStore(String store) {
+    public void setStore(Store store) {
         this.store = store;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
