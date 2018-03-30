@@ -78,6 +78,9 @@ public class CartController {
             return "redirect:/";
         cart.removeProduct(id);
         cartRepo.save(cart);
+
+
+
         model.addAttribute("cart", cart);
         return "cartView";
     }
