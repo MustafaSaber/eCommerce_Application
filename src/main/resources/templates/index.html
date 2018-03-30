@@ -2,49 +2,117 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
     <title>Welcome to A2Z</title>
 </head>
 <body>
-<div th:if = "${User} == null">
-    <a href="/normal/login">Login</a>
-    <a href="/normal/register">Register</a>
-</div>
-<div style="text-align: center;">
-    <h1>A2Z</h1>
-</div>
+<nav th:class="'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'">
+    <div th:class="container">
+        <a th:class="navbar-brand" href="/">A2Z</a>
+        <button th:class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="'Toggle navigation'">
+            <span th:class="navbar-toggler-icon"></span>
+        </button>
+        <div th:class="'collapse navbar-collapse'" id="navbarResponsive">
+            <div th:if = "${User} == null">
+                <ul th:class="'navbar-nav ml-auto'">
+                    <li th:class="'nav-item active'">
+                        <a th:class="nav-link" href="/normal/login">Login</a>
+                    </li>
+                    <li th:class="nav-item">
+                        <a th:class="nav-link" href="/normal/register">Register</a>
+                    </li>
+                </ul>
+            </div>
+            <div th:if = "${User} != null">
+                <ul th:class="'navbar-nav ml-auto'">
+                    <li th:class="'nav-item active'">
+                        <a th:class="nav-link" th:text = "'Welcome ' + ${User.getUsername()}" href="home"></a>
+                    </li>
+                    <li th:class="nav-item">
+                        <form action="/cart/view" method="post">
+                            <input type="text" name = "userid" th:value="${User.getUsername()}" hidden>
+                            <input th:class="'nav-link bttn'" type="submit" value = "Cart">
+                        </form>
+                    </li>
 
-<div class = "row">
-    <div th:if = "${User} != null">
-        <h1> Welcome </h1>
-        <h1 th:text = "${User.getUsername()}"></h1>
-        <form action="/cart/view" method="post">
-            <input type="text" name = "userid" th:value="${User.getUsername()}" hidden>
-            <input type="submit" value = "Cart">
-        </form>
-        <form action = "/logout" method="get">
-            <input type="submit" value="Log out">
-        </form>
-    </div>
-    <div class = "column" th:each = "row : ${rows}">
-        <div style="background-color:grey;
-             border-color: black;
-             color:white;
-             padding:20px;">
-            <h1 th:text = "${row.model.getName()}"></h1>
-            <span th:text = "${row.brand.getName()}"> </span>
-            <span th:text = "${row.store.getName()}"> </span>
-            <span th:text = "${row.price}"> </span>
-            <!--<a th:href="@{/product/view(ID=${row.productID})}">view</a>-->
-            <form action="/product/view" method="post">
-                <div>
-                    <input type = "text" name = "ID" th:value = "${row.productID}" hidden>
-                    <input type="submit" value = "view">
-                </div>
-            </form>
+                    <li th:class="nav-item">
+                        <form action = "/logout" method="get">
+                            <input th:class="'nav-link bttn'" type="submit" value="Log out">
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <br>
+
+
+    </div>
+</nav>
+
+
+<div th:class ="container">
+    <!--<nav>-->
+        <!--<div th:if = "${User} == null">-->
+            <!--<a href="/normal/login">Login</a>-->
+            <!--<a href="/normal/register">Register</a>-->
+        <!--</div>-->
+    <!--</nav>-->
+    <header th:class="'jumbotron my-4'">
+        <h1 th:class="display-3">A2Z</h1>
+        <p th:class="lead">Feel free to view your products and every thing u love, u can add it to your cart</p>
+    </header>
+
+    <!--<div th:if = "${User} != null">-->
+        <!--<h1> Welcome </h1>-->
+        <!--<h1 th:text = "${User.getUsername()}"></h1>-->
+        <!--<form action="/cart/view" method="post">-->
+            <!--<input type="text" name = "userid" th:value="${User.getUsername()}" hidden>-->
+            <!--<input type="submit" value = "Cart">-->
+        <!--</form>-->
+        <!--<form action = "/logout" method="get">-->
+            <!--<input type="submit" value="Log out">-->
+        <!--</form>-->
+    <!--</div>-->
+
+
+    <div th:class = "'row text-center'">
+        <div th:class = "'col-lg-3 col-md-6 mb-4'" th:each = "row : ${rows}">
+            <div th:class="card">
+                <div th:class="card-body">
+                    <h4 th:class="card-title" th:text = "${row.model.getName()}"></h4>
+                    <span th:class="card-text" th:text = "${row.brand.getName()}"> </span>
+                    <span th:text = "${row.store.getName()}"> </span>
+                    <span th:text = "${row.price}"> </span>
+                </div>
+                <!--<a th:href="@{/product/view(ID=${row.productID})}">view</a>-->
+                <form th:class="card-footer" action="/product/view" method="post">
+                    <div>
+                        <input type = "text" name = "modelname" th:value = "${row.model.getName()}" hidden>
+                        <input type = "text" name = "storename" th:value = "${row.store.getName()}" hidden>
+                        <input th:class="'btn btn-primary'" type="submit" value = "view">
+                    </div>
+                </form>
+            </div>
+            <br>
+        </div>
     </div>
 </div>
 
 </body>
 </html>
+
+
+<!--"background-color:grey;-->
+<!--border-color: black;-->
+<!--color:white;-->
+<!--padding:20px;"-->

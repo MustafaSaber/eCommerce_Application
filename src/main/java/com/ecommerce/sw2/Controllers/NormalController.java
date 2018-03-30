@@ -27,17 +27,17 @@ public class NormalController {
     @Autowired
     private SystemController systemController;
 
-    @GetMapping("/register")
-    public String addNewUser(){
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String addNewUser(Model model){
         return "register";
     }
 
-    @PostMapping("/register")
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String addNewUser (
             @RequestParam("Name") String name
             , @RequestParam("Email") String email
             , @RequestParam("Username") String username
-            , @RequestParam("password") String password) {
+            , @RequestParam("password") String password, Model model) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         NormalUser n = new NormalUser(name , email , username , password);
@@ -47,13 +47,13 @@ public class NormalController {
         return "Saved";
     }
 
-    @GetMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(Model model)
     {
         return "normalLogin";
     }
 
-    @PostMapping("/login")
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(
             @RequestParam("Username") String username,
             @RequestParam("password") String password, Model model) {
@@ -63,11 +63,10 @@ public class NormalController {
                 model.addAttribute("User" , new NormalUser(nu.getName(), nu.getEmail() , nu.getUsername() , ""));
 //                return new ModelAndView(systemController.index(model),
 //                        "User",new NormalUser(nu.getName(), nu.getEmail() , nu.getUsername() , ""));
-                return systemController.index(model);
+                return "redirect:/";
             }
             else
-                return "index";
-
+                return "redirect:/index";
         }
         else
             return "normalLogin";

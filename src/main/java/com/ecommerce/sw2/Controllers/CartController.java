@@ -11,6 +11,7 @@ import com.ecommerce.sw2.Repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
 import javax.management.modelmbean.ModelMBeanAttributeInfo;
@@ -36,17 +37,25 @@ public class CartController {
     SystemController systemController;
 
     @RequestMapping(value = "/addtocart", method = RequestMethod.POST)
-    public String AddToCart(@RequestParam Integer productID , Model model,
-                          @ModelAttribute("User") NormalUser user){
+    public String AddToCart(@RequestParam String modelname, @RequestParam String storename, @RequestParam Integer quantity, Model model,
+                          @ModelAttribute("User") User user){
         if (user == null)
-            return "normalLogin";
-        Cart cart = cartRepo.findCartByOwner(user.getUsername());
+            return "redirect:/";
+        if (!(user instanceof  NormalUser))
+            return "redirect:/";
+
+            Cart cart = cartRepo.findCartByOwner(user.getUsername());
         if (cart == null) {
             cart = new Cart(user.getUsername());
             cartRepo.save(cart);
         }
-        Product product = productRepo.findByProductID(productID);
-        cart.AddProduct(product);
+        Vector<Product> products = productRepo.findByModel_NameAndStoreName(modelname,storename);
+        if (products.size() < quantity)
+            return "redirect:/home";
+
+        for (int i = 0; i < quantity;i++) {
+            cart.AddProduct(products.get(i));
+        }
         cartRepo.save(cart);
         model.addAttribute("cart", cart);
         return "cartView";
@@ -54,6 +63,10 @@ public class CartController {
     @RequestMapping(value = "/view" , method = RequestMethod.POST)
     public String view(@RequestParam String userid, Model model){
         Cart cart = cartRepo.findCartByOwner(userid);
+        if (cart == null) {
+            cart = new Cart(userid);
+            cartRepo.save(cart);
+        }
         model.addAttribute("cart", cart);
         return "cartView";
     }
@@ -61,13 +74,13 @@ public class CartController {
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public String remove(@RequestParam("id") Integer id , @RequestParam("cartid") Integer cartid, Model model){
         Cart cart = cartRepo.findByCartID(cartid);
+        if (cart != null)
+            return "redirect:/";
         cart.removeProduct(id);
         cartRepo.save(cart);
         model.addAttribute("cart", cart);
         return "cartView";
-
     }
-
 
     @RequestMapping(value = "/checkout", method = RequestMethod.POST)
     public String checkout(@RequestParam("cartid") Integer cartid, Model model){
@@ -76,6 +89,6 @@ public class CartController {
         while (s.hasNext())
             productController.buyProduct(s.next().getProductID());
         cartRepo.save(cart);
-        return systemController.index(model);
+        return "redirect:/";//systemController.index(mv);
     }
 }

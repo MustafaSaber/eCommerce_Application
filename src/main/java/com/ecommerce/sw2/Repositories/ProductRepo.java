@@ -10,4 +10,5 @@ import java.util.Vector;
 public interface ProductRepo extends CrudRepository<Product , Integer> {
     public Product findByProductID(Integer id);
     public Vector<Product> findByStore(String id);
+    public Vector<Product> findByModel_NameAndStoreName(String model,String stname);
 }

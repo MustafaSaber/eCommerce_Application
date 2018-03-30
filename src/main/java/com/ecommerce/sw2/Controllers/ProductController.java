@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.Vector;
 
 @Controller
 @RequestMapping("/product")
@@ -23,25 +24,28 @@ public class ProductController {
     }
 
     @PostMapping(value = "/view")
-    String viewProduct(@RequestParam Integer ID, Model model,
+    String viewProduct(@RequestParam String modelname, @RequestParam String storename, Model model,
                        @ModelAttribute("User") User user) {
-        Product product = productRepo.findByProductID(ID);
-        if (product == null) {
+        Vector<Product> products = productRepo.findByModel_NameAndStoreName(modelname,storename);
+        if (products == null
+                || products.size() <= 0) {
             model.addAttribute("header", "Product missing");
-            model.addAttribute("body", "We didn't found product: " + ID.toString());
+            model.addAttribute("body", "We didn't found product: " + modelname);
             return "ProductError";
         }
-        int views = product.getNo_of_views();
-        product.setNo_of_views(views + 1);
+        int views = 0;
+        int sold = 0;
+        for (Product p: products) {
+            views+=p.getNo_of_views();
+            sold +=p.getNo_of_sold_out();
+        }
+        Product product = products.get(0);
+        product.setNo_of_views(product.getNo_of_views() + 1);
         productRepo.save(product);
         model.addAttribute("product", product);
-        model.addAttribute("name", "" + product.getModel());
-        model.addAttribute("price", "" + product.getPrice().toString());
-        model.addAttribute("id", "" + product.getProductID().toString());
-        model.addAttribute("brand", "" + product.getBrand());
-        model.addAttribute("store", "" + product.getStore());
-        model.addAttribute("views", "" + product.getNo_of_views());
-        model.addAttribute("sold", "" + product.getNo_of_sold_out());
+        model.addAttribute("views",views);
+        model.addAttribute("sold",sold);
+        model.addAttribute("quantity",products.size());
         return "ProductInfo";
     }
 

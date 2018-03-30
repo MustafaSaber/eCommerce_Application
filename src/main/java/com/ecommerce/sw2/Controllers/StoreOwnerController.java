@@ -137,4 +137,9 @@ public class StoreOwnerController {
         }
     }
 
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String getHomepage(Model model){
+        return "StoreOwnerAfterLogin";
+    }
+
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 
-@RequestMapping("/admin")
+//@RequestMapping("/admin")
 @Controller
 @SessionAttributes("User")
 public class AdminController {
@@ -28,24 +28,24 @@ public class AdminController {
     @Autowired
     private StoreRepo storeRepo;
 
-    @GetMapping("/adminLogin")
-    public String Login()
+    @RequestMapping(value = "/admin/adminLogin", method = RequestMethod.GET)
+    public String Login(Model model)
     {
         return "adminLogin";
     }
 
-    @GetMapping("/register")
-    public String adminRegister()
+    @RequestMapping(value = "/admin/register",method = RequestMethod.GET)
+    public String adminRegister(Model model)
     {
         return "adminRegister";
     }
 
-    @RequestMapping("/register")
+    @RequestMapping(value = "/admin/register", method = RequestMethod.POST)
     public String addAdmin(
             @RequestParam("Name") String name
             , @RequestParam("Email") String email
             , @RequestParam("Username") String username
-            , @RequestParam("password") String password) {
+            , @RequestParam("password") String password, Model model) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         AdminUser n = new AdminUser(name , email , username , password);
@@ -55,33 +55,33 @@ public class AdminController {
         return "index";
     }
 
-    @PostMapping("/adminLogin")
+    @RequestMapping(value = "/admin/adminLogin", method = RequestMethod.POST)
     public String login(
             @RequestParam("Username") String username,
             @RequestParam("password") String password, Model model) {
         AdminUser na = adminRepo.findAdminUserByUsernameAndPassword(username, password);
         if(na != null) {
             if(!model.containsAttribute("User"))
-                model.addAttribute("User" , new AdminUser("", "" , na.getUsername() , ""));
-            return "AdminAfterLogin";
+                model.addAttribute("User" , new AdminUser(na.getName(), na.getEmail() , na.getUsername() , ""));
+            return "redirect:/";
         }
         else
             return "adminLogin";
     }
-    @RequestMapping("/all")
+    @RequestMapping("/admin/all")
     public @ResponseBody Iterable<AdminUser> getAllUsers() {
         // This returns a JSON or XML with the users
         Iterable<AdminUser> iu = adminRepo.findAll();
         return iu;
     }
 
-    @GetMapping("/addNewBrand")
-    public String openAddBrand(){
+    @RequestMapping(value = "/admin/addNewBrand", method = RequestMethod.GET)
+    public String openAddBrand(Model model){
         return "AddBrand";
     }
 
-    @PostMapping("/addNewBrand")
-    public String AddNewBrand(@RequestParam("brand")  String brandname)
+    @RequestMapping(value = "/admin/addNewBrand", method = RequestMethod.POST)
+    public String AddNewBrand(@RequestParam("brand")  String brandname, Model model)
     {
         if(brandRepo.existsById(brandname))
             return "NotSavedBrand";
@@ -92,11 +92,12 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/addNewModel")
+    @GetMapping("/admin/addNewModel")
     public String addnewModel(){
         return "AddModel";
     }
-    @PostMapping("/addNewModel")
+
+    @PostMapping("/admin/addNewModel")
     public String AddNewModel(
             @RequestParam("model") String modelName
             , @RequestParam("brand")  String brandname) {
@@ -116,7 +117,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/confirmStores")
+    @GetMapping("/admin/confirmStores")
     public String GetAddNewStore(Model model)
     {
         Iterable<SuggestedStore> stores = ssr.findAll();
@@ -131,7 +132,7 @@ public class AdminController {
         return "suggestedStores";
     }
 
-    @PostMapping("/confirmStores")
+    @PostMapping("/admin/confirmStores")
     public String postAddNewStore(@RequestParam("storeName") String sn,
                                   @RequestParam("store_owner_name") String son ,
                                   Model model)
@@ -153,6 +154,10 @@ public class AdminController {
         model.addAttribute("found", "1");
         model.addAttribute("rows", list);
         return "suggestedStores";
+    }
+    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    public String getHomepage(Model model){
+        return "AdminAfterLogin";
     }
 
 }

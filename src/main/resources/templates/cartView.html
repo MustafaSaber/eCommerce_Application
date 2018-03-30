@@ -2,47 +2,123 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/heroic-features.css" rel="stylesheet">
+
+    <title>Cart</title>
 </head>
 <body>
-    <h1>Cart</h1>
-    <form action="../../", method="post">
-        <input type="submit" value="Home">
-    </form>
-    <div class = "row">
-        <div class = "column" th:each = "row : ${cart.getProducts()}">
-            <div style="background-color:grey;
-             border-color: black;
-             color:white;
-             padding:20px;">
-                <h1 th:text = "${row.model.getName()}"></h1>
-                <span th:text = "${row.brand.getName()}"> </span>
-                <span th:text = "${row.store.getName()}"> </span>
-                <span th:text = "${row.price}"> </span>
-                <form action="/cart/remove" method="post">
-                    <input type="text" name="cartid" th:value =  "${cart.getCartID()}" hidden>
-                    <input type="text" name="id" th:value =  "${row.getProductID()}" hidden>
-                    <input type="submit" value = "Remove">
-                </form>
-                <form action="/product/view" method="post">
-                    <div>
-                        <input type = "text" name = "ID" th:value = "${row.productID}" hidden>
-                        <input type="submit" value = "view">
-                    </div>
-                </form>
+<nav th:class="'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'">
+    <div th:class="container">
+        <a th:class="navbar-brand" href="/">Cart</a>
+        <button th:class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="'Toggle navigation'">
+            <span th:class="navbar-toggler-icon"></span>
+        </button>
+        <div th:class="'collapse navbar-collapse'" id="navbarResponsive">
+            <ul th:class="'navbar-nav ml-auto'">
+                <li th:class="'nav-item active'">
+                    <a th:class="nav-link" th:text = "${User.getUsername()}"></a>
+                </li>
+                <li th:class="nav-item">
+                    <a th:class="nav-link" th:text = "'Price: ' + ${cart.getTotal_price()}"></a>
+                </li>
+                <li th:class="nav-item">
+                    <form action="../../", method="post">
+                        <input th:class="'nav-link bttn'" type="submit" value="Home">
+                    </form>
+                </li>
+                <li th:class="nav-item">
+                    <form action="/cart/checkout" method="post">
+                        <input type="text" name = "cartid" th:value =  "${cart.getCartID()}" hidden>
+                        <input th:class="'nav-link bttn'" type="submit" value="Checkout">
+                    </form>
+                </li>
+                <li th:class="nav-item">
+                    <form action = "/logout" method="get">
+                        <input th:class="'nav-link bttn'" type="submit" value="Log out">
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+
+
+    </div>
+</nav>
+    <div th:class = "'row text-center'">
+        <div th:class = "'col-lg-3 col-md-6 mb-4'" th:each = "row : ${cart.getProducts()}">
+            <div th:class="card">
+                <div th:class="card-body">
+                    <h4 th:class="card-title" th:text = "${row.model.getName()}"></h4>
+                    <span th:class="card-text" th:text = "${row.brand.getName()}"> </span>
+                    <span th:text = "${row.store.getName()}"> </span>
+                    <span th:text = "${row.price}"> </span>
+                </div>
+                <!--<a th:href="@{/product/view(ID=${row.productID})}">view</a>-->
+                <div th:class="card-footer">
+                    <form action="/product/view" method="post">
+                        <div>
+                            <input type = "text" name = "ID" th:value = "${row.model.getName()}" hidden>
+                            <input th:class="'btn btn-primary left'" type="submit" value = "view">
+                        </div>
+                    </form>
+                    <form action="/cart/remove" method="post">
+                        <input type="text" name="cartid" th:value =  "${cart.getCartID()}" hidden>
+                        <input type="text" name="id" th:value =  "${row.getProductID()}" hidden>
+                        <input th:class="'btn btn-primar right red'" type="submit" value = "Remove">
+                    </form>
+                </div>
             </div>
             <br>
         </div>
-        <div>
-            <h3>Price</h3>
-            <div th:text = "${cart.getTotal_price()}">Price</div>
-        </div>
-        <div>
-            <form action="/cart/checkout" method="post">
-                <input type="text" name = "cartid" th:value =  "${cart.getCartID()}" hidden>
-                <input type="submit" value="Checkout">
-            </form>
-        </div>
     </div>
+
+
+
+    <!--<div class = "row">-->
+        <!--<div class = "column" th:each = "row : ${cart.getProducts()}">-->
+            <!--<div style="background-color:grey;-->
+             <!--border-color: black;-->
+             <!--color:white;-->
+             <!--padding:20px;">-->
+                <!--<h1 th:text = "${row.model.getName()}"></h1>-->
+                <!--<span th:text = "${row.brand.getName()}"> </span>-->
+                <!--<span th:text = "${row.store.getName()}"> </span>-->
+                <!--<span th:text = "${row.price}"> </span>-->
+                <!--<form action="/cart/remove" method="post">-->
+                    <!--<input type="text" name="cartid" th:value =  "${cart.getCartID()}" hidden>-->
+                    <!--<input type="text" name="id" th:value =  "${row.getProductID()}" hidden>-->
+                    <!--<input type="submit" value = "Remove">-->
+                <!--</form>-->
+                <!--<form action="/product/view" method="post">-->
+                    <!--<div>-->
+                        <!--<input type = "text" name = "ID" th:value = "${row.productID}" hidden>-->
+                        <!--<input type="submit" value = "view">-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<br>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<h3>Price</h3>-->
+            <!--<div th:text = "${cart.getTotal_price()}">Price</div>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<form action="/cart/checkout" method="post">-->
+                <!--<input type="text" name = "cartid" th:value =  "${cart.getCartID()}" hidden>-->
+                <!--<input type="submit" value="Checkout">-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</div>-->
 </body>
 </html>

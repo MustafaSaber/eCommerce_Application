@@ -1,11 +1,13 @@
 package com.ecommerce.sw2.Controllers;
 
-import com.ecommerce.sw2.Models.Product;
+import com.ecommerce.sw2.Models.*;
 import com.ecommerce.sw2.Repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -41,6 +43,7 @@ public class SystemController {
     String redirectadmin(){
         return "adminRegister";
     }
+
     @RequestMapping("/storeOwnerRegister")
     String redirectstoreOwner(){
         return "storeOwnerRegister";
@@ -51,4 +54,22 @@ public class SystemController {
     public String renderAddProduct(){
         return "AddProduct";
     }
+
+
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String getHome(@ModelAttribute("User") User user, Model model){
+        if (user instanceof NormalUser)
+            return "redirect:/";
+        else if (user instanceof AdminUser)
+            return "redirect:/admin/home";
+        else if (user instanceof StoreOwnerUser){
+            return "redirect:/storeowner/home";
+        }else
+            return "redirect:/";
+    }
+
+//    @RequestMapping("/error")
+//    public String error(){
+//        return "HomePage";
+//    }
 }

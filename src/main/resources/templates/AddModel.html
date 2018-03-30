@@ -1,19 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="ISO-8859-1"></meta>
-    <title>Calculator Application</title>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/heroic-features.css" rel="stylesheet">
+
+    <title>Add Model</title>
 </head>
 <body>
-<form action = "/admin/addNewModel" method="post">
+<nav th:class="'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'">
+    <div th:class="container">
+        <a th:class="navbar-brand" href="/">Add Model</a>
+        <button th:class="navbar-toggler" type="button" data-toggle="collapse" data-target="navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="'Toggle navigation'">
+            <span th:class="navbar-toggler-icon"></span>
+        </button>
+        <div th:class="'collapse navbar-collapse'" id="navbarResponsive">
+            <ul th:class="'navbar-nav ml-auto'">
+                <li th:class="'nav-item active'">
+                    <a th:class="nav-link" th:text = "'Welcome ' + ${User.getUsername()}"></a>
+                </li>
+                <li th:class="nav-item">
+                </li>
+                <li th:class="nav-item">
+                    <a th:class="nav-link" href="/admin/confirmStores">Confirm Store Requests</a>
+                </li>
+                <li th:class="nav-item">
+                    <a th:class="nav-link" href="/admin/addNewModel" >Add new model</a>
+                </li>
+                <li th:class="nav-item">
+                    <a th:class="nav-link" href="/admin/addNewBrand">Add new brand</a>
+                </li>
+                <li th:class="nav-item">
+                    <form action = "/logout" method="get">
+                        <input th:class="'nav-link bttn'" type="submit" value="Log out">
+                    </form>
+                </li>
+            </ul>
+        </div>
 
-    modelName<br/>
-    <input type  = "text" name = "model" /><br/>
-    brandName<br/>
-    <input type  = "text" name = "brand" /><br/>
+    </div>
+</nav>
 
-    <input type  = "submit" value = "Submit" /><br/>
-</form>
 
+<div th:class="container">
+    <div th:class="'jumbotron my-4'">
+        <h1 th:class="display-3">Add Model Details</h1>
+        <form th:class="card-footer" action = "/admin/addNewModel" method="post">
+            modelName<br/>
+            <input type  = "text" name = "model" /><br/>
+            brandName<br/>
+            <input type  = "text" name = "brand" /><br/>
+            <input th:class="'btn btn-primary'" type  = "submit" value = "Submit" /><br/>
+        </form>
+    </div>
+</div>
 </body>
+
 </html>

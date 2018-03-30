@@ -8,3 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface ModelRepo extends CrudRepository<Model, String> {
     public Model findByName(String name);
 }
+

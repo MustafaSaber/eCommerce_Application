@@ -21,11 +21,11 @@
         </tr>
         <tr>
             <th>Price</th>
-            <th th:text = "${price}"/>
+            <th th:text = "${product.getPrice()}"/>
         </tr>
         <tr>
-            <th>ID</th>
-            <th th:text = "${id}"/>
+            <th>quantity</th>
+            <th th:text = "${quantity}"/>
         </tr>
         <tr>
             <th>Brand</th>
@@ -37,18 +37,20 @@
         </tr>
         <tr>
             <th>Views</th>
-            <th th:text = "${product.getNo_of_views()}"/>
+            <th th:text = "${views}"/>
         </tr>
         <tr>
             <th>Solded</th>
-            <th th:text = "${product.getNo_of_sold_out()}"/>
+            <th th:text = "${sold}"/>
         </tr>
     </table>
 </div>
 <div>
     <form action="/cart/addtocart" method="post">
         <div>
-            <input type = "text" name = "productID" th:value = "${id}" hidden>
+            <input type = "text" name = "modelname" th:value = "${product.model.getName()}" hidden>
+            <input type = "text" name = "storename" th:value = "${product.store.getName()}" hidden>
+            <input type = "text" name = "quantity" >
             <input type="submit" value="Add to cart">
         </div>
     </form>
