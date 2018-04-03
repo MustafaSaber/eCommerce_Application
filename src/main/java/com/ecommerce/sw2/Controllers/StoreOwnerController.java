@@ -15,7 +15,6 @@ import java.util.Vector;
  */
 @RequestMapping("/storeowner")
 @Controller
-@SessionAttributes("User")
 public class StoreOwnerController {
 
     @Autowired
@@ -43,8 +42,7 @@ public class StoreOwnerController {
             @RequestParam("password") String password , Model model) {
         StoreOwnerUser na = storeOwnerRepo.findStoreOwnerUserByUsernameAndPassword(username, password);
         if(na != null) {
-            if(!model.containsAttribute("User"))
-                model.addAttribute("User" , new StoreOwnerUser("", "" , na.getUsername(), ""));
+
             Vector<Store> stores = stRe.findByStoreOwner(na.getUsername());
             model.addAttribute("sname",na.getName());
             if (stores == null || stores.size() <=0) {
@@ -94,17 +92,17 @@ public class StoreOwnerController {
 
 
     @PostMapping("/addStore")
-    public String postAddStore(@RequestParam("Name") String storename, Model model,
-                               @ModelAttribute("User") StoreOwnerUser storeOwnerUser)
+    public String postAddStore(@RequestParam("Name") String storename ,
+                               @RequestParam("StoreOwnerName") String son , Model model)
     {
-        Store temp = stRe.findByNameAndAndStoreOwner(storename , storeOwnerUser.getUsername());
+        Store temp = stRe.findByNameAndAndStoreOwner(storename , son);
         if(temp == null)
         {
-            SuggestedStore s = new SuggestedStore(storename , storeOwnerUser.getUsername());
+            SuggestedStore s = new SuggestedStore(storename , son);
             ssr.save(s);
         }
-        Vector<Store> stores = stRe.findByStoreOwner(storeOwnerUser.getUsername());
-        model.addAttribute("sname",storeOwnerUser.getUsername());
+        Vector<Store> stores = stRe.findByStoreOwner(son);
+        model.addAttribute("sname",son);
         if (stores == null || stores.size() <=0) {
             model.addAttribute("found", "0");
             return "StoreOwnerAfterLogin";
