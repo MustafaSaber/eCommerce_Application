@@ -1,39 +1,52 @@
 package com.ecommerce.sw2.Controllers;
 
+import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Services.UserService;
 import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Optional;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 public class LoginController {
 
     @Autowired
     private UserService userService;
 
+    /*
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login/login", "error", error.isPresent() ? error : null);
+    }*/
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Optional<User> login(@RequestBody RegisterForm RegisterForm)
+    {
+        return userService.getUserByUsername(RegisterForm.getUsername());
+    }
+
+    @RequestMapping(value = "/getusers", method = RequestMethod.GET)
+    public Collection<User> getUsers()
+    {
+        return userService.getAllUsers();
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public User register(@RequestBody RegisterForm RegisterForm, BindingResult bindingResult, HttpServletRequest request)
+    {
+       return userService.create(RegisterForm);
     }
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView register(@ModelAttribute("registerForm") RegisterForm RegisterForm) {
 
         return new ModelAndView("login/create", "registerForm", RegisterForm);
     }
-
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView register(@Valid @ModelAttribute("registerForm") RegisterForm RegisterForm, BindingResult bindingResult, HttpServletRequest request) {
@@ -51,5 +64,5 @@ public class LoginController {
         }
 
         return new ModelAndView("redirect:/");
-    }
+    }*/
 }
