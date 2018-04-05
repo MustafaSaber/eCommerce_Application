@@ -23,11 +23,12 @@ public class LoginController {
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login/login", "error", error.isPresent() ? error : null);
     }*/
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+
+    /*@RequestMapping(value = "/login", method = RequestMethod.POST)
     public Optional<User> login(@RequestBody RegisterForm RegisterForm)
     {
         return userService.getUserByUsername(RegisterForm.getUsername());
-    }
+    }*/
 
     @RequestMapping(value = "/getusers", method = RequestMethod.GET)
     public Collection<User> getUsers()
