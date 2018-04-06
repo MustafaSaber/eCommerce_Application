@@ -6,7 +6,9 @@ import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Optional;
@@ -18,16 +20,17 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    /*
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+
+    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login/login", "error", error.isPresent() ? error : null);
     }*/
 
-    /*@RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Optional<User> login(@RequestBody RegisterForm RegisterForm)
+   /* @RequestMapping(value = "/customelogin", method = RequestMethod.POST)
+    public Optional<User> login(@RequestParam("username") String username , @RequestParam("password") String password)
     {
-        return userService.getUserByUsername(RegisterForm.getUsername());
+        System.out.println(username + " " + password );
+        return userService.getUserByUsernameAndPassword(username , password);
     }*/
 
     @RequestMapping(value = "/getusers", method = RequestMethod.GET)

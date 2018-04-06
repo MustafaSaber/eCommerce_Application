@@ -38,6 +38,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public Optional<User> getUserByUsernameAndPassword(String username , String password) {
+        return userRepository.findOneByUsernameAndPasswordHash(username , password);
+    }
+
+    @Override
     public Collection<User> getAllUsers() {
         return userRepository.findAll();
     }
