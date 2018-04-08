@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors();
+        http.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class);
         http.authorizeRequests()
                 .antMatchers("/","/getusers", "/create").permitAll()
                 //.antMatchers("/css/**", "/images/**", "/js/**").permitAll()
@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                //.loginProcessingUrl("/customelogin")
                 .failureUrl("/login?error")
                 .usernameParameter("username")
                 .permitAll()

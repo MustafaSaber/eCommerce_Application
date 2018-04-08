@@ -15,8 +15,8 @@ public class LoggedUserDetailsSerivce implements UserDetailsService{
 
     @Override
     public LoggedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println(email);
         User user = userService.getUserByUsername(email).orElseThrow(() -> new UsernameNotFoundException("username not found."));
+        System.out.println(user.getUsername() + "   /////   " + user.getPasswordHash());
         return new LoggedUser(user);
     }
 }

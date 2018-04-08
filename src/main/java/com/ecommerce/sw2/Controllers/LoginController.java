@@ -4,6 +4,9 @@ import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Services.UserService;
 import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.Optional;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 public class LoginController {
@@ -21,17 +26,24 @@ public class LoginController {
     private UserService userService;
 
 
-    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         return new ModelAndView("login/login", "error", error.isPresent() ? error : null);
+    }
+
+    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResponseEntity<User> login(Model model, String error) {
+
+        System.out.println("LOGIN"+model.toString());
+
+        if (error != null) {
+            System.out.println("1.IF");
+            model.addAttribute("error", "Your username and password is invalid.");
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new User());
     }*/
 
-   /* @RequestMapping(value = "/customelogin", method = RequestMethod.POST)
-    public Optional<User> login(@RequestParam("username") String username , @RequestParam("password") String password)
-    {
-        System.out.println(username + " " + password );
-        return userService.getUserByUsernameAndPassword(username , password);
-    }*/
 
     @RequestMapping(value = "/getusers", method = RequestMethod.GET)
     public Collection<User> getUsers()
