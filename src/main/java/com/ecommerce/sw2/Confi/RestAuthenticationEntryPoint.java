@@ -1,6 +1,9 @@
 package com.ecommerce.sw2.Confi;
 
+import com.ecommerce.sw2.auth.LoggedUser;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +19,8 @@ http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        System.out.println("My Entry Point");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }

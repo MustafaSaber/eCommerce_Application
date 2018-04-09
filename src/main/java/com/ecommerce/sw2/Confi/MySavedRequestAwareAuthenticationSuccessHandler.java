@@ -3,6 +3,8 @@ package com.ecommerce.sw2.Confi;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.auth.LoggedUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,17 +41,22 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
             Authentication authentication)
             throws ServletException, IOException {
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType("application/json");
 
+        //System.out.println("Authentication Success");
         //LoggedUser userDetails = (LoggedUser) authentication.getPrincipal();
         //User user = userDetails.getUser();
 
-        //clearAuthenticationAttributes(request);
-       // Principal principal = request.getUserPrincipal();
-       // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-       // LoggedUser user = (LoggedUser)auth.getPrincipal();
-       // System.out.println(user.getUser().getUsername() + " IM NULL ");
-        getRedirectStrategy().sendRedirect(request, response, "/user");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoggedUser user = (LoggedUser)auth.getPrincipal();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("password" ,  user.getUser().getPasswordHash());
+        jsonObject.put("username" ,  user.getUser().getUsername());
+
+        clearAuthenticationAttributes(request);
+        response.getWriter().write(jsonObject.toString());
+       //System.out.println(user.getUser().getUsername() + " IM NULL ");
+       //getRedirectStrategy().sendRedirect(request, response, "/user");
     }
 
     public void setRequestCache(RequestCache requestCache) {

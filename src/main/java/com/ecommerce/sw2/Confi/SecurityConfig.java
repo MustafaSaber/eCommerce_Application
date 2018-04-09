@@ -26,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MySavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler;
 
+    @Autowired
+    private  Failure authenticationFaliureHandler;
+
     @Qualifier("loggedUserDetailsSerivce")
     @Autowired
     private UserDetailsService userDetailsService;
@@ -34,30 +37,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        // http.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class);
         http.cors();
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/","/getusers", "/create").permitAll()
                 //.antMatchers("/css/**", "/images/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
+                .and().httpBasic()
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .formLogin()
                 //.loginPage("/login")
                 //.failureForwardUrl("/login?error")
-                .loginProcessingUrl("/login")
+                // .loginProcessingUrl("/login")
+                .permitAll()
                 .usernameParameter("username")
                 .successHandler(authenticationSuccessHandler)
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                .permitAll()
+                .failureHandler(authenticationFaliureHandler)
                 .and()
                 .logout()
-                .permitAll()
-                .and()
-                .httpBasic()
-                .and()
-                .csrf().disable();
+                .permitAll();
+                //.and()
+                //.httpBasic()
+
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication();
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
@@ -69,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public SimpleUrlAuthenticationFailureHandler myFailureHandler() {
-        return new SimpleUrlAuthenticationFailureHandler();
+    public Failure myFailureHandler() {
+        return new Failure();
     }
 }

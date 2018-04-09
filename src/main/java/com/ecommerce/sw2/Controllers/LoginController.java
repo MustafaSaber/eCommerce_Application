@@ -7,6 +7,7 @@ import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -31,15 +32,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    /*@RequestMapping(value = "/user", method = RequestMethod.POST)
-    public User success()
-    {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        LoggedUser tmpuser = (LoggedUser)auth.getPrincipal();
-        User user = tmpuser.getUser();
-        System.out.println("tmp" + user.getUsername() + " sadas");
-        return user;
-    }*/
 
     /*@RequestMapping(value = "/login", method = RequestMethod.GET)
     public Optional<User> getLoginPage(HttpServletRequest request) {
