@@ -16,6 +16,8 @@ Entry point won't redirect to any login - will return 401
 check here
 http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
  */
+
+
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
@@ -24,3 +26,4 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 }
+

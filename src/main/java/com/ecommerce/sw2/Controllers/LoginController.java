@@ -2,8 +2,10 @@ package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Services.UserService;
-import com.ecommerce.sw2.auth.LoggedUser;
+//import com.ecommerce.sw2.auth.LoggedUser;
 import com.ecommerce.sw2.forms.RegisterForm;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +61,25 @@ public class LoginController {
     }*/
 
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public JSONObject login(@RequestBody RegisterForm registerForm)
+    {
+        JSONObject jsonObject = new JSONObject();
+        Optional<User> user =  userService.getUserByUsernameAndPassword(registerForm.getUsername() , registerForm.getPassword());
+        if(user.isPresent())
+        {
+            jsonObject.put("username", user.get().getUsername());
+            jsonObject.put("email", user.get().getEmail());
+            jsonObject.put("name", user.get().getName());
+            JSONArray array = new JSONArray();
+            array.add(user.get().getRole());
+            jsonObject.put("roles" , array);
+            return jsonObject;
+        }
+        else return null;
+
+    }
+
     @RequestMapping(value = "/getusers", method = RequestMethod.GET)
     public Collection<User> getUsers()
     {
@@ -66,7 +87,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public User register(@RequestBody RegisterForm RegisterForm, BindingResult bindingResult, HttpServletRequest request)
+    public User register(@RequestBody RegisterForm RegisterForm)
     {
        return userService.create(RegisterForm);
     }

@@ -1,6 +1,6 @@
 package com.ecommerce.sw2.Confi;
 
-import com.ecommerce.sw2.auth.LoggedUser;
+//import com.ecommerce.sw2.auth.LoggedUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/*
 public class Failure extends SimpleUrlAuthenticationFailureHandler {
 
     @Override
@@ -22,3 +23,4 @@ public class Failure extends SimpleUrlAuthenticationFailureHandler {
 
     }
 }
+*/

@@ -53,8 +53,8 @@ public class UserServiceImp implements UserService {
         user.setName(form.getName());
         user.setEmail(form.getEmail());
         user.setUsername(form.getUsername());
-        user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-
+        user.setPasswordHash(form.getPassword());
+        System.out.println(user.getPasswordHash() + " loknaspd " + form.getPassword());
         Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRole(roles);

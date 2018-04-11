@@ -1,7 +1,7 @@
 package com.ecommerce.sw2.Confi;
 
 import com.ecommerce.sw2.Models.Domain.User;
-import com.ecommerce.sw2.auth.LoggedUser;
+//import com.ecommerce.sw2.auth.LoggedUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.simple.JSONObject;
@@ -30,9 +30,11 @@ import java.security.Principal;
 To remove spring security redirect login
 http://www.baeldung.com/securing-a-restful-web-service-with-spring-security
  */
+
+/*
 public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private RequestCache requestCache = new HttpSessionRequestCache();
+  //  private RequestCache requestCache = new HttpSessionRequestCache();
 
     @Override
     public void onAuthenticationSuccess(
@@ -47,6 +49,7 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
         //LoggedUser userDetails = (LoggedUser) authentication.getPrincipal();
         //User user = userDetails.getUser();
 
+        System.out.println("I came here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoggedUser user = (LoggedUser)auth.getPrincipal();
         JSONObject jsonObject = new JSONObject();
@@ -59,8 +62,9 @@ public class MySavedRequestAwareAuthenticationSuccessHandler extends SimpleUrlAu
        //getRedirectStrategy().sendRedirect(request, response, "/user");
     }
 
-    public void setRequestCache(RequestCache requestCache) {
-        this.requestCache = requestCache;
-    }
+   // public void setRequestCache(RequestCache requestCache) {
+   //     this.requestCache = requestCache;
+    //}
 
 }
+*/
