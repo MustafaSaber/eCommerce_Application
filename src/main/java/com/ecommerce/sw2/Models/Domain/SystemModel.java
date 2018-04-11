@@ -3,8 +3,8 @@ package com.ecommerce.sw2.Models.Domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "systemmodel")
+public class SystemModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id" , nullable = false , updatable = false)
@@ -13,24 +13,21 @@ public class Product {
     @Column(name = "name" , nullable = false)
     private String name;
 
-
-    @Column(name = "ave_price" , nullable = false)
-    private Float averagePrice;
-
+    @ManyToOne
+    private Brand brand;
 
     /*
     * We need to map our logic in adding products to store
     * despite we have to make model or not.*/
     //THINK
 
-    public Product () {
+    public SystemModel () {
         this.name = "";
-        this.averagePrice = 0f;
     }
 
-    public Product(String name, Float averagePrice) {
+    public SystemModel(String name, Brand brand) {
         this.name = name;
-        this.averagePrice = averagePrice;
+        this.brand = brand;
     }
 
     public Long getId() {
@@ -49,11 +46,11 @@ public class Product {
         this.name = name;
     }
 
-    public Float getAveragePrice() {
-        return averagePrice;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setAveragePrice(Float averagePrice) {
-        this.averagePrice = averagePrice;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }
