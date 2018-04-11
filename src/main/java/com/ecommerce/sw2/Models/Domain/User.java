@@ -1,5 +1,7 @@
 package com.ecommerce.sw2.Models.Domain;
 
+import com.ecommerce.sw2.auth.LoggedUser;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +11,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
-    private int id;
+    private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -29,6 +31,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private StoreOwner storeOwner;
+
     public User(){}
 
     public User(String email, String passwordHash, String name, String username, Set<Role> roles) {
@@ -39,11 +45,27 @@ public class User {
         this.roles = roles;
     }
 
-    public int getId() {
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public StoreOwner getStoreOwner() {
+        return storeOwner;
+    }
+
+    public void setStoreOwner(StoreOwner storeOwner) {
+        this.storeOwner = storeOwner;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

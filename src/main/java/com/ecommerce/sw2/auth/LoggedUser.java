@@ -19,7 +19,7 @@ public class LoggedUser extends org.springframework.security.core.userdetails.Us
         return user;
     }
 
-    public int getId() {
+    public Long getId() {
         return user.getId();
     }
 

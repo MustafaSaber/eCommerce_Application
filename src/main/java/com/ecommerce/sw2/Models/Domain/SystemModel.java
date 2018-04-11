@@ -16,11 +16,6 @@ public class SystemModel {
     @ManyToOne
     private Brand brand;
 
-    /*
-    * We need to map our logic in adding products to store
-    * despite we have to make model or not.*/
-    //THINK
-
     public SystemModel () {
         this.name = "";
     }
