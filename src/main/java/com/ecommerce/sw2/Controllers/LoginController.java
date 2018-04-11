@@ -62,22 +62,10 @@ public class LoginController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public JSONObject login(@RequestBody RegisterForm registerForm)
+    public Optional<User> login(@RequestBody RegisterForm registerForm)
     {
-        JSONObject jsonObject = new JSONObject();
         Optional<User> user =  userService.getUserByUsernameAndPassword(registerForm.getUsername() , registerForm.getPassword());
-        if(user.isPresent())
-        {
-            jsonObject.put("username", user.get().getUsername());
-            jsonObject.put("email", user.get().getEmail());
-            jsonObject.put("name", user.get().getName());
-            JSONArray array = new JSONArray();
-            array.add(user.get().getRole());
-            jsonObject.put("roles" , array);
-            return jsonObject;
-        }
-        else return null;
-
+        return user;
     }
 
     @RequestMapping(value = "/getusers", method = RequestMethod.GET)
