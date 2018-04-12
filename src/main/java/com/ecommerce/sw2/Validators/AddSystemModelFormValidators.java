@@ -37,7 +37,7 @@ public class AddSystemModelFormValidators implements Validator {
             errors.rejectValue("modelname","msg.DuplicateModelName");
         }
         if(!brandRepository.findByName(form.getBrandname()).isPresent()) {
-            errors.rejectValue("brandname","brand name doesn't existed");
+            errors.rejectValue("brandname","msg.Brand404");
         }
     }
 }
