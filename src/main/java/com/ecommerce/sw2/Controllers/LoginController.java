@@ -81,6 +81,12 @@ public class LoginController {
     }
 
 
+    @RequestMapping(value = "/checkAdmin", method = RequestMethod.POST)
+    public boolean checkAdmin(@RequestBody RegisterForm RegisterForm)
+    {
+        return userService.checkAdminn(RegisterForm);
+    }
+
 /*    @RequestMapping(value = "/create", method = RequestMethod.GET)
     public ModelAndView register(@ModelAttribute("registerForm") RegisterForm RegisterForm) {
 

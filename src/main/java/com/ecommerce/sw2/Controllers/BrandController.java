@@ -3,6 +3,7 @@ package com.ecommerce.sw2.Controllers;
 import com.ecommerce.sw2.Models.Services.BrandService;
 import com.ecommerce.sw2.Validators.AddBrandFormValidators;
 import com.ecommerce.sw2.forms.AddBrandForm;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 public class BrandController {
     @Autowired
     private BrandService brandService;
@@ -33,11 +35,13 @@ public class BrandController {
 
 
     @RequestMapping(value = "/addbrand", method = RequestMethod.POST)
-    public ResponseEntity<?> addbrand(@Valid @RequestBody AddBrandForm addBrandForm, BindingResult error)
+    public ResponseEntity<?> addbrand(@Valid @RequestBody AddBrandForm addBrandForm,BindingResult error)
     {
         System.out.println("Here");
         if(error.hasErrors()) {
-            return ResponseEntity.badRequest().body(error.getAllErrors());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
         }
         return ResponseEntity.ok(brandService.AddBrand(addBrandForm));
     }

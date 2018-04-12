@@ -22,4 +22,5 @@ public interface UserService {
     Collection<User> getAllUsers();
 
     User create(RegisterForm form);
+    boolean checkAdminn(RegisterForm form);
 }

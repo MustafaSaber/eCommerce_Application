@@ -5,6 +5,7 @@ import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,16 @@ public class UserServiceImp implements UserService {
         roles.add(Role.USER);
         user.setRole(roles);
         return userRepository.save(user);
+    }
+
+    public boolean checkAdminn(RegisterForm form)
+    {
+        Optional<User> user = getUserByUsername(form.getUsername());
+
+        for(Role role : user.get().getRole())
+            if(role == Role.ADMIN)
+                return true;
+
+        return false;
     }
 }
