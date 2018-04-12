@@ -1,9 +1,8 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.Domain.Store;
-import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Services.StoreService;
-import com.ecommerce.sw2.Validators.AddStoreFormValidator;
+import com.ecommerce.sw2.Validators.StoreFormValidator;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +14,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-public class StoreOwnerController {
+public class StoreController {
 
     @Autowired
     private StoreService storeService;
 
     @Autowired
-    AddStoreFormValidator addStoreFormValidator;
+    private StoreFormValidator storeFormValidator;
 
-    @InitBinder("addStoreFormValidator")
-    public void AddStoreFormInitBinder(WebDataBinder binder) {
-        binder.addValidators(addStoreFormValidator);
+    @InitBinder("storeForm")
+    public void StoreFormInitBinder(WebDataBinder binder) {
+        binder.addValidators(storeFormValidator);
     }
 
-    @RequestMapping(name = "/addstore" , method = RequestMethod.POST)
-    public ResponseEntity<?> addStore(@Valid @RequestBody StoreForm storeForm , BindingResult bindingResult)
+    @RequestMapping(value = "/addstore" , method = RequestMethod.POST)
+    public ResponseEntity<?> addstore(@Valid @RequestBody StoreForm storeForm , BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
@@ -40,5 +39,4 @@ public class StoreOwnerController {
         jsonObject.put("name", store.getName());
         return ResponseEntity.ok().body(jsonObject);
     }
-
 }

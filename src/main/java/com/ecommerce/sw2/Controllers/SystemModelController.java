@@ -16,14 +16,15 @@ import javax.validation.Valid;
 /**
  * Created by Mina_Yousry on 11/04/2018.
  */
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 public class SystemModelController {
     @Autowired
-    SystemModelService systemModelService;
+    private SystemModelService systemModelService;
 
     @Autowired
-    AddSystemModelFormValidators addSystemModelFormValidators;
+    private AddSystemModelFormValidators addSystemModelFormValidators;
 
     @InitBinder("addSystemModelForm")
     public void AddBrandFormInitBinder(WebDataBinder binder) {

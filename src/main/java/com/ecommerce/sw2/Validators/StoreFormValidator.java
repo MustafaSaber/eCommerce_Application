@@ -9,7 +9,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class AddStoreFormValidator implements Validator {
+public class StoreFormValidator implements Validator {
     @Autowired
     private StoreRepository storeRepository;
 
