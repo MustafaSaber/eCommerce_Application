@@ -1,9 +1,12 @@
 package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.Store;
+import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
+import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,6 +17,9 @@ public class StoreServiceImp implements StoreService {
 
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     public StoreServiceImp(StoreRepository storeRepository) { this.storeRepository = storeRepository; }
@@ -33,6 +39,9 @@ public class StoreServiceImp implements StoreService {
     public Store createStore(StoreForm storeForm) {
         Store store = new Store();
         store.setName(storeForm.getName());
-        return store;
+        Optional<User> temp = userRepository.findOneByUsername(storeForm.getStore_owner_name());
+        if(temp.isPresent())
+            store.setStoreOwner(temp.get().getStoreOwner());
+        return storeRepository.save(store);
     }
 }

@@ -3,6 +3,7 @@ package com.ecommerce.sw2.Models.Domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "store")
@@ -22,6 +23,14 @@ public class Store {
     @ManyToOne(optional = false)
     @JsonBackReference
     private StoreOwner storeOwner;
+
+    public StoreOwner getStoreOwner() {
+        return storeOwner;
+    }
+
+    public void setStoreOwner(StoreOwner storeOwner) {
+        this.storeOwner = storeOwner;
+    }
 
     public Store() {
         this.suggested = false;
