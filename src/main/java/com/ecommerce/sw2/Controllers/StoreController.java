@@ -39,4 +39,20 @@ public class StoreController {
         jsonObject.put("name", store.getName());
         return ResponseEntity.ok().body(jsonObject);
     }
+
+    @RequestMapping(value = "/approvestore",method = RequestMethod.POST)
+    public ResponseEntity<?> approvestore(@RequestBody Long id)
+    {
+//        Long i = Long.getLong(id);
+        Store s = storeService.acceptStore(id);
+        if (s == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.badRequest().body(s);
+    }
+
+
 }

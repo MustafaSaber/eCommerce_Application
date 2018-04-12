@@ -57,4 +57,16 @@ public class StoreServiceImp implements StoreService {
         }
         return storeRepository.save(store);
     }
+
+    @Override
+    public Store acceptStore(Long id) {
+        Optional<Store> s = (storeRepository.findStoreById(id));
+        if (!s.isPresent())
+            return null;
+        s.get().setSuggested(true);
+        storeRepository.save(s.get());
+        return s.get();
+    }
+
+
 }

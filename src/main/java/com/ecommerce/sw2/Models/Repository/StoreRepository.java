@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<Store, Long> {
     Optional<Store> findOneByName(String name);
     Collection<Store> findAllBySuggested(Boolean check);
+    Optional<Store> findStoreById(Long id);
 
 }

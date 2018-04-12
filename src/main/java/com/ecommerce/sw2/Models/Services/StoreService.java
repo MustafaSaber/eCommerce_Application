@@ -13,4 +13,7 @@ public interface StoreService {
 
     //Add store as a suggested one till the admin approve it
     Store createStore(StoreForm storeForm);
+
+    //
+    Store acceptStore(Long id);
 }
