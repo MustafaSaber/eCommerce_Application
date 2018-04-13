@@ -4,11 +4,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
 @Entity
 public class StoreOwner {
 
     @Id
     protected Long id;
+
+   // @JoinColumn(name = "ID")
 
     @MapsId
     @OneToOne
@@ -20,6 +23,13 @@ public class StoreOwner {
 
     public List<Store> getStores() {
         return stores;
+    }
+
+    public StoreOwner() {
+    }
+
+    public StoreOwner(User user) {
+        this.user = user;
     }
 
     public boolean addStore(Store store)
@@ -49,3 +59,4 @@ public class StoreOwner {
         this.user = user;
     }
 }
+*/

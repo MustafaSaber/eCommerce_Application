@@ -1,6 +1,10 @@
 package com.ecommerce.sw2.Controllers;
 
+import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.Store;
+//import com.ecommerce.sw2.Models.Domain.StoreOwner;
+import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.Models.Services.StoreService;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
 import com.ecommerce.sw2.forms.StoreForm;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 public class StoreController {
@@ -32,6 +37,7 @@ public class StoreController {
     {
         if(bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+
 
         Store store = storeService.createStore(storeForm);
         JSONObject jsonObject = new JSONObject();

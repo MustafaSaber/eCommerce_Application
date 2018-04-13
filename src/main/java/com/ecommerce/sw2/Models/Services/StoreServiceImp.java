@@ -2,7 +2,7 @@ package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.Store;
-import com.ecommerce.sw2.Models.Domain.StoreOwner;
+//import com.ecommerce.sw2.Models.Domain.StoreOwner;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
@@ -38,22 +38,32 @@ public class StoreServiceImp implements StoreService {
     }
 
     @Override
-    public Store createStore(StoreForm storeForm) {
+    public Store createStore(StoreForm storeForm)
+    {
         Store store = new Store();
         store.setName(storeForm.getName());
         Optional<User> temp = userRepository.findOneByUsername(storeForm.getStore_owner_name());
+
         if(temp.isPresent())
         {
-            if(!temp.get().getRole().contains(Role.STORE_OWNER))
-                temp.get().addRole(Role.STORE_OWNER);
+            User user = temp.get();
+            if(!user.getRole().contains(Role.STORE_OWNER))
+                user.addRole(Role.STORE_OWNER);
 
-            if(temp.get().getStoreOwner() == null)
+            /*
+            if(user.getStoreOwner() == null)
             {
-                temp.get().setStoreOwner(new StoreOwner());
-                temp.get().getStoreOwner().setUser(temp.get());
+                StoreOwner storeOwner = new StoreOwner(user);
+                //storeOwner.setId((long) 5);
+                user.setStoreOwner(storeOwner);
+                //user.getStoreOwner().setUser(user);
+                System.out.println(user.getStoreOwner().getId() + " WTF");
             }
-
-            store.setStoreOwner(temp.get().getStoreOwner());
+            System.out.println(user.getId() + " Im not null " );
+            */
+            user.addstore(store);
+            user = userRepository.save(user);
+            store.setStoreOwner(user);
         }
         return storeRepository.save(store);
     }

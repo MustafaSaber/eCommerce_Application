@@ -1,9 +1,9 @@
 package com.ecommerce.sw2.Models.Domain;
 
-import com.ecommerce.sw2.auth.LoggedUser;
-
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,9 +31,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToOne
+    /*@OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private StoreOwner storeOwner;
+    */
+
+    @OneToMany(mappedBy = "storeOwner")
+    private List<Store> stores;
 
     public User(){}
 
@@ -53,13 +57,14 @@ public class User {
         this.roles = roles;
     }
 
-    public StoreOwner getStoreOwner() {
+   /* public StoreOwner getStoreOwner() {
         return storeOwner;
     }
 
     public void setStoreOwner(StoreOwner storeOwner) {
         this.storeOwner = storeOwner;
     }
+    */
 
     public Long getId() {
         return id;
@@ -113,5 +118,22 @@ public class User {
     {
         if(roles == null) roles = new HashSet<>();
         roles.add(role);
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
+
+    public boolean addstore(Store store)
+    {
+        if(!roles.contains(Role.STORE_OWNER)) return false;
+
+        if(stores == null)
+            stores = new ArrayList<>();
+        return stores.add(store);
     }
 }
