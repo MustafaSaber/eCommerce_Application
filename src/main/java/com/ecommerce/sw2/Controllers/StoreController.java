@@ -67,9 +67,15 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/getstores", method = RequestMethod.POST)
-    public Collection<Store> getStores(@RequestBody RegisterForm RegisterForm)
+    public Collection<Store> getStoresStoreOwner(@RequestBody RegisterForm RegisterForm)
     {
-        return storeService.getStoresByUsername(RegisterForm);
+        return storeService.getStoresforStoreOwner(RegisterForm);
+    }
+
+    @RequestMapping(value = "/getappstores", method = RequestMethod.POST)
+    public Collection<Store> getStoresAdmin(@RequestBody RegisterForm RegisterForm)
+    {
+        return storeService.getStoresforAdmin(RegisterForm);
     }
 
 

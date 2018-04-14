@@ -15,8 +15,10 @@ public interface StoreService {
     //Add store as a suggested one till the admin approve it
     Store createStore(StoreForm storeForm);
 
-    //
     Store acceptStore(Long id);
     Collection<Store> getStoresByUsername(RegisterForm form);
+    Collection<Store> getStoresforStoreOwner(RegisterForm form);
+
+    Collection<Store> getStoresforAdmin(RegisterForm form);
 }
 

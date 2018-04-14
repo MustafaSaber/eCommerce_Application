@@ -82,10 +82,22 @@ public class StoreServiceImp implements StoreService {
         return s.get();
     }
 
+    @Override
     public Collection<Store> getStoresByUsername(RegisterForm form)
     {
         Optional<User> user = userService.getUserByUsername(form.getUsername());
         return storeRepository.findByStoreOwner_Id(user.get().getId());
     }
 
+    @Override
+    public Collection<Store> getStoresforStoreOwner(RegisterForm form) {
+        Optional<User> user = userService.getUserByUsername(form.getUsername());
+        return storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , true);
+    }
+
+    @Override
+    public Collection<Store> getStoresforAdmin(RegisterForm form) {
+        Optional<User> user = userService.getUserByUsername(form.getUsername());
+        return storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , false);
+    }
 }

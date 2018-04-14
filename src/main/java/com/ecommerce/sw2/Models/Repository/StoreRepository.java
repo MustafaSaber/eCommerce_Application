@@ -11,4 +11,5 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     Collection<Store> findAllBySuggested(Boolean check);
     Optional<Store> findStoreById(Long id);
     Collection<Store> findByStoreOwner_Id(Long id);
+    Collection<Store> findByStoreOwner_IdAndAndSuggested(Long id , boolean check);
 }

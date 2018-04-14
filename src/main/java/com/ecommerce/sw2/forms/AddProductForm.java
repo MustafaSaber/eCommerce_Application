@@ -9,6 +9,9 @@ public class AddProductForm {
     private String name;
 
     @NotEmpty
+    private String model_name;
+
+    @NotEmpty
     private  String storename;
 
     @Min(value = 1)
@@ -17,8 +20,6 @@ public class AddProductForm {
     @Min(value = 1)
     private int number_of_items;
 
-    @NotEmpty
-    private String model_name;
 
     public int getNumber_of_items() {
         return number_of_items;
