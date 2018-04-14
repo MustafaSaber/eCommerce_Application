@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files 
+body.homepage,body.listuser{
+    background-image: url("1.JPG");
+	background-position: unset;
+	background-repeat: no-repeat;
+    background-size: cover;
+   
+}
+label,h1{
+    color: wheat;
+}*/

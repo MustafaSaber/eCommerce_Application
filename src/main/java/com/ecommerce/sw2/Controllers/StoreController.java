@@ -57,7 +57,7 @@ public class StoreController {
             jsonObject.put("name","null");
             return ResponseEntity.ok().body(jsonObject);
         }
-        return ResponseEntity.badRequest().body(s);
+        return ResponseEntity.ok().body(s);
     }
 
 

@@ -3,7 +3,8 @@ package com.ecommerce.sw2.Models.Domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "store")
@@ -19,6 +20,9 @@ public class Store {
 
     @Column(name = "accepted")
     private Boolean suggested;
+
+    @OneToMany(mappedBy = "mystore")
+    private List<Product> products;
 
     @ManyToOne(optional = false)
     @JsonBackReference
@@ -64,4 +68,20 @@ public class Store {
     public void setSuggested(Boolean suggested) {
         this.suggested = suggested;
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public boolean addproduct(Product product)
+    {
+        if(products == null)
+            products = new ArrayList<>();
+        return products.add(product);
+    }
+
 }

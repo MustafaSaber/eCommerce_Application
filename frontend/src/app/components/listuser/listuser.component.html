@@ -1,0 +1,19 @@
+<body class="listuser">
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users"> 
+              <td>{{user.username}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+            </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-info" (click)="newUser()">New User</button>
+</div>
+</body>
