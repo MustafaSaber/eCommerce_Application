@@ -7,8 +7,12 @@ import com.ecommerce.sw2.forms.StoreForm;
 
 import java.util.Collection;
 
+import java.util.Optional;
+
 public interface ProductService {
 
+
+    Optional<Product> getProduct(Long id);
     Product addProduct(AddProductForm addProductForm);
     public Collection<Product> getProductsByStore(StoreForm form);
 

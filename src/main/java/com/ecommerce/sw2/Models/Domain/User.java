@@ -1,5 +1,7 @@
 package com.ecommerce.sw2.Models.Domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +38,10 @@ public class User {
     private StoreOwner storeOwner;
     */
 
+    @OneToOne
+    @JsonBackReference
+    private Cart cart;
+
     @OneToMany(mappedBy = "storeOwner")
     private List<Store> stores;
 
@@ -47,6 +53,7 @@ public class User {
         this.name = name;
         this.username = username;
         this.roles = roles;
+        this.cart = new Cart(this);
     }
 
     public Set<Role> getRoles() {
@@ -135,5 +142,13 @@ public class User {
         if(stores == null)
             stores = new ArrayList<>();
         return stores.add(store);
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }

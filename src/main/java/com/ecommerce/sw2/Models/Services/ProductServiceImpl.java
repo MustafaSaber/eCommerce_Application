@@ -33,6 +33,11 @@ public class ProductServiceImpl implements ProductService{
     private SystemModelRepository systemModelRepository;
 
     @Override
+    public Optional<Product> getProduct(Long id) {
+        return productRepository.findById(id);
+    }
+
+    @Override
     public Product addProduct(AddProductForm addProductForm) {
         Product product = new Product();
         product.setName(addProductForm.getName());
@@ -50,6 +55,7 @@ public class ProductServiceImpl implements ProductService{
         systemModelRepository.save(systemModel.get());
         return productRepository.save(product);
     }
+
 
     public Collection<Product> getProductsByStore(StoreForm form)
     {

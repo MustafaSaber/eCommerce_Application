@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.Models.Domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.jboss.logging.Field;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Brand {
 
 
     @OneToMany(mappedBy = "brand")
+    @JsonBackReference
     private List<SystemModel> products;
 
     public Brand(){

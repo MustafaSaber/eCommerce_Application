@@ -45,7 +45,7 @@ public class SystemModelController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id",systemModel.getId());
         jsonObject.put("name",systemModel.getName());
-        jsonObject.put("brandname",systemModel.getBrand().getId());
+        jsonObject.put("brand",systemModel.getBrand());
         return ResponseEntity.ok().body(jsonObject);
     }
 }

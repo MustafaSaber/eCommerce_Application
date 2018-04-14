@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
+/**
+ * Created by Mina_Yousry on 14/04/2018.
+ */
 @Entity
-@Table(name = "product")
-public class Product {
-
+public class ProductInCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id" , nullable = false , updatable = false)
     private Long id;
 
@@ -18,12 +18,6 @@ public class Product {
 
     @Column(name = "name" , nullable = false)
     private String name;
-
-    @Column(name = "views", nullable = false)
-    private int view;
-
-    @Column(name = "no_of_sold" , nullable = false)
-    private int sold;
 
     @Column(name = "no_of_items" , nullable = false)
     private int no_of_items;
@@ -36,13 +30,6 @@ public class Product {
     @JsonBackReference
     private SystemModel systemModel;
 
-    public int getSold() {
-        return sold;
-    }
-
-    public void setSold(int sold) {
-        this.sold = sold;
-    }
 
     public SystemModel getSystemModel() {
         return systemModel;
@@ -52,9 +39,7 @@ public class Product {
         this.systemModel = systemModel;
     }
 
-    public Product() {
-        this.view = 0;
-        this.sold = 0;
+    public ProductInCart() {
     }
 
     public int getNo_of_items() {
@@ -89,14 +74,6 @@ public class Product {
         this.name = name;
     }
 
-    public int getView() {
-        return view;
-    }
-
-    public void setView(int view) {
-        this.view = view;
-    }
-
     public Store getMystore() {
         return mystore;
     }
@@ -105,13 +82,12 @@ public class Product {
         this.mystore = mystore;
     }
 
-    public void equal(Product p){
-        this.mystore = p.mystore;
-        this.price = p.price;
-        this.name = p.name;
-        this.no_of_items = p.no_of_items;
-        this.systemModel = p.systemModel;
-        this.view = p.view;
-        this.sold = p.sold;
+    public void equal(Product p,int q){
+        this.id = p.getId();
+        this.mystore = p.getMystore();
+        this.price = p.getPrice();
+        this.name = p.getName();
+        this.no_of_items = q;//p.getNo_of_items()
+        this.systemModel = p.getSystemModel();
     }
 }

@@ -1,5 +1,7 @@
 package com.ecommerce.sw2.Models.Domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ public class SystemModel {
     private String name;
 
     @ManyToOne
+    @JsonManagedReference
     private Brand brand;
 
     @OneToMany(mappedBy = "systemModel")

@@ -73,8 +73,8 @@ public class StoreServiceImp implements StoreService {
     }
 
     @Override
-    public Store acceptStore(Long id) {
-        Optional<Store> s = (storeRepository.findStoreById(id));
+    public Store acceptStore(String name) {
+        Optional<Store> s = (storeRepository.findOneByName(name));
         if (!s.isPresent())
             return null;
         s.get().setSuggested(true);

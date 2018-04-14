@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.forms;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
