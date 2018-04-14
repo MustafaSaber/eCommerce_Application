@@ -6,7 +6,9 @@ import com.ecommerce.sw2.Models.Domain.Store;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.Models.Services.StoreService;
+import com.ecommerce.sw2.Models.Services.UserService;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
+import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +26,8 @@ public class StoreController {
 
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private StoreFormValidator storeFormValidator;
@@ -59,6 +64,12 @@ public class StoreController {
             return ResponseEntity.ok().body(jsonObject);
         }
         return ResponseEntity.ok().body(s);
+    }
+
+    @RequestMapping(value = "/getstores", method = RequestMethod.POST)
+    public Collection<Store> getStores(@RequestBody RegisterForm RegisterForm)
+    {
+        return storeService.getStoresByUsername(RegisterForm);
     }
 
 

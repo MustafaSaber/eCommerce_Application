@@ -9,9 +9,13 @@ import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.SystemModelRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.AddProductForm;
+import com.ecommerce.sw2.forms.RegisterForm;
+import com.ecommerce.sw2.forms.StoreForm;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -22,6 +26,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private StoreRepository storeRepository;
+    @Autowired
+    private StoreService storeService;
 
     @Autowired
     private SystemModelRepository systemModelRepository;
@@ -43,5 +49,15 @@ public class ProductServiceImpl implements ProductService{
         systemModel.get().addproduct(product);
         systemModelRepository.save(systemModel.get());
         return productRepository.save(product);
+    }
+
+    public Collection<Product> getProductsByStore(StoreForm form)
+    {
+        Optional<Store> store = storeService.getStoreByName(form.getName());
+        if(store.isPresent())
+            return productRepository.findByMystore_Id(store.get().getId());
+
+        Collection<Product> col = null;
+        return col;
     }
 }

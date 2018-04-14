@@ -6,6 +6,7 @@ import com.ecommerce.sw2.Models.Domain.Store;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
+import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
@@ -22,6 +23,9 @@ public class StoreServiceImp implements StoreService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public StoreServiceImp(StoreRepository storeRepository) { this.storeRepository = storeRepository; }
@@ -78,5 +82,10 @@ public class StoreServiceImp implements StoreService {
         return s.get();
     }
 
+    public Collection<Store> getStoresByUsername(RegisterForm form)
+    {
+        Optional<User> user = userService.getUserByUsername(form.getUsername());
+        return storeRepository.findByStoreOwner_Id(user.get().getId());
+    }
 
 }

@@ -2,6 +2,7 @@ package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.Store;
 import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
 
 import java.util.Collection;
@@ -16,4 +17,6 @@ public interface StoreService {
 
     //
     Store acceptStore(Long id);
+    Collection<Store> getStoresByUsername(RegisterForm form);
 }
+

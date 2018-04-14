@@ -6,6 +6,8 @@ import com.ecommerce.sw2.Models.Services.ProductService;
 import com.ecommerce.sw2.Validators.AddProductFormValidators;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
 import com.ecommerce.sw2.forms.AddProductForm;
+import com.ecommerce.sw2.forms.RegisterForm;
+import com.ecommerce.sw2.forms.StoreForm;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 public class ProductController {
@@ -46,6 +49,12 @@ public class ProductController {
         }
 
         return ResponseEntity.ok().body(product);
+    }
+
+    @RequestMapping(value = "/getproducts", method = RequestMethod.POST)
+    public Collection<Product> getStores(@RequestBody StoreForm RegisterForm)
+    {
+        return productService.getProductsByStore(RegisterForm);
     }
 
 }
