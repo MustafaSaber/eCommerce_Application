@@ -98,6 +98,6 @@ public class StoreServiceImp implements StoreService {
     @Override
     public Collection<Store> getStoresforAdmin(RegisterForm form) {
         Optional<User> user = userService.getUserByUsername(form.getUsername());
-        return storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , false);
+        return storeRepository.findBySuggested(false);
     }
 }
