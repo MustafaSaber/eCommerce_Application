@@ -27,6 +27,7 @@ public class StoreController {
     @Autowired
     private StoreFormValidator storeFormValidator;
 
+
     @InitBinder("storeForm")
     public void StoreFormInitBinder(WebDataBinder binder) {
         binder.addValidators(storeFormValidator);
