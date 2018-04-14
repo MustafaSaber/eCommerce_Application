@@ -25,12 +25,36 @@ public class Product {
     @Column(name = "no_of_items" , nullable = false)
     private int no_of_items;
 
+    @Column(name = "no_of_sold" , nullable = false)
+    private int sold;
+
     @ManyToOne(optional = false)
     @JsonBackReference
     private Store mystore;
 
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    private SystemModel systemModel;
+
+    public int getSold() {
+        return sold;
+    }
+
+    public void setSold(int sold) {
+        this.sold = sold;
+    }
+
+    public SystemModel getSystemModel() {
+        return systemModel;
+    }
+
+    public void setSystemModel(SystemModel systemModel) {
+        this.systemModel = systemModel;
+    }
+
     public Product() {
         this.view = 0;
+        this.sold = 0;
     }
 
     public int getNo_of_items() {

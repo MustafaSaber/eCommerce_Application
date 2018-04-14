@@ -17,8 +17,19 @@ public class AddProductForm {
     @Min(value = 1)
     private int number_of_items;
 
+    @NotEmpty
+    private String model_name;
+
     public int getNumber_of_items() {
         return number_of_items;
+    }
+
+    public String getModel_name() {
+        return model_name;
+    }
+
+    public void setModel_name(String model_name) {
+        this.model_name = model_name;
     }
 
     public void setNumber_of_items(int number_of_items) {

@@ -1,6 +1,8 @@
 package com.ecommerce.sw2.Models.Domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "systemmodel")
@@ -15,6 +17,9 @@ public class SystemModel {
 
     @ManyToOne
     private Brand brand;
+
+    @OneToMany(mappedBy = "systemModel")
+    private List<Product> products;
 
     public SystemModel () {
         this.name = "";
@@ -47,5 +52,19 @@ public class SystemModel {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public boolean addproduct(Product product)
+    {
+        if(products == null) products = new ArrayList<>();
+        return products.add(product);
     }
 }
