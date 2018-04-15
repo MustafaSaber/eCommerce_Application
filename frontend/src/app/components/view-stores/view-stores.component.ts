@@ -29,6 +29,7 @@ export class ViewStoresComponent implements OnInit {
 
   View(store:Store)
   {
+    this._storeService.setter(store);
     this._router.navigate(['/viewproducts']);
   }
 }

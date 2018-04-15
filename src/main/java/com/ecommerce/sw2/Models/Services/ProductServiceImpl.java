@@ -66,4 +66,9 @@ public class ProductServiceImpl implements ProductService{
         Collection<Product> col = null;
         return col;
     }
+
+    public Collection<Product> viewProducts()
+    {
+        return productRepository.findAll();
+    }
 }

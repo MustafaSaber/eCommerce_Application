@@ -100,4 +100,7 @@ public class StoreServiceImp implements StoreService {
         Optional<User> user = userService.getUserByUsername(form.getUsername());
         return storeRepository.findBySuggested(false);
     }
+
+
+
 }

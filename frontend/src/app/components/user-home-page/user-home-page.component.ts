@@ -8,6 +8,8 @@ import { Model } from '../../model';
 import { ModelService } from '../../shared-service/model.service';
 import { StoreService } from '../../shared-service/store.service';
 import { Store } from '../../store';
+import { Prod } from '../../prod';
+import { ProductService } from '../../shared-service/product.service';
 
 @Component({
   selector:    'app-user-home-page',
@@ -17,10 +19,31 @@ import { Store } from '../../store';
 export class UserHomePageComponent implements OnInit {
 
   private user:User; 
-  constructor(private _userService:UserService, private _brandService:BrandserviceService,private _storeService:StoreService, private _modelService:ModelService ,private _router:Router) { }
+  private products:Prod[];
+  constructor(private _userService:UserService,private _productService:ProductService, 
+                private _brandService:BrandserviceService,private _storeService:StoreService,
+                     private _modelService:ModelService ,private _router:Router) {}
 
   ngOnInit() {
     this.user = this._userService.getter();
+    this._productService.viewproducts().subscribe((prod)=>{
+      console.log(prod);
+      this.products=prod;
+    },(error)=>{
+      console.log(error);
+    })
+  }
+  viewProduct(p:Prod,user:User)
+  {
+    console.log(p);
+    console.log(user);
+    this._router.navigate(['/userhome']);
+  }
+  buyProduct(p:Prod,user:User)
+  {
+    console.log(p);
+    console.log(user);
+    this._router.navigate(['/userhome']);
   }
   AddBrand()
   {
@@ -70,11 +93,24 @@ export class UserHomePageComponent implements OnInit {
   }
   ViewStores()
   {
-    //this._userService.getStores(this.user).subscribe((user)=>{
-    //console.log(user);
-    this._router.navigate(['/viewstores']);
-    //},(error)=>{
-    //console.log(error); 
-   // })
+    this._router.navigate(['/viewstores']);  
+  }
+  AppStores()
+  {    
+    var ret;
+    this._userService.checkAdmin(this.user).subscribe((ret)=>{
+      console.log(ret);
+      if(ret == true)
+      {
+        this._router.navigate(['/appstores']);
+      }
+      else
+      {
+        window.alert("You can not use this option !!");
+        this._router.navigate(['/userhome']);
+      }
+    },(error)=>{
+      console.log(error); 
+    })
   }
 }

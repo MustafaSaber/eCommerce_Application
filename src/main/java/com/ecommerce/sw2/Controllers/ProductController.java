@@ -57,4 +57,10 @@ public class ProductController {
         return productService.getProductsByStore(RegisterForm);
     }
 
+    @RequestMapping(value = "/viewproducts", method = RequestMethod.GET)
+    public Collection<Product> viewProducts()
+    {
+        return productService.viewProducts();
+    }
+
 }

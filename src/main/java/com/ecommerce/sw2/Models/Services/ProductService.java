@@ -14,6 +14,6 @@ public interface ProductService {
 
     Optional<Product> getProduct(Long id);
     Product addProduct(AddProductForm addProductForm);
-    public Collection<Product> getProductsByStore(StoreForm form);
-
+    Collection<Product> getProductsByStore(StoreForm form);
+    Collection<Product> viewProducts();
 }
