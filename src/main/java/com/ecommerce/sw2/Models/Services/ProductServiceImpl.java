@@ -1,9 +1,6 @@
 package com.ecommerce.sw2.Models.Services;
 
-import com.ecommerce.sw2.Models.Domain.Product;
-import com.ecommerce.sw2.Models.Domain.Store;
-import com.ecommerce.sw2.Models.Domain.SystemModel;
-import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Domain.*;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.SystemModelRepository;
@@ -53,6 +50,9 @@ public class ProductServiceImpl implements ProductService{
         //add the product to the system model and save it again
         systemModel.get().addproduct(product);
         systemModelRepository.save(systemModel.get());
+
+        ProductBackup productBackup = new ProductBackup();
+
         return productRepository.save(product);
     }
 

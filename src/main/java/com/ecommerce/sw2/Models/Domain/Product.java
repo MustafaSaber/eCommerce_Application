@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Product {
 
     @Id
