@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService{
 
     public Collection<Product> viewProducts()
     {
+
         return productRepository.findAll();
     }
 }

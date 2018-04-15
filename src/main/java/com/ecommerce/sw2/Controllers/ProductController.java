@@ -60,6 +60,7 @@ public class ProductController {
     @RequestMapping(value = "/viewproducts", method = RequestMethod.GET)
     public Collection<Product> viewProducts()
     {
+
         return productService.viewProducts();
     }
 
