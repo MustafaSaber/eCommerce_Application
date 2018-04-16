@@ -21,6 +21,5 @@ public interface ProductService {
 
     Product edit(EditProductForm editProductForm);
 
-    Collection<Product> getProductsByStore(StoreForm form);
     Collection<Product> viewProducts();
 }
