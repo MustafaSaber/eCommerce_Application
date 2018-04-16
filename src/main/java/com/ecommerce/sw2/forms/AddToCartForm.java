@@ -23,6 +23,7 @@ public class AddToCartForm {
         this.cartid = cartid;
         this.quantity = quantity;
     }
+
     public Long getProductid() {
         return productid;
     }
