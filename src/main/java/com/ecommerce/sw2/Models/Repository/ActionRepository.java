@@ -1,12 +1,10 @@
 package com.ecommerce.sw2.Models.Repository;
 
-import com.ecommerce.sw2.Models.Domain.Cart;
+import com.ecommerce.sw2.Models.Domain.Action;
+import com.ecommerce.sw2.Models.Domain.ProductBackup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by Mina_Yousry on 14/04/2018.
- */
 @Repository
-public interface CartRepository extends JpaRepository<Cart,Long> {
+public interface ActionRepository extends JpaRepository<Action, Long> {
 }

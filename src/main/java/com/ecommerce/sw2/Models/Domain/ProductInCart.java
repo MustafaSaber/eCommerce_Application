@@ -1,6 +1,8 @@
 package com.ecommerce.sw2.Models.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
 
@@ -10,8 +12,16 @@ import javax.persistence.*;
 @Entity
 public class ProductInCart {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id" , nullable = false , updatable = false)
     private Long id;
+
+    @ManyToOne
+    private Product product;
+
+    @OneToOne
+    @JsonManagedReference
+    private Cart cart;
 
     @Column(name = "price" , nullable = false)
     private float price;
@@ -82,12 +92,29 @@ public class ProductInCart {
         this.mystore = mystore;
     }
 
-    public void equal(Product p,int q){
-        this.id = p.getId();
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public void equal(Product p, int q,Cart cart){
+        this.product = p;
         this.mystore = p.getMystore();
         this.price = p.getPrice();
         this.name = p.getName();
         this.no_of_items = q;//p.getNo_of_items()
         this.systemModel = p.getSystemModel();
+        this.cart = cart;
     }
 }

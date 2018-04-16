@@ -1,10 +1,7 @@
 package com.ecommerce.sw2.Validators;
 
 import com.ecommerce.sw2.Models.Domain.Product;
-import com.ecommerce.sw2.Models.Repository.BrandRepository;
-import com.ecommerce.sw2.Models.Repository.CartRepository;
-import com.ecommerce.sw2.Models.Repository.ProductRepository;
-import com.ecommerce.sw2.Models.Repository.SystemModelRepository;
+import com.ecommerce.sw2.Models.Repository.*;
 import com.ecommerce.sw2.forms.AddSystemModelForm;
 import com.ecommerce.sw2.forms.AddToCartForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,7 @@ import java.util.Optional;
 @Component
 public class AddToCartFormValidator implements Validator{
     @Autowired
-    CartRepository cartRepository;
+    UserRepository userRepository;
     @Autowired
     ProductRepository productRepository;
 
@@ -44,8 +41,8 @@ public class AddToCartFormValidator implements Validator{
         Optional<Product> product = productRepository.findById(form.getProductid());
         if (!product.isPresent())
             errors.rejectValue("productid","msg.ProductNotExist");
-        if (!cartRepository.findById(form.getCartid()).isPresent())
-            errors.rejectValue("cartid","msg.CartNotExist");
+        if (!userRepository.findOneByUsername(form.getUsername()).isPresent())
+            errors.rejectValue("username","msg.UserNotExist");
         if (product.isPresent() && product.get().getNo_of_items() < form.getQuantity())
             errors.rejectValue("quantity", "msg.NotEnoughQuantity");
     }

@@ -30,4 +30,16 @@ public class ProductBackup extends Product{
         this.setSystemModel(product.getSystemModel());
     }
 
+    public void to (Product product){
+        product.setId(this.my_id);
+        product.setName(this.getName());
+        product.setPrice(this.getPrice());
+        product.setView((this.getView()));
+        product.setSold(this.getSold());
+        product.setNo_of_items(this.getNo_of_items());
+        product.setMystore(this.getMystore());
+        product.setSystemModel(this.getSystemModel());
+    }
+
+
 }

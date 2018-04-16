@@ -17,6 +17,7 @@ public class Cart {
     private Long cartID;
 
     @OneToMany
+    @JsonBackReference
     private Set<ProductInCart> products;
 
     @OneToOne
