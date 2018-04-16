@@ -17,9 +17,11 @@ public interface StoreService {
 
     //
     Store acceptStore(String name);
+//    Store acceptStore(Long id);
    // Store acceptStore(Long id);
     Collection<Store> getStoresByUsername(RegisterForm form);
     Collection<Store> getStoresforStoreOwner(RegisterForm form);
 
     Collection<Store> getStoresforAdmin(RegisterForm form);
+
 }

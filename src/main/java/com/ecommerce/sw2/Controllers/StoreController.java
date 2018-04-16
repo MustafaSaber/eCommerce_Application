@@ -53,10 +53,10 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/approvestore",method = RequestMethod.POST)
-    public ResponseEntity<?> approvestore(@RequestBody String name)
+    public ResponseEntity<?> approvestore(@RequestBody StoreForm storeForm)
     {
 //        Long i = Long.getLong(id);
-        Store s = storeService.acceptStore(name);
+        Store s = storeService.acceptStore(storeForm.getName());
         if (s == null)
         {
             JSONObject jsonObject = new JSONObject();

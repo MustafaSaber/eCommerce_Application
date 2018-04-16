@@ -21,6 +21,7 @@ import { ProductService }        from './shared-service/product.service';
 import { ViewStoresComponent } from './components/view-stores/view-stores.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
+import { AppStoresComponent } from './components/app-stores/app-stores.component';
  
 const appRoutes:Routes=[
   {path:'getuser'  ,component:ListuserComponent},
@@ -33,7 +34,8 @@ const appRoutes:Routes=[
   {path:'addstore' ,component:AddStoreComponent},
   {path:'viewproducts' ,component:ViewProductsComponent},
   {path:'viewstores' ,component:ViewStoresComponent},
-  {path:'addproduct' ,component:AddProductComponent}
+  {path:'addproduct' ,component:AddProductComponent},
+  {path:'appstores' ,component:AppStoresComponent}
    
 ]
 @NgModule({
@@ -49,7 +51,8 @@ const appRoutes:Routes=[
    AddStoreComponent,
    ViewStoresComponent,
    ViewProductsComponent,
-   AddProductComponent
+   AddProductComponent,
+   AppStoresComponent
   ],
   imports: [
     BrowserModule,

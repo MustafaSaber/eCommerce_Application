@@ -80,4 +80,10 @@ public class ProductServiceImpl implements ProductService{
         EditProduct editProduct = new EditProduct();
         return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
     }
+
+    public Collection<Product> viewProducts()
+    {
+
+        return productRepository.findAll();
+    }
 }

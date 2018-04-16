@@ -29,6 +29,10 @@ export class UserService {
   {
     return this._http.post(this.baseUrl+'/getstores',JSON.stringify(user),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
   }
+  getAppStores(user:User)
+  {
+    return this._http.post(this.baseUrl+'/getappstores',JSON.stringify(user),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
+  }
   checkAdmin(user:User)
   {
     return this._http.post(this.baseUrl+'/checkAdmin',JSON.stringify(user),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);;

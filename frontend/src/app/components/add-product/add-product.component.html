@@ -1,3 +1,31 @@
-<p>
-  add-product works!
-</p>
+<h4> Welcome {{user.username}}</h4>
+<h6> this is  {{store.name}}</h6>
+<div class="container">
+  <form (ngSubmit)="addproduct()">
+
+    <div class="form group">
+        <label for="name">Product Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="product.name">
+    </div>
+
+    <div class="form group">
+        <label for="model_name">model Name</label>
+        <input type="text" name="model_name" class="form-control" [(ngModel)]="product.model_name">
+    </div>
+
+    <div class="form group">
+        <label for="price">price</label>
+        <input type="number" name="price" class="form-control" [(ngModel)]="product.price">
+    </div>
+
+    <div class="form group">
+        <label for="number_of_items">number of items</label>
+        <input type="number" name="number_of_items" class="form-control" [(ngModel)]="product.number_of_items">
+    </div>
+
+  <br>
+    <input type="submit" value="save" class="btn btn-success">
+  </form>
+ 
+</div>
+ 

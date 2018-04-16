@@ -1,12 +1,30 @@
 <div class="container">
 
-  <h4> Welcome {{user.username}}</h4>
+  <h4 ng-value="user"> Welcome {{user.username}}</h4>
   
 </div>
 
 <div>
-  <button class="btn btn-primary" (click)="AddBrand()">Add Brand</button>
-  <button class="btn btn-primary" (click)="AddModel()">Add Model</button>
-  <button class="btn btn-primary" (click)="AddStore()">Add Store</button>
-  <button class="btn btn-primary" (click)="ViewStores()">View Stores</button>
+  <button class="btn btn-primary"  (click)="AddBrand()">Add Brand</button>
+  <button class="btn btn-warning"  (click)="AddModel()">Add Model</button>
+  <button class="btn btn-danger"   (click)="AddStore()">Add Store</button>
+  <button class="btn btn-info"     (click)="ViewStores()">View Stores</button>
+  <button class="btn btn-success"  (click)="AppStores()">Approve Stores</button>
 </div>
+
+<div class="container">
+  <table class="table table-striped">
+      <thead>
+          <th>Product Name</th>
+          <th>View   </th>
+          <th>Buy </th>
+      </thead>
+      <tbody>
+          <tr *ngFor="let prod of products"> 
+            <td>{{prod.name}}</td>   
+            <td><button class="btn btn-danger"   (click)="viewProduct(prod,user)">View</button></td>
+            <td><button class="btn btn-success"  (click)="addToCart(prod,user)">Buy</button></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>

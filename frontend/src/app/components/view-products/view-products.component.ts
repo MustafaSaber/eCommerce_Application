@@ -24,7 +24,7 @@ export class ViewProductsComponent implements OnInit {
     this.store = this._storeService.getter();
     this._storeService.getProducts(this.store).subscribe((products)=>{
       console.log(products);
-      this.products=products;
+      this.products = products;
     },(error)=>{
       console.log(error);
     }) 

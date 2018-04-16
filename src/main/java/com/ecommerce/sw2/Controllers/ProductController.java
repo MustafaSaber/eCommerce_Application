@@ -7,6 +7,7 @@ import com.ecommerce.sw2.Models.Repository.ProductRepository;
 import com.ecommerce.sw2.Models.Services.ProductService;
 import com.ecommerce.sw2.Validators.AddProductFormValidators;
 import com.ecommerce.sw2.Validators.EditProductFormValidator;
+import com.ecommerce.sw2.Validators.EditProductFormValidator;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
 import com.ecommerce.sw2.forms.AddProductForm;
 import com.ecommerce.sw2.forms.EditProductForm;
@@ -68,6 +69,12 @@ public class ProductController {
         return productService.getProductsByStore(RegisterForm);
     }
 
+    @RequestMapping(value = "/viewproducts", method = RequestMethod.GET)
+    public Collection<Product> viewProducts()
+    {
+
+        return productService.viewProducts();
+    }
 
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)
     public ResponseEntity<?> edit(@Valid @RequestBody EditProductForm editProductForm, BindingResult bindingResult){
@@ -80,3 +87,6 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.edit(editProductForm));
     }
 }
+
+
+

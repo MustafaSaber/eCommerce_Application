@@ -24,6 +24,11 @@ export class StoreService {
   {
     return this._http.post(this.baseUrl+'/getproducts',JSON.stringify(store),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
   }
+  appStore(store:Store)
+  {
+    console.log("hereeeee"+store.name);
+    return this._http.post(this.baseUrl+'/approvestore',JSON.stringify(store),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
+  }
   errorHandler(error:Response)
   {
     return Observable.throw(error||"SERVER ERROR");

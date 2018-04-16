@@ -6,16 +6,14 @@
         <table class="table table-striped">
             <thead>
                 <th>Product Name</th>
-                <th>Model Name</th>
-                <th>Brand </th>
+                <th>Price</th>
                 <th>No of items</th>
             </thead>
             <tbody>
                 <tr *ngFor="let product of products"> 
                   <td>{{product.name}}</td>
-                  <td>{{product.model_name}}</td>
                   <td>{{product.price}}</td>
-                  <td>{{product.number_of_items}}</td>
+                  <td>{{product.no_of_items}}</td>
                 
                 </tr>
             </tbody>

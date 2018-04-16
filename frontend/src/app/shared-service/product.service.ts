@@ -19,6 +19,11 @@ export class ProductService {
     console.log(product);
     return this._http.post(this.baseUrl+'/addproduct',JSON.stringify(product),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);;
   }
+  viewproducts()
+  {
+    return this._http.get(this.baseUrl+'/viewproducts',this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
+
+  }
   errorHandler(error:Response)
   {
     return Observable.throw(error||"SERVER ERROR");
