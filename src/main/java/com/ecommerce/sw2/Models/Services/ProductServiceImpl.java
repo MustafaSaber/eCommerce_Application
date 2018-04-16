@@ -1,11 +1,9 @@
 package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.*;
-import com.ecommerce.sw2.Models.Repository.ProductRepository;
-import com.ecommerce.sw2.Models.Repository.StoreRepository;
-import com.ecommerce.sw2.Models.Repository.SystemModelRepository;
-import com.ecommerce.sw2.Models.Repository.UserRepository;
+import com.ecommerce.sw2.Models.Repository.*;
 import com.ecommerce.sw2.forms.AddProductForm;
+import com.ecommerce.sw2.forms.EditProductForm;
 import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.json.simple.JSONObject;
@@ -22,12 +20,18 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Autowired
+    private ProductBackUpRepository productBackUpRepository;
+
+    @Autowired
     private StoreRepository storeRepository;
     @Autowired
     private StoreService storeService;
 
     @Autowired
     private SystemModelRepository systemModelRepository;
+
+    @Autowired
+    private ActionRepository actionRepository;
 
     @Override
     public Optional<Product> getProduct(Long id) {
@@ -51,9 +55,9 @@ public class ProductServiceImpl implements ProductService{
         systemModel.get().addproduct(product);
         systemModelRepository.save(systemModel.get());
 
-        ProductBackup productBackup = new ProductBackup();
-
-        return productRepository.save(product);
+        AddProduct addProduct = new AddProduct();
+        return addProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
+//        return productRepository.save(product);
     }
 
 
@@ -65,5 +69,15 @@ public class ProductServiceImpl implements ProductService{
 
         Collection<Product> col = null;
         return col;
+    }
+
+    @Override
+    public Product edit(EditProductForm editProductForm) {
+        Product product = productRepository.findById(editProductForm.getId()).get();//productRepository.getOne(editProductForm.getId());
+        product.setName(editProductForm.getName());
+        product.setPrice(editProductForm.getPrice());
+        product.setNo_of_items(editProductForm.getNumberofitems());
+        EditProduct editProduct = new EditProduct();
+        return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
     }
 }

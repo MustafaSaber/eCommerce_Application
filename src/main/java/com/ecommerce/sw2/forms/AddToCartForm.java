@@ -11,16 +11,17 @@ import javax.validation.constraints.NotEmpty;
  */
 public class AddToCartForm {
     private Long productid;
-    private Long cartid;
+    private String username;
+
     @Range(min = 1)
     private int quantity;
 
     public AddToCartForm() {
     }
 
-    public AddToCartForm(Long productid, Long cartid, int quantity) {
+    public AddToCartForm(Long productid, String username, int quantity) {
         this.productid = productid;
-        this.cartid = cartid;
+        this.username = username;
         this.quantity = quantity;
     }
     public Long getProductid() {
@@ -39,11 +40,11 @@ public class AddToCartForm {
         this.quantity = quantity;
     }
 
-    public Long getCartid() {
-        return cartid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCartid(Long cartid) {
-        this.cartid = cartid;
+    public void setUsername(String cartid) {
+        this.username = cartid;
     }
 }

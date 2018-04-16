@@ -42,7 +42,14 @@ public class CartController {
             jsonObject.put("name","null1");
             return ResponseEntity.ok().body(jsonObject);
         }
-        return ResponseEntity.ok().body(cartService.AddToCart(addToCartForm));
+        Cart cart = cartService.AddToCart(addToCartForm);
+        if (cart == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null1");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(cart);
     }
 
 
