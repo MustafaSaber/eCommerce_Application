@@ -75,6 +75,7 @@ public class ProductController {
     {
         return productService.viewProducts();
     }
+
     @RequestMapping(value = "/cartproducts", method = RequestMethod.GET)
     public Collection<Product> cartProducts(@RequestBody Cart cart)
     {
