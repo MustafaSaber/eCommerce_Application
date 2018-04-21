@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.Models.Services;
 
+import com.ecommerce.sw2.Models.Domain.Cart;
 import com.ecommerce.sw2.Models.Domain.Product;
 import com.ecommerce.sw2.forms.AddProductForm;
 import com.ecommerce.sw2.forms.EditProductForm;
@@ -25,4 +26,6 @@ public interface ProductService {
     Collection<Product> viewProducts();
 
     Product viewproduct(Long id);
+
+    Collection<Product> cartProducts(Cart cart);
 }

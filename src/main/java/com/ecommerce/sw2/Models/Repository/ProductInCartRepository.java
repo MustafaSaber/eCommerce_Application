@@ -6,6 +6,7 @@ import com.ecommerce.sw2.Models.Domain.ProductInCart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,5 @@ public interface ProductInCartRepository extends JpaRepository<ProductInCart, Lo
     Optional<ProductInCart> findById(Long id);
     Optional<ProductInCart> findByCartAndAndId(Long cid,Long id);
     Optional<ProductInCart> findByProduct_IdAndCart_CartID(Long id,Long cid);
+    Collection<Product> findByCartCartID(Long id);
 }

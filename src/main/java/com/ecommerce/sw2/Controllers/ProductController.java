@@ -1,6 +1,7 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.Domain.Action;
+import com.ecommerce.sw2.Models.Domain.Cart;
 import com.ecommerce.sw2.Models.Domain.EditProduct;
 import com.ecommerce.sw2.Models.Domain.Product;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
@@ -73,6 +74,11 @@ public class ProductController {
     public Collection<Product> viewProducts()
     {
         return productService.viewProducts();
+    }
+    @RequestMapping(value = "/cartproducts", method = RequestMethod.GET)
+    public Collection<Product> cartProducts(@RequestBody Cart cart)
+    {
+        return productService.cartProducts(cart);
     }
 
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)

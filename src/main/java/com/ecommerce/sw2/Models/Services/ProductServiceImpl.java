@@ -22,6 +22,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private ProductInCartRepository productInCartRepository;
+
     @Autowired
     private StoreService storeService;
 
@@ -84,6 +88,12 @@ public class ProductServiceImpl implements ProductService{
     {
 
         return productRepository.findAll();
+    }
+
+    @Override
+    public Collection<Product> cartProducts(Cart cart)
+    {
+        return productInCartRepository.findByCartCartID(cart.getCartID());
     }
 
     @Override
