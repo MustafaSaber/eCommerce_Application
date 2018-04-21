@@ -1,7 +1,9 @@
 package com.ecommerce.sw2.Models.Services;
 
+import com.ecommerce.sw2.Models.Domain.Cart;
 import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Repository.CartRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     @Autowired
     public UserServiceImp(UserRepository userRepository) {
@@ -59,6 +64,9 @@ public class UserServiceImp implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRole(roles);
+        Cart cart = new Cart();
+        cart = cartRepository.save(cart);
+        user.setCart(cart);
         return userRepository.save(user);
     }
 
