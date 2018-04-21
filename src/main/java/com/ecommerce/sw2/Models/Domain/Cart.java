@@ -26,7 +26,9 @@ public class Cart {
 
     private Double total_price;
 
-    public Cart(){}
+    public Cart(){
+        total_price = 0.0;
+    }
 
     public Cart(User owner) {
         this.owner = owner;

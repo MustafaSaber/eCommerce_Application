@@ -86,12 +86,12 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.edit(editProductForm));
     }
 
-    @RequestMapping(value = "/viewprod" , method = RequestMethod.POST)
-    public Product view(@RequestBody JSONObject jsonObj)
+    @RequestMapping(value = "/viewprod/{id}" , method = RequestMethod.GET)
+    public Product view(@PathVariable Long id)
     {
-        Object id = jsonObj.get("id");
-        System.out.println(id);
-        return productService.viewproduct((Long) id);
+      //  Object id = jsonObj.get("id");
+        //System.out.println(id);
+        return productService.viewproduct(id);
     }
 }
 
