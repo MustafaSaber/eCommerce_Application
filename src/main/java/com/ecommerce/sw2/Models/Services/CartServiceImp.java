@@ -9,10 +9,12 @@ import com.ecommerce.sw2.Models.Repository.ProductInCartRepository;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.AddToCartForm;
+import com.ecommerce.sw2.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -92,5 +94,12 @@ public class CartServiceImp implements CartService {
         cart.get().setProducts(new HashSet<>());
         cart.get().setTotal_price(0.0);
         return cartRepository.save(cart.get());
+    }
+
+    @Override
+    public Cart viewCart(RegisterForm registerForm)
+    {
+        Optional<User> user = userRepository.findOneByUsername(registerForm.getUsername());
+        return cartRepository.findByOwnerId(user.get().getId());
     }
 }

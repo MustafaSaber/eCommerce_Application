@@ -5,6 +5,7 @@ import com.ecommerce.sw2.Models.Repository.CartRepository;
 import com.ecommerce.sw2.Models.Services.CartService;
 import com.ecommerce.sw2.Validators.AddToCartFormValidator;
 import com.ecommerce.sw2.forms.AddToCartForm;
+import com.ecommerce.sw2.forms.RegisterForm;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -63,5 +65,10 @@ public class CartController {
             return ResponseEntity.ok().body(jsonObject);
         }
         return ResponseEntity.ok().body(cartService.CheckOut(id));
+    }
+    @RequestMapping(value = "/viewcart",method = RequestMethod.POST)
+    public Cart viewCart(@RequestBody RegisterForm registerForm)
+    {
+        return cartService.viewCart(registerForm);
     }
 }
