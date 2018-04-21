@@ -1,6 +1,7 @@
 package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.Models.Services.UserService;
 //import com.ecommerce.sw2.auth.LoggedUser;
 import com.ecommerce.sw2.forms.RegisterForm;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.soap.SOAPBinding;
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,32 +36,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-
-    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public Optional<User> getLoginPage(HttpServletRequest request) {
-        System.out.println("IM Here");
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HttpSession session = request.getSession(true);
-        System.out.println(session.getAttribute("SPRING_SECURITY_CONTEXT"));
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Principal principal = request.getUserPrincipal();
-        System.out.println(user.getUsername() + " IM NULL ");
-        return userService.getUserByUsername(principal.getName());
-    }*/
-
-    /*@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseEntity<User> login(Model model, String error) {
-
-        System.out.println("LOGIN"+model.toString());
-
-        if (error != null) {
-            System.out.println("1.IF");
-            model.addAttribute("error", "Your username and password is invalid.");
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new User());
-    }*/
-
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Optional<User> login(@RequestBody RegisterForm registerForm)
@@ -87,27 +65,4 @@ public class LoginController {
         return userService.checkAdminn(RegisterForm);
     }
 
-/*    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView register(@ModelAttribute("registerForm") RegisterForm RegisterForm) {
-
-        return new ModelAndView("login/create", "registerForm", RegisterForm);
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ModelAndView register(@Valid @ModelAttribute("registerForm") RegisterForm RegisterForm, BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors())
-            return new ModelAndView("login/create", "registerForm", RegisterForm);
-
-
-        userService.create(RegisterForm);
-
-        try {
-            //request.changeSessionId();
-            request.login(RegisterForm.getUsername(), RegisterForm.getPassword());
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
-
-        return new ModelAndView("redirect:/");
-    }*/
 }

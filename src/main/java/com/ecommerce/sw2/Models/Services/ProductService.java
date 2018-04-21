@@ -5,6 +5,7 @@ import com.ecommerce.sw2.forms.AddProductForm;
 import com.ecommerce.sw2.forms.EditProductForm;
 import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Collection;
 
@@ -22,4 +23,6 @@ public interface ProductService {
     Product edit(EditProductForm editProductForm);
 
     Collection<Product> viewProducts();
+
+    Product viewproduct(Long id);
 }

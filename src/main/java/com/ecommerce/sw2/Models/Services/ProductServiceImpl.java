@@ -4,9 +4,7 @@ import com.ecommerce.sw2.Models.Domain.*;
 import com.ecommerce.sw2.Models.Repository.*;
 import com.ecommerce.sw2.forms.AddProductForm;
 import com.ecommerce.sw2.forms.EditProductForm;
-import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,9 +79,23 @@ public class ProductServiceImpl implements ProductService{
         return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
     }
 
+    @Override
     public Collection<Product> viewProducts()
     {
 
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product viewproduct(Long id)
+    {
+        Optional<Product> product = getProduct(id);
+        if(product.isPresent())
+        {
+            Product product1 = product.get();
+            product1.setView(product.get().getView()+1);
+            return productRepository.save(product1);
+        }
+        return null;
     }
 }
