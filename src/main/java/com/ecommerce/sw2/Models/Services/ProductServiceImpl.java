@@ -91,9 +91,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Collection<Product> cartProducts(Cart cart)
+    public Collection<Product> cartProducts(Long cartID)
     {
-        return productInCartRepository.findByCartCartID(cart.getCartID());
+        return productInCartRepository.findByCartCartID(cartID);
     }
 
     @Override

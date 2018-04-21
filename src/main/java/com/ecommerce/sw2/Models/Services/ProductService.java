@@ -27,5 +27,5 @@ public interface ProductService {
 
     Product viewproduct(Long id);
 
-    Collection<Product> cartProducts(Cart cart);
+    Collection<Product> cartProducts(Long cartID);
 }

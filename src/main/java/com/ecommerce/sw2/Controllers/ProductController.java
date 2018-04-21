@@ -76,10 +76,10 @@ public class ProductController {
         return productService.viewProducts();
     }
 
-    @RequestMapping(value = "/cartproducts", method = RequestMethod.GET)
-    public Collection<Product> cartProducts(@RequestBody Cart cart)
+    @RequestMapping(value = "/cartproducts/{cartId}", method = RequestMethod.GET)
+    public Collection<Product> cartProducts(@PathVariable("cartId") Long cartId)
     {
-        return productService.cartProducts(cart);
+        return productService.cartProducts(cartId);
     }
 
     @RequestMapping(value = "/edit" , method = RequestMethod.POST)
