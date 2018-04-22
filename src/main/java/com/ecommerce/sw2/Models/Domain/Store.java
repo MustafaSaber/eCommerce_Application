@@ -34,6 +34,23 @@ public class Store {
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "collaboratedStores")
     protected Set<User> collaborators;
 
+    @OneToMany
+    private List<Action> actions;
+
+    public Boolean addAction(Action action)
+    {
+        if(actions ==  null) actions = new ArrayList<>();
+        return actions.add(action);
+    }
+
+    public List<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<Action> actions) {
+        this.actions = actions;
+    }
+
     public Boolean addCollaborator(User user)
     {
         if(collaborators == null) collaborators = new HashSet<>();

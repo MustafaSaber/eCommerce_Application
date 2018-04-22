@@ -3,6 +3,7 @@ package com.ecommerce.sw2.Models.Domain;
 import com.ecommerce.sw2.Models.Repository.ActionRepository;
 import com.ecommerce.sw2.Models.Repository.ProductBackUpRepository;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
+import com.ecommerce.sw2.Models.Repository.StoreRepository;
 
 import javax.persistence.*;
 
@@ -39,8 +40,8 @@ public abstract class Action {
         this.productBackup = productBackup;
     }
 
-    public abstract Product Do(Product product, ActionRepository actionRepository, ProductRepository productRepository, ProductBackUpRepository productBackUpRepository);
+    public abstract Product Do(Product product, ActionRepository actionRepository, ProductRepository productRepository, ProductBackUpRepository productBackUpRepository , StoreRepository storeRepository);
 
-    public abstract Product Undo(Long id,ActionRepository actionRepository,ProductRepository productRepository, ProductBackUpRepository productBackUpRepository);
+    public abstract Product Undo(Long id,ActionRepository actionRepository,ProductRepository productRepository, ProductBackUpRepository productBackUpRepository , StoreRepository storeRepository);
 
 }

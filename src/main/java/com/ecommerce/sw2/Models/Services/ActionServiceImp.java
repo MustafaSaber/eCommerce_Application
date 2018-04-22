@@ -5,6 +5,7 @@ import com.ecommerce.sw2.Models.Domain.Product;
 import com.ecommerce.sw2.Models.Repository.ActionRepository;
 import com.ecommerce.sw2.Models.Repository.ProductBackUpRepository;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
+import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,14 @@ public class ActionServiceImp implements ActionService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    StoreRepository storeRepository;
+
     @Override
     public Product undo(Long id) {
         Action action =actionRepository.getOne(id);
-        Product p = action.Undo(id,actionRepository,productRepository,productBackUpRepository);
+        Product p = action.Undo(id,actionRepository,productRepository,productBackUpRepository , storeRepository);
         actionRepository.delete(action);
         productBackUpRepository.delete(action.getProductBackup());
         return p;

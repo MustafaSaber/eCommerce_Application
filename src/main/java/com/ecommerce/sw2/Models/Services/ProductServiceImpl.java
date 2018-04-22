@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService{
         systemModelRepository.save(systemModel.get());
 
         AddProduct addProduct = new AddProduct();
-        return addProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
+        return addProduct.Do(product,actionRepository,productRepository,productBackUpRepository , storeRepository);
 //        return productRepository.save(product);
     }
 
@@ -81,7 +81,7 @@ public class ProductServiceImpl implements ProductService{
         product.setName(editProductForm.getName());
         product.setPrice(editProductForm.getPrice());
         product.setNo_of_items(editProductForm.getNumberofitems());
-        return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
+        return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository , storeRepository);
     }
 
     @Override
