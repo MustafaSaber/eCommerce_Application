@@ -67,8 +67,19 @@ public class CartController {
         return ResponseEntity.ok().body(cartService.CheckOut(id));
     }
     @RequestMapping(value = "/viewcart",method = RequestMethod.POST)
-    public Cart viewCart(@RequestBody RegisterForm registerForm)
+    public ResponseEntity<?> viewCart(@RequestBody RegisterForm registerForm)
     {
-        return cartService.viewCart(registerForm);
+        Cart cart = cartService.viewCart(registerForm);
+        if (cart == null){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user",cart.getOwner());
+        jsonObject.put("CartID",cart.getCartID());
+        jsonObject.put("Products",cart.getProducts());
+        jsonObject.put("price",cart.getTotal_price());
+        return ResponseEntity.ok().body(jsonObject);
     }
 }

@@ -25,8 +25,8 @@ public class EditProduct extends Action {
 
     @Override
     public Product Do(Product product,ActionRepository actionRepository,ProductRepository productRepository, ProductBackUpRepository productBackUpRepository) {
-        Product oldp = productRepository.findById(product.getId()).get();
-        this.productBackup.equal(oldp);
+//        Product oldp = productRepository.findById(product.getId()).get();
+//        this.productBackup.equal(oldp);
         product = productRepository.save(product);
         this.productBackup = productBackUpRepository.save(productBackup);
         actionRepository.save(this);

@@ -76,10 +76,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product edit(EditProductForm editProductForm) {
         Product product = productRepository.findById(editProductForm.getId()).get();//productRepository.getOne(editProductForm.getId());
+        EditProduct editProduct = new EditProduct();
+        editProduct.getProductBackup().equal(product);
         product.setName(editProductForm.getName());
         product.setPrice(editProductForm.getPrice());
         product.setNo_of_items(editProductForm.getNumberofitems());
-        EditProduct editProduct = new EditProduct();
         return editProduct.Do(product,actionRepository,productRepository,productBackUpRepository);
     }
 
