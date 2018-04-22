@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "store")
@@ -27,6 +29,25 @@ public class Store {
     @ManyToOne(optional = false)
     @JsonBackReference
     private User storeOwner;
+
+    @JsonBackReference
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "collaboratedStores")
+    protected Set<User> collaborators;
+
+    public Boolean addCollaborator(User user)
+    {
+        if(collaborators == null) collaborators = new HashSet<>();
+
+        return collaborators.add(user);
+    }
+
+    public Set<User> getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(Set<User> collaborators) {
+        this.collaborators = collaborators;
+    }
 
     public User getStoreOwner() {
         return storeOwner;

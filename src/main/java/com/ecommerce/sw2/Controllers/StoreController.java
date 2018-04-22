@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
@@ -78,5 +79,11 @@ public class StoreController {
         return storeService.getStoresforAdmin(RegisterForm);
     }
 
+    @RequestMapping(value = "/addcollaborator/{username}/{storename}" , method = RequestMethod.GET)
+    public User addCollaborator(@PathVariable String username , @PathVariable String storename)
+    {
+        //System.out.println(username + " " + storename);
+        return storeService.addcollab(username , storename);
+    }
 
 }

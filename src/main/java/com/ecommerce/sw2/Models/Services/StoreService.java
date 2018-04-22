@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface StoreService {
+
     Optional<Store> getStoreByName(String name);
     Collection<Store> getStoresAccepted(Boolean check);
 
@@ -22,5 +23,6 @@ public interface StoreService {
     Collection<Store> getStoresByUsername(RegisterForm form);
     Collection<Store> getStoresforStoreOwner(RegisterForm form);
     Collection<Store> getStoresforAdmin(RegisterForm form);
+    User addcollab(String username, String storename);
 
 }

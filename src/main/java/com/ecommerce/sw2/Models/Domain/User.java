@@ -45,6 +45,9 @@ public class User {
     @OneToMany(mappedBy = "storeOwner")
     private List<Store> stores;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Store> collaboratedStores;
+
     public User(){}
 
     public User(String email, String passwordHash, String name, String username, Set<Role> roles) {
@@ -56,6 +59,20 @@ public class User {
         this.cart = new Cart(this);
     }
 
+    public Boolean AddCollaboratedStore (Store store)
+    {
+        if(collaboratedStores == null) collaboratedStores = new HashSet<>();
+        return collaboratedStores.add(store);
+    }
+
+    public Set<Store> getCollaboratedStores() {
+        return collaboratedStores;
+    }
+
+    public void setCollaboratedStores(Set<Store> collaboratedStores) {
+        this.collaboratedStores = collaboratedStores;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -64,14 +81,6 @@ public class User {
         this.roles = roles;
     }
 
-   /* public StoreOwner getStoreOwner() {
-        return storeOwner;
-    }
-
-    public void setStoreOwner(StoreOwner storeOwner) {
-        this.storeOwner = storeOwner;
-    }
-    */
 
     public Long getId() {
         return id;
@@ -137,7 +146,7 @@ public class User {
 
     public boolean addstore(Store store)
     {
-        if(!roles.contains(Role.STORE_OWNER)) return false;
+       //if(!roles.contains(Role.STORE_OWNER)) return false;
 
         if(stores == null)
             stores = new ArrayList<>();

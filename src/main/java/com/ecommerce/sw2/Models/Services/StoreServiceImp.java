@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -101,6 +102,30 @@ public class StoreServiceImp implements StoreService {
         return storeRepository.findBySuggested(false);
     }
 
+    @Override
+    public User addcollab(String username, String storename)
+    {
+        /*
+        I didn't handle returning all stores of the user yet.
+         */
 
-
+        //System.out.println("Im here");
+        Optional<Store> store = getStoreByName(storename);
+        Optional<User> collabuser = userService.getUserByUsername(username);
+        if(store.isPresent() && collabuser.isPresent())
+        {
+            //System.out.println("YES");
+            Store currstore = store.get();
+            User collab = collabuser.get();
+            if(collab.getCollaboratedStores().contains(currstore))
+                return null;
+            collab.AddCollaboratedStore(currstore);
+            currstore.addCollaborator(collab);
+            if(!collab.getRole().contains(Role.STORE_OWNER))
+                collab.addRole(Role.STORE_OWNER);
+            storeRepository.save(currstore);
+            return userRepository.save(collab);
+        }
+        return null;
+    }
 }

@@ -96,8 +96,6 @@ public class ProductController {
     @RequestMapping(value = "/viewprod/{id}" , method = RequestMethod.GET)
     public Product view(@PathVariable Long id)
     {
-      //  Object id = jsonObj.get("id");
-        //System.out.println(id);
         return productService.viewproduct(id);
     }
 }
