@@ -19,7 +19,7 @@ public interface ProductService {
 
     Product addProduct(AddProductForm addProductForm);
 
-    public Collection<Product> getProductsByStore(StoreForm form);
+    Collection<Product> getProductsByStore(StoreForm form);
 
     Product edit(EditProductForm editProductForm);
 
@@ -28,4 +28,8 @@ public interface ProductService {
     Product viewproduct(Long id);
 
     Collection<Product> cartProducts(Long cartID);
+
+    Product getBestSellerInStore(String storename);
+
+    Product getMostViewedInStore(String storename);
 }

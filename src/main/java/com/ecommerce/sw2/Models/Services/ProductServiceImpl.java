@@ -109,4 +109,14 @@ public class ProductServiceImpl implements ProductService{
         }
         return null;
     }
+
+    @Override
+    public Product getBestSellerInStore(String storename) {
+        return null;
+    }
+
+    @Override
+    public Product getMostViewedInStore(String storename) {
+        return null;
+    }
 }
