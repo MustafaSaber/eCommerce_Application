@@ -112,11 +112,37 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product getBestSellerInStore(String storename) {
+        Optional<Store> store = storeService.getStoreByName(storename);
+        if(store.isPresent()) {
+            Collection<Product> products = productRepository.findByMystore_Id(store.get().getId());
+            if(products == null) return null;
+            Product ans = new Product();
+            ans.setSold(-1);
+            for(Product products1: products)
+            {
+                if(products1.getSold() > ans.getSold())
+                    ans = products1;
+            }
+            return ans;
+        }
         return null;
     }
 
     @Override
     public Product getMostViewedInStore(String storename) {
+        Optional<Store> store = storeService.getStoreByName(storename);
+        if(store.isPresent()) {
+            Collection<Product> products = productRepository.findByMystore_Id(store.get().getId());
+            if(products == null) return null;
+            Product ans = new Product();
+            ans.setView(-1);
+            for(Product products1: products)
+            {
+                if(products1.getView() > ans.getView())
+                    ans = products1;
+            }
+            return ans;
+        }
         return null;
     }
 }
