@@ -92,8 +92,16 @@ public class StoreServiceImp implements StoreService {
 
     @Override
     public Collection<Store> getStoresforStoreOwner(RegisterForm form) {
+        /*
+        This will handle returning all stores of the user, his stores and collaborated stores.
+         */
+
         Optional<User> user = userService.getUserByUsername(form.getUsername());
-        return storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , true);
+        Collection<Store> stores = storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , true);
+
+        for(Store store: user.get().getCollaboratedStores()) stores.add(store);
+
+        return stores;
     }
 
     @Override
@@ -105,10 +113,6 @@ public class StoreServiceImp implements StoreService {
     @Override
     public User addcollab(String username, String storename)
     {
-        /*
-        I didn't handle returning all stores of the user yet.
-         */
-
         //System.out.println("Im here");
         Optional<Store> store = getStoreByName(storename);
         Optional<User> collabuser = userService.getUserByUsername(username);
@@ -127,5 +131,13 @@ public class StoreServiceImp implements StoreService {
             return userRepository.save(collab);
         }
         return null;
+    }
+
+    @Override
+    public Collection<User> viewcollab(String storename) {
+        Optional<Store> s = (storeRepository.findOneByName(storename));
+        if (!s.isPresent())
+            return null;
+        return s.get().getCollaborators();
     }
 }

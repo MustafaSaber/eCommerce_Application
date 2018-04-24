@@ -24,5 +24,6 @@ public interface StoreService {
     Collection<Store> getStoresforStoreOwner(RegisterForm form);
     Collection<Store> getStoresforAdmin(RegisterForm form);
     User addcollab(String username, String storename);
+    Collection<User> viewcollab(String storename);
 
 }
