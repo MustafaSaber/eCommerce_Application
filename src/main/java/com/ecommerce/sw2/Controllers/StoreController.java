@@ -86,4 +86,10 @@ public class StoreController {
         return storeService.addcollab(username , storename);
     }
 
+    @RequestMapping(value = "/viewcollaborators/{storename}" , method = RequestMethod.GET)
+    public Collection<User> getCollaboratores(@PathVariable String storename)
+    {
+        return storeService.viewcollab(storename);
+    }
+
 }
