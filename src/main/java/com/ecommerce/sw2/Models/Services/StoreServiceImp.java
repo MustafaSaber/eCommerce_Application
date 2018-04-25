@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.Models.Services;
 
+import com.ecommerce.sw2.Models.Domain.Action;
 import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.Store;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
@@ -139,5 +140,13 @@ public class StoreServiceImp implements StoreService {
         if (!s.isPresent())
             return null;
         return s.get().getCollaborators();
+    }
+
+    @Override
+    public Collection<Action> viewactions(String storename) {
+        Optional<Store> s = (storeRepository.findOneByName(storename));
+        if (!s.isPresent())
+            return null;
+        return s.get().getActions();
     }
 }
