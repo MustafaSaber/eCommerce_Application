@@ -1,6 +1,6 @@
 package com.ecommerce.sw2.Models.Domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,9 +43,11 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "storeOwner")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<Store> stores;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Set<Store> collaboratedStores;
 
     public User(){}

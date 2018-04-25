@@ -4,8 +4,12 @@ import com.ecommerce.sw2.Models.Repository.ActionRepository;
 import com.ecommerce.sw2.Models.Repository.ProductBackUpRepository;
 import com.ecommerce.sw2.Models.Repository.ProductRepository;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "action")

@@ -2,8 +2,11 @@ package com.ecommerce.sw2.Models.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.*;
 
 /**
@@ -18,6 +21,7 @@ public class Cart {
 
     @OneToMany
     @JsonBackReference
+    @Cascade(CascadeType.ALL)
     private Set<ProductInCart> products;
 
     @OneToOne

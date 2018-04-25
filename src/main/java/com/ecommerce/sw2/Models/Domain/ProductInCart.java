@@ -2,9 +2,11 @@ package com.ecommerce.sw2.Models.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * Created by Mina_Yousry on 14/04/2018.
@@ -17,6 +19,7 @@ public class ProductInCart {
     private Long id;
 
     @ManyToOne
+//    @Cascade(CascadeType.REMOVE)
     private Product product;
 
     @OneToOne

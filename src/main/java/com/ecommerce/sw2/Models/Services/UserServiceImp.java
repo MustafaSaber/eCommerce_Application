@@ -69,7 +69,10 @@ public class UserServiceImp implements UserService {
         Cart cart = new Cart();
         cart = cartRepository.save(cart);
         user.setCart(cart);
-        return userRepository.save(user);
+        user = userRepository.save(user);
+        cart.setOwner(user);
+        cart = cartRepository.save(cart);
+        return user;
     }
 
     public boolean checkAdminn(RegisterForm form)

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProductBackUpRepository extends JpaRepository<ProductBackup, Long> {
+    void deleteAllByPid(Long id);
 }

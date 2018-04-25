@@ -46,6 +46,7 @@ public class CartServiceImp implements CartService {
         if (addToCartForm.getQuantity() <= 0)
             return null;
 
+//        UpdateTotalPrice(cart.get().getCartID());
         Optional<ProductInCart> productInCart = productInCartRepository.findByProduct_IdAndCart_CartID
                 (addToCartForm.getProductid(),cart.get().getCartID());
 
@@ -76,6 +77,7 @@ public class CartServiceImp implements CartService {
         Optional<Cart> cart = cartRepository.findById(id);
         if (!cart.isPresent())
             return null;
+//        UpdateTotalPrice(id);
         for (ProductInCart p : cart.get().getProducts()) {
             int Quantity = p.getNo_of_items();
             Optional<Product> product = productService.getProduct(p.getProduct().getId());
@@ -100,6 +102,23 @@ public class CartServiceImp implements CartService {
     public Cart viewCart(RegisterForm registerForm)
     {
         Optional<User> user = userRepository.findOneByUsername(registerForm.getUsername());
-        return cartRepository.findByOwnerId(user.get().getId());
+        Cart cart = cartRepository.findByOwnerId(user.get().getId());
+        //UpdateTotalPrice(cart.getCartID());
+        return cart;
+    }
+
+    public void UpdateTotalPrice(Long cartid){
+        Optional<Cart> cart = cartRepository.findById(cartid);
+        if (cart.isPresent()){
+            Cart cart1 = cart.get();
+            double tp = 0;
+            for (ProductInCart productInCart : cart1.getProducts())
+                tp+=productInCart.getProduct().getPrice();
+            cart1.setTotal_price(tp);
+        }
+    }
+
+    public void DeleteAllProductWithID(Long id){
+
     }
 }

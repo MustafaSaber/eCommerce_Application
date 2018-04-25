@@ -154,6 +154,9 @@ public class ProductServiceImpl implements ProductService{
         if (!product.isPresent())
             return null;
 
+        productBackUpRepository.deleteAllByPid(productid);
+        productInCartRepository.deleteAllByProduct_Id(productid);
+
         return removeProduct.Do(product.get(),actionRepository,productRepository,
                 productBackUpRepository,storeRepository);
     }
