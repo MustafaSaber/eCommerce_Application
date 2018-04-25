@@ -36,9 +36,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Optional<User> login(@RequestBody RegisterForm registerForm)
     {
@@ -63,9 +60,15 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public User register(@RequestBody RegisterForm RegisterForm)
+    public ResponseEntity<?> register(@RequestBody RegisterForm RegisterForm)
     {
-       return userService.create(RegisterForm);
+        User user  = userService.create(RegisterForm);
+        if(user == null) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", "null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+       return ResponseEntity.ok().body(user);
     }
 
 

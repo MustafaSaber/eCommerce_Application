@@ -60,7 +60,9 @@ public class UserServiceImp implements UserService {
         user.setEmail(form.getEmail());
         user.setUsername(form.getUsername());
         user.setPasswordHash(form.getPassword());
-        System.out.println(user.getPasswordHash() + " loknaspd " + form.getPassword());
+        //System.out.println(user.getPasswordHash() + " loknaspd " + form.getPassword());
+        Optional<User> tempuser = userRepository.findOneByUsername(form.getUsername());
+        if(tempuser.isPresent()) return null;
         Set<Role> roles = new HashSet<>();
         roles.add(Role.USER);
         user.setRole(roles);
