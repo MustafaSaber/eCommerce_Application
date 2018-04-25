@@ -14,6 +14,8 @@ import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -96,13 +98,24 @@ public class StoreServiceImp implements StoreService {
         /*
         This will handle returning all stores of the user, his stores and collaborated stores.
          */
-
         Optional<User> user = userService.getUserByUsername(form.getUsername());
         Collection<Store> stores = storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , true);
-
-        for(Store store: user.get().getCollaboratedStores()) stores.add(store);
-
-        return stores;
+        Collection<Store> stores1 = new ArrayList<>();
+        for(Store store: stores)
+        {
+            Store s = new Store();
+            s.setName(store.getName());
+            s.setStoreOwner(s.getStoreOwner());
+            stores1.add(s);
+        }
+        for(Store store: user.get().getCollaboratedStores())
+        {
+            Store s = new Store();
+            s.setName(store.getName());
+            s.setStoreOwner(s.getStoreOwner());
+            stores1.add(s);
+        }
+        return stores1;
     }
 
     @Override

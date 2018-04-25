@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Path;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -96,7 +97,18 @@ public class StoreController {
     @RequestMapping(value = "/viewcollaborators/{storename}" , method = RequestMethod.GET)
     public Collection<User> getCollaboratores(@PathVariable String storename)
     {
-        return storeService.viewcollab(storename);
+        Collection<User> us = storeService.viewcollab(storename);
+        Collection<User> users = new ArrayList<>();
+        for(User user : us)
+        {
+            User form = new User();
+            form.setName(user.getName());
+            form.setEmail(user.getEmail());
+            form.setUsername(user.getUsername());
+            form.setPasswordHash(user.getPasswordHash());
+            users.add(form);
+        }
+        return  users;
     }
 
     @RequestMapping(value = "/viewactions/{storename}" , method = RequestMethod.GET)
