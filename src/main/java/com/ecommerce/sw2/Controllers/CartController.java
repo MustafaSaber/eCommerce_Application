@@ -1,5 +1,4 @@
 package com.ecommerce.sw2.Controllers;
-
 import com.ecommerce.sw2.Models.Domain.Cart;
 import com.ecommerce.sw2.Models.Repository.CartRepository;
 import com.ecommerce.sw2.Models.Services.CartService;
@@ -18,9 +17,6 @@ import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Created by Mina_Yousry on 14/04/2018.
- */
 @RestController
 public class CartController {
     @Autowired
@@ -34,7 +30,6 @@ public class CartController {
     public void AddToCartFormInitBinder(WebDataBinder binder) {
         binder.addValidators(addToCartFormValidator);
     }
-
 
     @RequestMapping(value = "/addtocart",method = RequestMethod.POST)
     public ResponseEntity<?> addtocart(@Valid @RequestBody AddToCartForm addToCartForm, BindingResult bindingResult)
@@ -54,17 +49,16 @@ public class CartController {
         return ResponseEntity.ok().body(cart);
     }
 
-
-    @RequestMapping(value = "/checkout",method = RequestMethod.POST)
-    public ResponseEntity<?> checkout(@RequestBody Long id)
+    @RequestMapping(value = "/checkout/{mycart}",method = RequestMethod.GET)
+    public ResponseEntity<?> checkout(@PathVariable Long mycart)
     {
-        Optional<Cart> cart = cartRepository.findById(id);
+        Optional<Cart> cart = cartRepository.findById(mycart);
         if (!cart.isPresent()) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name", "null");
             return ResponseEntity.ok().body(jsonObject);
         }
-        return ResponseEntity.ok().body(cartService.CheckOut(id));
+        return ResponseEntity.ok().body(cartService.CheckOut(mycart));
     }
     @RequestMapping(value = "/viewcart",method = RequestMethod.POST)
     public ResponseEntity<?> viewCart(@RequestBody RegisterForm registerForm)
