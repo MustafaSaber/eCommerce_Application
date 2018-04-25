@@ -32,6 +32,8 @@ public class RemoveProduct extends Action {
         productRepository.delete(product);
         this.productBackup = productBackUpRepository.save(productBackup);
         actionRepository.save(this);
+        product.getMystore().addAction(this);
+        storeRepository.save(product.getMystore());
         return product;
     }
 

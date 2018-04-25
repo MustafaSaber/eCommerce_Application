@@ -145,4 +145,15 @@ public class ProductServiceImpl implements ProductService{
         }
         return null;
     }
+
+    @Override
+    public Product delete(Long productid) {
+        RemoveProduct removeProduct = new RemoveProduct();
+        Optional<Product> product = productRepository.findById(productid);
+        if (!product.isPresent())
+            return null;
+
+        return removeProduct.Do(product.get(),actionRepository,productRepository,
+                productBackUpRepository,storeRepository);
+    }
 }

@@ -1,7 +1,7 @@
 package com.ecommerce.sw2.Models.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.jboss.logging.Field;
+//import org.jboss.logging.Field;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Mina_Yousry on 11/04/2018.
  */
-@Entity
+@javax.persistence.Entity
 @Table(name = "brand")
 public class Brand {
     @Id

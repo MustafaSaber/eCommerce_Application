@@ -32,4 +32,7 @@ public interface ProductService {
     Product getBestSellerInStore(String storename);
 
     Product getMostViewedInStore(String storename);
+
+
+    Product delete(Long productid);
 }

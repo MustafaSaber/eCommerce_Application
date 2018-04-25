@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -98,7 +99,17 @@ public class ProductController {
     {
         return productService.viewproduct(id);
     }
-}
 
+    @RequestMapping(value = "/deleteproduct",method = RequestMethod.POST)
+    public ResponseEntity<?> delete(@RequestBody Long productid){
+        Optional<Product> product = productService.getProduct(productid);
+        if (!product.isPresent()){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(productService.delete(productid));
+    }
+}
 
 
