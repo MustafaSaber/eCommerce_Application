@@ -1,20 +1,17 @@
 package com.ecommerce.sw2.Models.Services;
 
-import com.ecommerce.sw2.Models.Domain.Action;
-import com.ecommerce.sw2.Models.Domain.Role;
-import com.ecommerce.sw2.Models.Domain.Store;
+import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
-import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Repository.ActionRepository;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.RegisterForm;
 import com.ecommerce.sw2.forms.StoreForm;
+import javassist.expr.Instanceof;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.stereotype.Service;
+import sun.security.jca.GetInstance;
 
-import javax.swing.text.html.Option;
-import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -30,6 +27,8 @@ public class StoreServiceImp implements StoreService {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ActionRepository actionRepository;
 
     @Autowired
     public StoreServiceImp(StoreRepository storeRepository) { this.storeRepository = storeRepository; }
@@ -115,6 +114,7 @@ public class StoreServiceImp implements StoreService {
             s.setStoreOwner(s.getStoreOwner());
             stores1.add(s);
         }
+
         return stores1;
     }
 
@@ -156,10 +156,32 @@ public class StoreServiceImp implements StoreService {
     }
 
     @Override
-    public Collection<Action> viewactions(String storename) {
+    public Collection<ActionHistory> viewactions(String storename) {
         Optional<Store> s = (storeRepository.findOneByName(storename));
         if (!s.isPresent())
             return null;
-        return s.get().getActions();
+        Collection<Action> actions = s.get().getActions();
+        Collection<ActionHistory> ac = new ArrayList<ActionHistory>();
+
+
+        for(Action action:actions)
+        {
+            ActionHistory ah = new ActionHistory();
+            System.out.println("id = "+ action.getId());
+            ah.setId(action.getId());
+
+            if(action instanceof RemoveProduct)
+                ah.setAction_type("remove product");
+            else if(action instanceof AddProduct)
+                ah.setAction_type("add product");
+            else if(action instanceof EditProduct)
+                ah.setAction_type("edit product");
+
+            ah.setProduct_backup_id(action.getProductBackup().getMy_id());
+            ah.setProduct_name(action.getProductBackup().getName());
+
+            ac.add(ah);
+        }
+        return  ac;
     }
 }

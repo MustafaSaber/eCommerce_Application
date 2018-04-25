@@ -43,7 +43,9 @@ public class LoginController {
     public Optional<User> login(@RequestBody RegisterForm registerForm)
     {
         Optional<User> user =  userService.getUserByUsernameAndPassword(registerForm.getUsername() , registerForm.getPassword());
-        if(user != null) {
+        Optional<User> u = Optional.empty();
+        if(user != u)
+         {
             User form = new User();
             form.setName(user.get().getName());
             form.setEmail(user.get().getEmail());

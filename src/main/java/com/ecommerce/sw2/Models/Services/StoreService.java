@@ -1,6 +1,7 @@
 package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.Action;
+import com.ecommerce.sw2.Models.Domain.ActionHistory;
 import com.ecommerce.sw2.Models.Domain.Store;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.forms.RegisterForm;
@@ -27,5 +28,5 @@ public interface StoreService {
     User addcollab(String username, String storename);
     Collection<User> viewcollab(String storename);
 
-    Collection<Action> viewactions(String storename);
+    Collection<ActionHistory> viewactions(String storename);
 }

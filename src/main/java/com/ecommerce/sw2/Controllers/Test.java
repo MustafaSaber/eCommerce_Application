@@ -1,6 +1,6 @@
 package com.ecommerce.sw2.Controllers;
 
-import com.ecommerce.sw2.Models.Domain.QUser;
+//import com.ecommerce.sw2.Models.Domain.QUser;
 import com.ecommerce.sw2.Models.Domain.User;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @RestController
 public class Test {
-
+/*
     @Autowired
     private EntityManager entityManager;
 
@@ -32,5 +32,5 @@ public class Test {
         List<User> users = query.from(qUser).where(username1).fetch();
         return ResponseEntity.ok(users);
     }
-
+*/
 }

@@ -1,10 +1,7 @@
 package com.ecommerce.sw2.Controllers;
 
-import com.ecommerce.sw2.Models.Domain.Action;
-import com.ecommerce.sw2.Models.Domain.Role;
-import com.ecommerce.sw2.Models.Domain.Store;
+import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
-import com.ecommerce.sw2.Models.Domain.User;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.Models.Services.StoreService;
 import com.ecommerce.sw2.Models.Services.UserService;
@@ -112,7 +109,7 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/viewactions/{storename}" , method = RequestMethod.GET)
-    public Collection<Action> getActions(@PathVariable String storename)
+    public Collection<ActionHistory> getActions(@PathVariable String storename)
     {
         return storeService.viewactions(storename);
     }
