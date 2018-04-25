@@ -1,5 +1,6 @@
 package com.ecommerce.sw2.Controllers;
 
+import com.ecommerce.sw2.Models.Domain.Action;
 import com.ecommerce.sw2.Models.Domain.Role;
 import com.ecommerce.sw2.Models.Domain.Store;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
@@ -80,16 +81,28 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/addcollaborator/{username}/{storename}" , method = RequestMethod.GET)
-    public User addCollaborator(@PathVariable String username , @PathVariable String storename)
+    public ResponseEntity<?> addCollaborator(@PathVariable String username , @PathVariable String storename)
     {
-        //System.out.println(username + " " + storename);
-        return storeService.addcollab(username , storename);
+        User user = storeService.addcollab(username , storename);
+        if(user == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(user);
     }
 
     @RequestMapping(value = "/viewcollaborators/{storename}" , method = RequestMethod.GET)
     public Collection<User> getCollaboratores(@PathVariable String storename)
     {
         return storeService.viewcollab(storename);
+    }
+
+    @RequestMapping(value = "/viewactions/{storename}" , method = RequestMethod.GET)
+    public Collection<Action> getActions(@PathVariable String storename)
+    {
+        return storeService.viewactions(storename);
     }
 
 }
