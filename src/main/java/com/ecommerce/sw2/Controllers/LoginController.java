@@ -43,6 +43,14 @@ public class LoginController {
     public Optional<User> login(@RequestBody RegisterForm registerForm)
     {
         Optional<User> user =  userService.getUserByUsernameAndPassword(registerForm.getUsername() , registerForm.getPassword());
+        if(user != null) {
+            User form = new User();
+            form.setName(user.get().getName());
+            form.setEmail(user.get().getEmail());
+            form.setUsername(user.get().getUsername());
+            form.setPasswordHash(user.get().getPasswordHash());
+            return Optional.ofNullable(form);
+        }
         return user;
     }
 
