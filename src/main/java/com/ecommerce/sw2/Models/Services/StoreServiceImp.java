@@ -3,17 +3,25 @@ package com.ecommerce.sw2.Models.Services;
 import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
 import com.ecommerce.sw2.Models.Repository.ActionRepository;
+import com.ecommerce.sw2.Models.Repository.StatisticsRepository;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.forms.RegisterForm;
+import com.ecommerce.sw2.forms.StatisticsForm;
 import com.ecommerce.sw2.forms.StoreForm;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import javassist.expr.Instanceof;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sun.security.jca.GetInstance;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,8 +35,15 @@ public class StoreServiceImp implements StoreService {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private ActionRepository actionRepository;
+
+    @Autowired
+    private StatisticsRepository statisticsRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     public StoreServiceImp(StoreRepository storeRepository) { this.storeRepository = storeRepository; }
@@ -183,5 +198,83 @@ public class StoreServiceImp implements StoreService {
             ac.add(ah);
         }
         return  ac;
+    }
+
+    @Override
+    public Store AddStatToStore(StatisticsForm statisticsForm, String storename) {
+        Optional<Store> s = (storeRepository.findOneByName(storename));
+        Optional<Statistics> statistic = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getTable(), statisticsForm.getColumn() , statisticsForm.getFunction());
+        if (!s.isPresent() || !statistic.isPresent())
+            return null;
+        s.get().AddStat(statistic.get());
+        return storeRepository.save(s.get());
+    }
+
+    @Override
+    public Collection<Statistics> GetStoreStats(String storename) {
+        Optional<Store> s = (storeRepository.findOneByName(storename));
+        if (!s.isPresent())
+            return null;
+        return s.get().getStatistics();
+    }
+
+    @Override
+    public ResponseEntity<?> ApplyStatForProduct(String storename, StatisticsForm statisticsForm) {
+        Optional<Store> s = (storeRepository.findOneByName(storename));
+        Optional<Statistics> statistic = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getTable(), statisticsForm.getColumn() , statisticsForm.getFunction());
+        if (!s.isPresent() || !statistic.isPresent())
+        {
+            {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("name","null");
+                return ResponseEntity.ok().body(jsonObject);
+            }
+        }
+
+        JPAQuery<Product> query = new JPAQuery<>(entityManager);
+        QProduct qProduct = QProduct.product;
+        QProduct qProduct1 = new QProduct("qProduct1");
+
+        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "sold"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.sold.eq(JPAExpressions.select(qProduct1.sold.max()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "sold"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.sold.eq(JPAExpressions.select(qProduct1.sold.min()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "sold"))
+            return ResponseEntity.ok(query.select(qProduct.price.avg()).from(qProduct)
+                    .fetch().get(0));
+
+        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "views"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.view.eq(JPAExpressions.select(qProduct1.view.max()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "views"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.view.eq(JPAExpressions.select(qProduct1.view.min()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "views"))
+            return ResponseEntity.ok(query.select(qProduct.view.avg()).from(qProduct)
+                    .fetch().get(0));
+
+        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.no_of_items.eq(JPAExpressions.select(qProduct1.no_of_items.max()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.no_of_items.eq(JPAExpressions.select(qProduct1.no_of_items.min()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+            return ResponseEntity.ok(query.select(qProduct.no_of_items.avg()).from(qProduct)
+                    .fetch().get(0));
+
+        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "price"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.price.eq(JPAExpressions.select(qProduct1.price.max()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "price"))
+            return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.price.eq(JPAExpressions.select(qProduct1.price.min()).from(qProduct1))).fetch());
+
+        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "price"))
+            return ResponseEntity.ok(query.select(qProduct.price.avg()).from(qProduct)
+                    .fetch().get(0));
+
+        return null;
     }
 }

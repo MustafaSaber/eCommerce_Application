@@ -2,11 +2,13 @@ package com.ecommerce.sw2.Controllers;
 
 import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
+import com.ecommerce.sw2.Models.Repository.StatisticsRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
 import com.ecommerce.sw2.Models.Services.StoreService;
 import com.ecommerce.sw2.Models.Services.UserService;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
 import com.ecommerce.sw2.forms.RegisterForm;
+import com.ecommerce.sw2.forms.StatisticsForm;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,12 @@ public class StoreController {
 
     @Autowired
     private StoreService storeService;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StatisticsRepository statisticsRepository;
 
     @Autowired
     private StoreFormValidator storeFormValidator;
@@ -112,6 +118,38 @@ public class StoreController {
     public Collection<ActionHistory> getActions(@PathVariable String storename)
     {
         return storeService.viewactions(storename);
+    }
+
+    @RequestMapping(value = "/addStatisticeToStore/{storename}" , method = RequestMethod.POST)
+    public ResponseEntity<?> addStatisticToStore(@PathVariable String storename , @RequestBody StatisticsForm statisticsForm)
+    {
+        Store store = storeService.AddStatToStore(statisticsForm , storename);
+        if(store == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(store);
+    }
+
+    @RequestMapping(value = "/getStoreStats/{storename}" , method = RequestMethod.GET)
+    public ResponseEntity<?> GetStoreStats(@PathVariable String storename)
+    {
+        Collection<Statistics> statistics  = storeService.GetStoreStats(storename);
+        if(statistics == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(statistics);
+    }
+
+    @RequestMapping(value = "/GetValueStat/{storename}" , method = RequestMethod.POST)
+    public ResponseEntity<?> statapply(@PathVariable String storename , @RequestBody StatisticsForm statisticsForm)
+    {
+        return storeService.ApplyStatForProduct(storename , statisticsForm);
     }
 
 }

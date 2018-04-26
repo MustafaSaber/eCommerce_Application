@@ -1,6 +1,7 @@
 package com.ecommerce.sw2.Models.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,6 +37,23 @@ public class Store {
 
     @OneToMany
     private List<Action> actions;
+
+    @OneToMany
+    private List<Statistics> statistics;
+
+    public Boolean AddStat(Statistics stat)
+    {
+        if(statistics == null) statistics = new ArrayList<>();
+        return statistics.add(stat);
+    }
+
+    public List<Statistics> getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(List<Statistics> statistics) {
+        this.statistics = statistics;
+    }
 
     public Boolean addAction(Action action)
     {

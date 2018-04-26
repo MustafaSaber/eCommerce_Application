@@ -1,14 +1,13 @@
 package com.ecommerce.sw2.Models.Services;
 
-import com.ecommerce.sw2.Models.Domain.Action;
-import com.ecommerce.sw2.Models.Domain.ActionHistory;
-import com.ecommerce.sw2.Models.Domain.Store;
-import com.ecommerce.sw2.Models.Domain.User;
+import com.ecommerce.sw2.Models.Domain.*;
 import com.ecommerce.sw2.forms.RegisterForm;
+import com.ecommerce.sw2.forms.StatisticsForm;
 import com.ecommerce.sw2.forms.StoreForm;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface StoreService {
@@ -29,4 +28,11 @@ public interface StoreService {
     Collection<User> viewcollab(String storename);
 
     Collection<ActionHistory> viewactions(String storename);
+
+    Store AddStatToStore(StatisticsForm statisticsForm , String storename);
+
+    Collection<Statistics> GetStoreStats(String storename);
+
+    ResponseEntity<?> ApplyStatForProduct(String storename , StatisticsForm statisticsForm);
+
 }
