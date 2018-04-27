@@ -37,11 +37,13 @@ public class CartServiceImp implements CartService {
     @Override
     public Cart AddToCart(AddToCartForm addToCartForm) {
         Optional<Product> product = productService.getProduct(addToCartForm.getProductid());
+        if (!product.isPresent())
+            return null;
         Optional<User> user = userRepository.findOneByUsername(addToCartForm.getUsername());
+        if(!user.isPresent())
+            return null;
         Optional<Cart> cart = cartRepository.findById(user.get().getCart().getCartID());
         if (!cart.isPresent())
-            return null;
-        if (!product.isPresent())
             return null;
         if (addToCartForm.getQuantity() <= 0)
             return null;
@@ -68,7 +70,7 @@ public class CartServiceImp implements CartService {
             return null;
         }
 
-        cart.get().getProducts().add(productInCartRepository.save(productInCart.get()));
+        cart.get().addProduct(productInCartRepository.save(productInCart.get()));
         return cartRepository.save(cart.get());
     }
 
@@ -77,7 +79,6 @@ public class CartServiceImp implements CartService {
         Optional<Cart> cart = cartRepository.findById(id);
         if (!cart.isPresent())
             return null;
-//        UpdateTotalPrice(id);
         for (ProductInCart p : cart.get().getProducts()) {
             int Quantity = p.getNo_of_items();
             Optional<Product> product = productService.getProduct(p.getProduct().getId());
