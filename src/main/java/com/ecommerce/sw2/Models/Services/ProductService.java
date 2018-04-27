@@ -29,9 +29,6 @@ public interface ProductService {
 
     Collection<Product> cartProducts(Long cartID);
 
-    Product getBestSellerInStore(String storename);
-
-    Product getMostViewedInStore(String storename);
 
 
     Product delete(Long productid);

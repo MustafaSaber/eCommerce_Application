@@ -31,7 +31,7 @@ import static org.testng.Assert.*;
 public class StoreServiceImpTest extends AbstractTestNGSpringContextTests {
 
     @BeforeTest
-    void setup()throws Exception {
+    void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
     }
 

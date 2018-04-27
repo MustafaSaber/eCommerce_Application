@@ -40,6 +40,12 @@ public class Cart {
         products = new HashSet<>();
     }
 
+    public Boolean addProduct(ProductInCart productInCart)
+    {
+        if(products == null) products = new HashSet<>();
+        return products.add(productInCart);
+    }
+
     public Long getCartID() {
         return cartID;
     }

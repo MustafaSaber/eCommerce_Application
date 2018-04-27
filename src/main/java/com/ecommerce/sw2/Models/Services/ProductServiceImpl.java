@@ -50,6 +50,7 @@ public class ProductServiceImpl implements ProductService{
         Optional<Store> store = storeRepository.findOneByName(addProductForm.getStorename());
         Optional<SystemModel> systemModel = systemModelRepository.findByName(addProductForm.getModel_name());
         //check done in validation
+        if(!store.isPresent()) return null;
         if(! store.get().getSuggested() ) return null;
         product.setMystore(store.get());
         product.setSystemModel(systemModel.get());
@@ -58,7 +59,8 @@ public class ProductServiceImpl implements ProductService{
         systemModelRepository.save(systemModel.get());
 
         AddProduct addProduct = new AddProduct();
-        return addProduct.Do(product,actionRepository,productRepository,productBackUpRepository , storeRepository);
+        Product product1 = addProduct.Do(product,actionRepository,productRepository,productBackUpRepository , storeRepository);
+        return product1;
 //        return productRepository.save(product);
     }
 
@@ -107,42 +109,6 @@ public class ProductServiceImpl implements ProductService{
             Product product1 = product.get();
             product1.setView(product.get().getView()+1);
             return productRepository.save(product1);
-        }
-        return null;
-    }
-
-    @Override
-    public Product getBestSellerInStore(String storename) {
-        Optional<Store> store = storeService.getStoreByName(storename);
-        if(store.isPresent()) {
-            Collection<Product> products = productRepository.findByMystore_Id(store.get().getId());
-            if(products == null) return null;
-            Product ans = new Product();
-            ans.setSold(-1);
-            for(Product products1: products)
-            {
-                if(products1.getSold() > ans.getSold())
-                    ans = products1;
-            }
-            return ans;
-        }
-        return null;
-    }
-
-    @Override
-    public Product getMostViewedInStore(String storename) {
-        Optional<Store> store = storeService.getStoreByName(storename);
-        if(store.isPresent()) {
-            Collection<Product> products = productRepository.findByMystore_Id(store.get().getId());
-            if(products == null) return null;
-            Product ans = new Product();
-            ans.setView(-1);
-            for(Product products1: products)
-            {
-                if(products1.getView() > ans.getView())
-                    ans = products1;
-            }
-            return ans;
         }
         return null;
     }
