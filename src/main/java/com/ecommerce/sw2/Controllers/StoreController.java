@@ -4,6 +4,7 @@ import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
 import com.ecommerce.sw2.Models.Repository.StatisticsRepository;
 import com.ecommerce.sw2.Models.Repository.UserRepository;
+import com.ecommerce.sw2.Models.Services.StatisticsService;
 import com.ecommerce.sw2.Models.Services.StoreService;
 import com.ecommerce.sw2.Models.Services.UserService;
 import com.ecommerce.sw2.Validators.StoreFormValidator;
@@ -38,6 +39,8 @@ public class StoreController {
     @Autowired
     private StoreFormValidator storeFormValidator;
 
+    @Autowired
+    private StatisticsService statisticsService;
 
     @InitBinder("storeForm")
     public void StoreFormInitBinder(WebDataBinder binder) {
@@ -152,4 +155,16 @@ public class StoreController {
         return storeService.ApplyStatForProduct(storename , statisticsForm);
     }
 
+    @RequestMapping(value = "/getAllStats" , method = RequestMethod.GET)
+    public ResponseEntity<?> all()
+    {
+        Collection<Statistics> statistics = statisticsService.GetAllStats();
+        if(statistics == null)
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name","null");
+            return ResponseEntity.ok().body(jsonObject);
+        }
+        return ResponseEntity.ok().body(statistics);
+    }
 }
