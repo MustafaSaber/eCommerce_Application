@@ -33,7 +33,7 @@ public class StatisticsFormValidators implements Validator {
         if(errors.hasFieldErrors()) return;
 
         Optional<Statistics> alreadyTheir = null;
-        alreadyTheir  = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getTable() , statisticsForm.getColumn() , statisticsForm.getFunction());
+        alreadyTheir  = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getEntity() , statisticsForm.getAttribute() , statisticsForm.getFunction());
         if(alreadyTheir.isPresent())
         {
             errors.reject("msg.DublicateStat");
