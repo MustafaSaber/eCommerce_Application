@@ -1,0 +1,18 @@
+<h4> Welcome {{user.username}}</h4>
+<div class="container">
+  <form (ngSubmit)="addmodel()">
+
+    <div class="form group">
+        <label for="name">Model Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="model.modelname">
+    </div>
+    <div class="form group">
+      <label for="brandname">brand name</label>
+      <input type="text" name="brandname" class="form-control" [(ngModel)]="model.brandname">
+  </div>
+  <br>
+    <input type="submit" value="save" class="btn btn-success">
+  </form>
+ 
+</div>
+ 

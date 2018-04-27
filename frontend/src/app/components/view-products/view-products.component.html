@@ -1,0 +1,23 @@
+<body>
+    <h4> Welcome {{user.username}}</h4>
+    <br>
+    <h6> this is  {{store.name}}</h6>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>No of items</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products"> 
+                  <td>{{product.name}}</td>
+                  <td>{{product.price}}</td>
+                  <td>{{product.no_of_items}}</td>
+                
+                </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-info" (click)="AddProduct()">Add Product</button>
+        </div>
+</body>

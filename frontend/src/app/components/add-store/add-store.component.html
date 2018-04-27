@@ -1,0 +1,15 @@
+<h4> Welcome {{user.username}}</h4>
+<div class="container">
+  <form (ngSubmit)="addstore()">
+
+    <div class="form group">
+        <label for="name">Store Name</label>
+        <input type="text" name="name" class="form-control" [(ngModel)]="store.name">
+    </div>
+    
+
+    <input type="submit" value="save" class="btn btn-success">
+  </form>
+ 
+</div>
+ 
