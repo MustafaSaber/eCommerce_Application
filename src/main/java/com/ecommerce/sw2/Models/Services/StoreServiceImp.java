@@ -191,7 +191,6 @@ public class StoreServiceImp implements StoreService {
         Collection<Action> actions = s.get().getActions();
         Collection<ActionHistory> ac = new ArrayList<ActionHistory>();
 
-
         for(Action action:actions)
         {
             ActionHistory ah = new ActionHistory();
