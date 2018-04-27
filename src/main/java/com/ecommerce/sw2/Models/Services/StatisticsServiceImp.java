@@ -16,7 +16,7 @@ public class StatisticsServiceImp implements StatisticsService{
     @Override
     public Statistics AddStat(StatisticsForm statisticsForm) {
 
-        Statistics statistic = new Statistics(statisticsForm.getTable() , statisticsForm.getColumn() , statisticsForm.getFunction());
+        Statistics statistic = new Statistics(statisticsForm.getEntity() , statisticsForm.getAttribute() , statisticsForm.getFunction());
         return statisticsRepository.save(statistic);
     }
 

@@ -216,7 +216,7 @@ public class StoreServiceImp implements StoreService {
     @Override
     public Store AddStatToStore(StatisticsForm statisticsForm, String storename) {
         Optional<Store> s = (storeRepository.findOneByName(storename));
-        Optional<Statistics> statistic = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getTable(), statisticsForm.getColumn() , statisticsForm.getFunction());
+        Optional<Statistics> statistic = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getEntity(), statisticsForm.getAttribute() , statisticsForm.getFunction());
         if (!s.isPresent() || !statistic.isPresent())
             return null;
         s.get().AddStat(statistic.get());
@@ -234,8 +234,18 @@ public class StoreServiceImp implements StoreService {
     @Override
     public ResponseEntity<?> ApplyStatForProduct(String storename, StatisticsForm statisticsForm) {
         Optional<Store> s = (storeRepository.findOneByName(storename));
-        Optional<Statistics> statistic = statisticsRepository.findByEntityAndAttributeAndFunction(statisticsForm.getTable(), statisticsForm.getColumn() , statisticsForm.getFunction());
-        if (!s.isPresent() || !statistic.isPresent())
+        Collection<Statistics> statistics = GetStoreStats(storename);
+        Statistics statistic = null;
+        for(Statistics statistics1 : statistics)
+            if(statistics1.getAttribute().equals(statisticsForm.getAttribute())
+                    && statistics1.getEntity().equals(statisticsForm.getEntity())
+                    && statistics1.getFunction().equals(statisticsForm.getFunction()))
+            {
+                statistic = statistics1;
+                break;
+            }
+
+        if (!s.isPresent()  || statistic == null)
         {
             {
                 JSONObject jsonObject = new JSONObject();
@@ -248,43 +258,43 @@ public class StoreServiceImp implements StoreService {
         QProduct qProduct = QProduct.product;
         QProduct qProduct1 = new QProduct("qProduct1");
 
-        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "sold"))
+        if(Objects.equals(statistic.getFunction(), "max") && Objects.equals(statistic.getAttribute(), "sold"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.sold.eq(JPAExpressions.select(qProduct1.sold.max()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "sold"))
+        else if(Objects.equals(statistic.getFunction(), "min") && Objects.equals(statistic.getAttribute(), "sold"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.sold.eq(JPAExpressions.select(qProduct1.sold.min()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "sold"))
+        else if(Objects.equals(statistic.getFunction(), "avg") && Objects.equals(statistic.getAttribute(), "sold"))
             return ResponseEntity.ok(query.select(qProduct.price.avg()).from(qProduct)
                     .fetch().get(0));
 
-        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "views"))
+        if(Objects.equals(statistic.getFunction(), "max") && Objects.equals(statistic.getAttribute(), "views"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.view.eq(JPAExpressions.select(qProduct1.view.max()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "views"))
+        else if(Objects.equals(statistic.getFunction(), "min") && Objects.equals(statistic.getAttribute(), "views"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.view.eq(JPAExpressions.select(qProduct1.view.min()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "views"))
+        else if(Objects.equals(statistic.getFunction(), "avg") && Objects.equals(statistic.getAttribute(), "views"))
             return ResponseEntity.ok(query.select(qProduct.view.avg()).from(qProduct)
                     .fetch().get(0));
 
-        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+        if(Objects.equals(statistic.getFunction(), "max") && Objects.equals(statistic.getAttribute(), "no_of_items"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.no_of_items.eq(JPAExpressions.select(qProduct1.no_of_items.max()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+        else if(Objects.equals(statistic.getFunction(), "min") && Objects.equals(statistic.getAttribute(), "no_of_items"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.no_of_items.eq(JPAExpressions.select(qProduct1.no_of_items.min()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "number of items"))
+        else if(Objects.equals(statistic.getFunction(), "avg") && Objects.equals(statistic.getAttribute(), "no_of_items"))
             return ResponseEntity.ok(query.select(qProduct.no_of_items.avg()).from(qProduct)
                     .fetch().get(0));
 
-        if(Objects.equals(statistic.get().getFunction(), "max") && Objects.equals(statistic.get().getAttribute(), "price"))
+        if(Objects.equals(statistic.getFunction(), "max") && Objects.equals(statistic.getAttribute(), "price"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.price.eq(JPAExpressions.select(qProduct1.price.max()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "min") && Objects.equals(statistic.get().getAttribute(), "price"))
+        else if(Objects.equals(statistic.getFunction(), "min") && Objects.equals(statistic.getAttribute(), "price"))
             return ResponseEntity.ok().body(query.from(qProduct).where(qProduct.price.eq(JPAExpressions.select(qProduct1.price.min()).from(qProduct1))).fetch());
 
-        else if(Objects.equals(statistic.get().getFunction(), "avg") && Objects.equals(statistic.get().getAttribute(), "price"))
+        else if(Objects.equals(statistic.getFunction(), "avg") && Objects.equals(statistic.getAttribute(), "price"))
             return ResponseEntity.ok(query.select(qProduct.price.avg()).from(qProduct)
                     .fetch().get(0));
 

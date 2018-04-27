@@ -7,10 +7,10 @@ public class StatisticsForm
     private Long id;
 
     @NotEmpty
-    private String table = "";
+    private String entity = "";
 
     @NotEmpty
-    private String column = "";
+    private String attribute = "";
 
     @NotEmpty
     private String function = "";
@@ -23,20 +23,20 @@ public class StatisticsForm
         this.id = id;
     }
 
-    public String getTable() {
-        return table;
+    public String getEntity() {
+        return entity;
     }
 
-    public void setTable(String table) {
-        this.table = table;
+    public void setEntity(String entity) {
+        this.entity = entity;
     }
 
-    public String getColumn() {
-        return column;
+    public String getAttribute() {
+        return attribute;
     }
 
-    public void setColumn(String column) {
-        this.column = column;
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
     public String getFunction() {
