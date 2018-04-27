@@ -94,11 +94,15 @@ public class Store {
 
     public Store() {
         this.suggested = false;
+        collaborators = new HashSet<>();
+        actions = new ArrayList<>();
     }
 
     public Store(String name) {
         this.name = name;
         this.suggested = false;
+        collaborators = new HashSet<>();
+        actions = new ArrayList<>();
     }
 
     public Long getId() {

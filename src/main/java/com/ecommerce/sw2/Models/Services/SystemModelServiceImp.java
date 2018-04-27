@@ -29,6 +29,7 @@ public class SystemModelServiceImp implements SystemModelService {
         if (brand == null)
             return null;
         SystemModel systemModel = new SystemModel(addSystemModelForm.getModelname(),brand);
-        return systemModelRepository.save(systemModel);
+        systemModel =  systemModelRepository.save(systemModel);
+        return systemModel;
     }
 }

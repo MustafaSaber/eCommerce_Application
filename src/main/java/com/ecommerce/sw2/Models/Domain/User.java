@@ -50,8 +50,16 @@ public class User {
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Set<Store> collaboratedStores;
 
-    public User(){}
-
+    public User(){
+        collaboratedStores = new HashSet<>();
+    }
+    public User(String email, String passwordHash, String name, String username){
+        this.name = name;
+        this.passwordHash = passwordHash;
+        this.email = email;
+        this.username = username;
+        collaboratedStores = new HashSet<>();
+    }
     public User(String email, String passwordHash, String name, String username, Set<Role> roles) {
         this.email = email;
         this.passwordHash = passwordHash;
@@ -59,6 +67,7 @@ public class User {
         this.username = username;
         this.roles = roles;
         this.cart = new Cart(this);
+        collaboratedStores = new HashSet<>();
     }
 
     public Boolean AddCollaboratedStore (Store store)

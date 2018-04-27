@@ -2,6 +2,7 @@ package com.ecommerce.sw2.Models.Services;
 
 import com.ecommerce.sw2.Models.Domain.*;
 //import com.ecommerce.sw2.Models.Domain.StoreOwner;
+import com.ecommerce.sw2.Models.Domain.QProduct;
 import com.ecommerce.sw2.Models.Repository.ActionRepository;
 import com.ecommerce.sw2.Models.Repository.StatisticsRepository;
 import com.ecommerce.sw2.Models.Repository.StoreRepository;
@@ -86,8 +87,9 @@ public class StoreServiceImp implements StoreService {
             user.addstore(store);
             user = userRepository.save(user);
             store.setStoreOwner(user);
+            return storeRepository.save(store);
         }
-        return storeRepository.save(store);
+        return null;
     }
 
     @Override
@@ -104,6 +106,9 @@ public class StoreServiceImp implements StoreService {
     public Collection<Store> getStoresByUsername(RegisterForm form)
     {
         Optional<User> user = userService.getUserByUsername(form.getUsername());
+        if (!user.isPresent()) {
+            return null;
+        }
         return storeRepository.findByStoreOwner_Id(user.get().getId());
     }
 
@@ -113,7 +118,13 @@ public class StoreServiceImp implements StoreService {
         This will handle returning all stores of the user, his stores and collaborated stores.
          */
         Optional<User> user = userService.getUserByUsername(form.getUsername());
+        if (!user.isPresent())
+            return null;
         Collection<Store> stores = storeRepository.findByStoreOwner_IdAndAndSuggested(user.get().getId() , true);
+
+        if (stores == null)
+            return null;
+
         Collection<Store> stores1 = new ArrayList<>();
         for(Store store: stores)
         {
@@ -136,6 +147,8 @@ public class StoreServiceImp implements StoreService {
     @Override
     public Collection<Store> getStoresforAdmin(RegisterForm form) {
         Optional<User> user = userService.getUserByUsername(form.getUsername());
+        if (!user.isPresent())
+            return null;
         return storeRepository.findBySuggested(false);
     }
 

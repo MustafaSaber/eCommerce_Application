@@ -16,6 +16,13 @@ public class RegisterForm {
     @NotEmpty
     private String password = "";
 
+    public RegisterForm(@NotEmpty String name, @NotEmpty String email, @NotEmpty String username, @NotEmpty String password) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }

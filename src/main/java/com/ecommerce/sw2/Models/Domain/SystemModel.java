@@ -14,7 +14,7 @@ public class SystemModel {
     @Column(name = "id" , nullable = false , updatable = false)
     private Long id;
 
-    @Column(name = "name" , nullable = false)
+    @Column(name = "name" , nullable = false, unique = true)
     private String name;
 
     @ManyToOne
