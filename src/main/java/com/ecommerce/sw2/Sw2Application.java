@@ -2,6 +2,9 @@ package com.ecommerce.sw2;
 
 //import com.querydsl.codegen.GenericExporter;
 //import com.querydsl.codegen.Keywords;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +26,8 @@ import java.io.File;
 @SpringBootApplication
 public class Sw2Application {
 	public static void main(String[] args) {
+		//BasicConfigurator.configure();
+		//Logger.getRootLogger().setLevel(Level.OFF);
 		SpringApplication.run(Sw2Application.class, args);
 //		GenericExporter exporter = new GenericExporter();
 //		exporter.setKeywords(Keywords.JPA);
