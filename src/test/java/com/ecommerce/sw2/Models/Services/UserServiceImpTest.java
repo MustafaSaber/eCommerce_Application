@@ -29,7 +29,7 @@ import static org.testng.Assert.*;
 @Test
 public class UserServiceImpTest extends AbstractTestNGSpringContextTests {
 
-    private static Logger logger = Logger.getLogger(UserServiceImpTest.class);
+   //private static Logger logger = Logger.getLogger(UserServiceImpTest.class);
 
     @BeforeMethod
     public void setUp() throws Exception {
