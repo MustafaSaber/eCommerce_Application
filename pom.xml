@@ -139,7 +139,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-sources/java</outputDirectory>
-							<processor>com.mysema.query.apt.hibernate.HibernateAnnotationProcessor</processor>
+							<!--<processor>com.mysema.query.apt.hibernate.HibernateAnnotationProcessor</processor>-->
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
 						</configuration>
 					</execution>
