@@ -252,7 +252,6 @@ public class StoreServiceImp implements StoreService {
                 return ResponseEntity.ok().body(jsonObject);
             }
         }
-
         JPAQuery<Product> query = new JPAQuery<>(entityManager);
         QProduct qProduct = QProduct.product;
         QProduct qProduct1 = new QProduct("qProduct1");

@@ -162,18 +162,4 @@ public class UserServiceImpTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test
-    public void testCheckAdmin2() throws Exception {
-        String name = "name";
-        String email= "email";
-        String username ="username"; /// username doesn't existed
-        String password = "password";
-        RegisterForm registerForm = new RegisterForm(name,email,username,password);
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(Role.USER);
-        User user = spy(new User(name,email,username,password,roleSet));
-        when(userServiceImp.getUserByUsername(username)).thenReturn(Optional.empty());
-        assertEquals(false,userServiceImp.checkAdminn(registerForm));
-    }
-
 }
