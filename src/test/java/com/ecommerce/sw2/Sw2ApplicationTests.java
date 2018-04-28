@@ -11,7 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-@WebAppConfiguration
 public class Sw2ApplicationTests {
 
 	@Test
