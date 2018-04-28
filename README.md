@@ -7,6 +7,7 @@ Building an eCommerce application.
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Angular 4](https://angular.io/) - Front-end
 * [Mockito](http://site.mockito.org/) - Testing framework for junit testing
+* [Selenium](https://www.seleniumhq.org/download/) - Web automated testing
 
 ## Authors
 
