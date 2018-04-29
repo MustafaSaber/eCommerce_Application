@@ -75,6 +75,13 @@ public class UserServiceImp implements UserService {
         return user;
     }
 
+    @Override
+    public boolean checkStoreOwner(User user){
+        if (user.getStores().size() > 0)
+            return true;
+        return false;
+    }
+
     public boolean checkAdminn(RegisterForm form)
     {
         Optional<User> user = getUserByUsername(form.getUsername());

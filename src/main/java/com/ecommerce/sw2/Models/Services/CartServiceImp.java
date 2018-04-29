@@ -26,6 +26,9 @@ public class CartServiceImp implements CartService {
     @Autowired
     ProductService productService;
     @Autowired
+    UserService userService;
+
+    @Autowired
     CartRepository cartRepository;
     @Autowired
     ProductRepository productRepository;
@@ -96,6 +99,7 @@ public class CartServiceImp implements CartService {
         }
         cart.get().setProducts(new HashSet<>());
         cart.get().setTotal_price(0.0);
+        cart.get().setDiscount(0);
         return cartRepository.save(cart.get());
     }
 
@@ -116,7 +120,25 @@ public class CartServiceImp implements CartService {
             for (ProductInCart productInCart : cart1.getProducts())
                 tp+=productInCart.getProduct().getPrice();
             cart1.setTotal_price(tp);
+
         }
+    }
+
+    public Cart CheckDiscount(Long cartid){
+        Optional<Cart> cart = cartRepository.findById(cartid);
+
+        if (!cart.isPresent())
+            return null;
+
+        Cart cart1 = cart.get();
+        if (userService.checkStoreOwner(cart1.getOwner()))
+            cart1.setDiscount(cart1.getDiscount()+15);
+        for (ProductInCart productInCart : cart1.getProducts())
+            if (productInCart.getNo_of_items() > 1)
+            {
+                cart1.setDiscount(cart1.getDiscount()+10);
+            }
+        return cart1;
     }
 
     public void DeleteAllProductWithID(Long id){

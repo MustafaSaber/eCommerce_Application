@@ -28,16 +28,28 @@ public class Cart {
     @JsonManagedReference
     private User owner;
 
+    private Integer discount;
+
     private Double total_price;
 
     public Cart(){
         total_price = 0.0;
+        discount = 15;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
     public Cart(User owner) {
         this.owner = owner;
         total_price = 0.0;
         products = new HashSet<>();
+        discount = 15;
     }
 
     public Boolean addProduct(ProductInCart productInCart)

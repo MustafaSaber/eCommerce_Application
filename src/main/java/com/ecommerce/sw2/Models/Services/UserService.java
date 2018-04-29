@@ -23,4 +23,6 @@ public interface UserService {
 
     User create(RegisterForm form);
     boolean checkAdminn(RegisterForm form);
+
+    boolean checkStoreOwner(User user);
 }
