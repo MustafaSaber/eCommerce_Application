@@ -37,7 +37,6 @@ public class AddProduct extends Action {
         product.getMystore().addAction(this);
         storeRepository.save(product.getMystore());
         return product;
-//        return new Product();
     }
 
     @Override
