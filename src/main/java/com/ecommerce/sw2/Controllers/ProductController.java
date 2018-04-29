@@ -109,6 +109,6 @@ public class ProductController {
             return ResponseEntity.ok().body(jsonObject);
         }
 //        return ResponseEntity.ok().body(productService.delete(productid));
-        return ResponseEntity.ok().body("");
+        return ResponseEntity.ok().body(productService.delete(productid));
     }
 }

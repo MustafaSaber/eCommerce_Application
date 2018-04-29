@@ -38,9 +38,10 @@ public class EditProduct extends Action {
 
     @Override
     public Product Undo(Long id,ActionRepository actionRepository,ProductRepository productRepository, ProductBackUpRepository productBackUpRepository , StoreRepository storeRepository) {
-        Action editProduct = actionRepository.getOne(id);
+        Action editProduct = new EditProduct();
         Product p = new Product();
-        editProduct.productBackup.to(p);
-        return Do(p,actionRepository,productRepository,  productBackUpRepository , storeRepository);
+        this.productBackup.to(p);
+        editProduct.productBackup.equal(productRepository.getOne(p.getId()));
+        return editProduct.Do(p,actionRepository,productRepository,  productBackUpRepository , storeRepository);
     }
 }

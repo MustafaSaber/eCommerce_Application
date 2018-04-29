@@ -37,7 +37,6 @@ public class AddProduct extends Action {
         product.getMystore().addAction(this);
         storeRepository.save(product.getMystore());
         return product;
-//        return new Product();
     }
 
     @Override
@@ -46,6 +45,7 @@ public class AddProduct extends Action {
         RemoveProduct removeProduct = new RemoveProduct();
         Product p = new Product();
         action.productBackup.to(p);
+        p.setId(action.productBackup.getMy_id());
         return removeProduct.Do(p,actionRepository,productRepository,  productBackUpRepository , storeRepository);
 //        return new Product();
     }

@@ -28,7 +28,7 @@ public class RemoveProduct extends Action {
 
     @Override
     public Product Do(Product product, ActionRepository actionRepository, ProductRepository productRepository, ProductBackUpRepository productBackUpRepository , StoreRepository storeRepository) {
-//        this.productBackup.equal(product);
+        this.productBackup.equal(product);
 //        productBackUpRepository.deleteAllByMy_id(product.getId());
         productRepository.delete(product);
         this.productBackup = productBackUpRepository.save(productBackup);

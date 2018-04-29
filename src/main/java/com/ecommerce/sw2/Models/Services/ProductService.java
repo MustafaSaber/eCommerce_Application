@@ -29,7 +29,7 @@ public interface ProductService {
 
     Collection<Product> cartProducts(Long cartID);
 
-
-
+    public void MakeProductBackUpPIDWithNulls(Long pid);
+    public void MakeProductInCartProductIDWithNulls(Long pid);
     Product delete(Long productid);
 }

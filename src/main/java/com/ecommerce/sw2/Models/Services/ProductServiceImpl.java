@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -89,7 +90,6 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Collection<Product> viewProducts()
     {
-
         return productRepository.findAll();
     }
 
@@ -120,10 +120,36 @@ public class ProductServiceImpl implements ProductService{
         if (!product.isPresent())
             return null;
 
-        productBackUpRepository.deleteAllByPid(productid);
-        productInCartRepository.deleteAllByProduct_Id(productid);
+
+        MakeProductBackUpPIDWithNulls(productid);
+        MakeProductInCartProductIDWithNulls(productid);
 
         return removeProduct.Do(product.get(),actionRepository,productRepository,
                 productBackUpRepository,storeRepository);
+    }
+
+
+    public void MakeProductBackUpPIDWithNulls(Long pid) {
+        List<ProductBackup> productBackupCollection
+                = productBackUpRepository.findAllByPid(pid);
+
+
+        for (ProductBackup productBackup : productBackupCollection) {
+            productBackup.setMy_id(null);
+            productBackUpRepository.save(productBackup);
+        }
+    }
+
+    public void MakeProductInCartProductIDWithNulls(Long pid)
+    {
+        List<ProductInCart> productInCartList
+                = productInCartRepository.findAllByProduct_Id(pid);
+
+
+        for (ProductInCart productInCart : productInCartList)
+        {
+            productInCart.setProduct(null);
+            productInCartRepository.save(productInCart);
+        }
     }
 }

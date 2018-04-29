@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,4 +21,5 @@ public interface ProductInCartRepository extends JpaRepository<ProductInCart, Lo
     Collection<Product> findByCartCartID(Long id);
 
     void deleteAllByProduct_Id(Long id);
+    List<ProductInCart> findAllByProduct_Id(Long id);
 }
