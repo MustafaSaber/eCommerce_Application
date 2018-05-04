@@ -1,7 +1,7 @@
 # eCommerce_Application
 Building an eCommerce application.
 
-## Built With
+## Building With
 
 * [Spring boot](https://projects.spring.io/spring-boot/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
