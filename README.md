@@ -15,5 +15,5 @@ See the list of [contributors](https://github.com/MustafaSaber/eCommerce_Applica
 
 ## Acknowledgments
 
-* SherifAbdlNaby
-* Mahmoud Mohsen.
+* SherifAbdlNaby - Colleague.
+* Mahmoud Mohsen - Teacher Assistant.
