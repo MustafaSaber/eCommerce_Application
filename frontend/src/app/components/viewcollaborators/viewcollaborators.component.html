@@ -1,0 +1,19 @@
+<body>
+  <h4> Welcome {{user.username}}  >> you are in {{store.name}}</h4>
+  <br>
+  <div class="container">
+      <table class="table table-striped">
+          <thead>
+              <th>Username</th>
+              <th>Remove Collaborator</th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let user of users"> 
+                <td>{{user.username}}</td>
+                <td><button class="btn btn-danger"><i class="fa fa-remove"></i> Remove</button></td>
+              </tr>
+          </tbody>
+         </table>
+        <button class="btn btn-info" (click)="AddCollaborator()"><i class="fa fa-plus"></i>Add Collaborator</button>
+      </div>
+</body>

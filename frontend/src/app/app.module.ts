@@ -18,25 +18,50 @@ import { ModelService }        from './shared-service/model.service';
 import { AddStoreComponent } from './components/add-store/add-store.component';
 import { StoreService }        from './shared-service/store.service';
 import { ProductService }        from './shared-service/product.service';
+import { AddToCartService }        from './shared-service/add-to-cart.service';
 import { ViewStoresComponent } from './components/view-stores/view-stores.component';
 import { ViewProductsComponent } from './components/view-products/view-products.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AppStoresComponent } from './components/app-stores/app-stores.component';
+import { MyCartComponent } from './components/my-cart/my-cart.component';
+import { CartService }        from './shared-service/cart.service';
+import { ProdService }        from './shared-service/prod.service';
+import { EditproductformService }  from './shared-service/editproductform.service';
+import { ViewProdDetalisComponent } from './components/view-prod-detalis/view-prod-detalis.component';
+import { EditproductComponent } from './components/editproduct/editproduct.component';
+import { AddcollaboratorComponent } from './components/addcollaborator/addcollaborator.component';
+import { ViewcollaboratorsComponent } from './components/viewcollaborators/viewcollaborators.component';
+import { ViewhistoryComponent } from './components/viewhistory/viewhistory.component';
+import { ActionService }        from './shared-service/action.service';
+import { AdminhomeComponent } from './components/adminhome/adminhome.component';
+import { AddstatComponent } from './components/addstat/addstat.component';
+import { StatService }  from './shared-service/stat.service';
+import { ViewstorestatComponent } from './components/viewstorestat/viewstorestat.component';
+import { AddstorestatComponent } from './components/addstorestat/addstorestat.component';
  
 const appRoutes:Routes=[
-  {path:'getuser'  ,component:ListuserComponent},
-  {path:'op'       ,component:UserformComponent},
-  {path:'login'    ,component:LoginformComponent},
+  {path:'getuser'  ,canActivate:[LoginguardGuard],component:ListuserComponent},
+  {path:'op'       ,canActivate:[LoginguardGuard],component:UserformComponent},
+  {path:'login'    ,canActivate:[LoginguardGuard],component:LoginformComponent},
   {path:''         ,component:HomepageComponent},
-  {path:'addbrand' ,component:AddBrandComponent},
+  {path:'addbrand' ,canActivate:[LoginguardGuard],component:AddBrandComponent},
   {path:'userhome' ,canActivate:[LoginguardGuard],component:UserHomePageComponent},
-  {path:'addmodel' ,component:AddModelComponent},
-  {path:'addstore' ,component:AddStoreComponent},
-  {path:'viewproducts' ,component:ViewProductsComponent},
-  {path:'viewstores' ,component:ViewStoresComponent},
-  {path:'addproduct' ,component:AddProductComponent},
-  {path:'appstores' ,component:AppStoresComponent}
-   
+  {path:'addmodel' ,canActivate:[LoginguardGuard],component:AddModelComponent},
+  {path:'addstore' ,canActivate:[LoginguardGuard],component:AddStoreComponent},
+  {path:'viewproducts',canActivate:[LoginguardGuard],component:ViewProductsComponent},
+  {path:'viewstores' ,canActivate:[LoginguardGuard],component:ViewStoresComponent},
+  {path:'addproduct' ,canActivate:[LoginguardGuard],component:AddProductComponent},
+  {path:'appstores' ,canActivate:[LoginguardGuard],component:AppStoresComponent},
+  {path:'mycart' ,canActivate:[LoginguardGuard],component:MyCartComponent},
+  {path:'viewproddetails',canActivate:[LoginguardGuard],component:ViewProdDetalisComponent},
+  {path:'editproduct',canActivate:[LoginguardGuard],component:EditproductComponent},
+  {path:'addcollaborator',canActivate:[LoginguardGuard],component:AddcollaboratorComponent},
+  {path:'viewcollaborators',canActivate:[LoginguardGuard],component:ViewcollaboratorsComponent},
+  {path:'viewhistory',canActivate:[LoginguardGuard],component:ViewhistoryComponent},
+  {path:'adminhome',canActivate:[LoginguardGuard],component:AdminhomeComponent},
+  {path:'addstat',canActivate:[LoginguardGuard],component:AddstatComponent},
+  {path:"viewstorestat",canActivate:[LoginguardGuard],component:ViewstorestatComponent},
+  {path:"addstorestat",canActivate:[LoginguardGuard],component:AddstorestatComponent}
 ]
 @NgModule({
   declarations: [
@@ -52,7 +77,17 @@ const appRoutes:Routes=[
    ViewStoresComponent,
    ViewProductsComponent,
    AddProductComponent,
-   AppStoresComponent
+   AppStoresComponent,
+   MyCartComponent,
+   ViewProdDetalisComponent,
+   EditproductComponent,
+   AddcollaboratorComponent,
+   ViewcollaboratorsComponent,
+   ViewhistoryComponent,
+   AdminhomeComponent,
+   AddstatComponent,
+   ViewstorestatComponent,
+   AddstorestatComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +95,8 @@ const appRoutes:Routes=[
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [UserService,LoginguardGuard,BrandserviceService,ModelService,StoreService,ProductService],
+  providers: [UserService,StatService,ActionService,EditproductformService,LoginguardGuard,BrandserviceService,ModelService,StoreService,ProductService,ProdService,CartService,AddToCartService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

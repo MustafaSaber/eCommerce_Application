@@ -22,7 +22,11 @@ export class ProductService {
   viewproducts()
   {
     return this._http.get(this.baseUrl+'/viewproducts',this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
-
+  }
+  deleteProduct(id:Number)
+  {
+    console.log("id" + id);
+    return this._http.post(this.baseUrl+'/deleteproduct',JSON.stringify(id),this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
   }
   errorHandler(error:Response)
   {

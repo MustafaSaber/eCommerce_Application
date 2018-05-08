@@ -1,0 +1,18 @@
+<body>
+    <h4> Welcome {{user.username}}</h4>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <th>Store Name</th>
+                <th>Approve Store</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let store of stores"> 
+                  <td ng-value="store">{{store.name}}</td>
+                  <td><button class="btn btn-success"  (click)="App(store)">Approve</button></td>
+                </tr>
+            </tbody>
+          </table>
+
+        </div>
+</body>

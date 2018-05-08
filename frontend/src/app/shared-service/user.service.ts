@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {User} from '../user';
+import { Store } from '../store';
 
 @Injectable()
 export class UserService {
@@ -24,6 +25,16 @@ export class UserService {
   getterUserLoggedIn()
   {
     return this.isUserLoggedIn; 
+  }
+  getcoll(store:Store)
+  {
+    console.log(store);
+    return this._http.get(this.baseUrl+'/viewcollaborators/'+store.name,this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
+  }
+  addColl(name,store)
+  {
+    console.log(name+" "+ store);
+    return this._http.get(this.baseUrl+'/addcollaborator/'+name+'/'+store,this.options).map((response:Response)=>response.json()).catch(this.errorHandler);
   }
   getStores(user:User)
   {

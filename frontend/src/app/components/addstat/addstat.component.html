@@ -1,0 +1,37 @@
+<h4> Welcome {{user.username}}</h4>
+<div class="container">
+  <form (ngSubmit)="addstat()">
+      <label for="name"> Statistics </label>
+    <div class="container">
+      <table class="table table-striped">
+          <thead>
+              <th>Statistics on </th>
+              <th>Type</th>
+              <th>About</th>
+          </thead>
+          <tbody>
+            <tr> 
+      
+        <td>
+          <input type="text" name="table" class="form-control" [(ngModel)]="stat.entity">
+        </td>
+        
+        <td> 
+          <div> 
+            <input type="text" name="function"   class="form-control" [(ngModel)]="stat.function">
+          </div>
+        </td>
+
+        <td> 
+          <div> 
+            <input type="text" name="column"   class="form-control" [(ngModel)]="stat.attribute">
+          </div>
+        </td>
+        </tr>   
+    </tbody>
+ </table>
+    <input type="submit" value="Save" class="btn btn-success">
+    </div>
+  </form>
+ 
+</div>

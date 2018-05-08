@@ -1,0 +1,24 @@
+<body>
+  <h4> Welcome {{user.username}}</h4>
+  <br>
+  <div class="container">
+      <table class="table table-striped">
+          <thead>
+              <th>Product</th>
+              <th>No of items</th>
+              <th>Price</th>
+          </thead>
+          <tbody>
+              <tr *ngFor ="let prod of mycart.Products"> 
+                <td >{{prod.name}}</td>
+                <td>{{prod.no_of_items}}</td>
+                <td>{{prod.price}}</td>
+              </tr>
+          </tbody>
+        </table>
+       
+       <button class="btn btn-default"><i class="fa fa-money"></i> Total Price >> {{mycart.price}}</button>
+       <button class="btn btn-success" (click)= CheckOut(mycart) ><i class="fa fa fa-dollar"></i> Check out</button>
+   
+      </div>
+</body>

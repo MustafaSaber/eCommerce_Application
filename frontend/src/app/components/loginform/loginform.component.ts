@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import{User} from '../../user';
+import{AddToCart} from '../../add-to-cart';
 import{Router} from '@angular/router';
 import {UserService} from '../../shared-service/user.service';
+import {AddToCartService} from '../../shared-service/add-to-cart.service';
 
 @Component({
   selector: 'app-loginform',
@@ -11,7 +13,7 @@ import {UserService} from '../../shared-service/user.service';
 export class LoginformComponent implements OnInit {
   private user:User; //
  
-  constructor(private _userService:UserService,private _router:Router) { }
+  constructor(private _userService:UserService,private _addToCartService:AddToCartService,private _router:Router) { }
 
   ngOnInit() {
     this.user=this._userService.getter();
@@ -21,7 +23,6 @@ export class LoginformComponent implements OnInit {
   {
     var ret;
     this._userService.loginUser(this.user).subscribe((ret)=>{
-
     console.log(ret);
     if(ret == null)
     {
@@ -32,6 +33,8 @@ export class LoginformComponent implements OnInit {
    else
     {
       this._userService.setterUserLoggedIn();
+      let addToCart = new AddToCart();
+      this._addToCartService.setter(addToCart);
       this._router.navigate(['/userhome']);
     }
       
