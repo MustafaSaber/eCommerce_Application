@@ -14,6 +14,7 @@ public class Product {
     @Column(name = "id" , nullable = false , updatable = false)
     private Long id;
 
+
     @Column(name = "price" , nullable = false)
     private float price;
 
