@@ -1,0 +1,21 @@
+<body>
+  <h4> Welcome {{user.username}}</h4>
+  <br>
+  <div class="container">
+      <table class="table table-striped">
+          <thead>
+              <th>Product</th>
+              <th>Details</th>
+            </thead>
+            <tbody>
+              <tr>Name <td>{{prod.name}}</td> </tr>
+              <tr>Price <td>{{prod.price}}</td> </tr>
+              <tr>No of items <td>{{prod.no_of_items}}</td> </tr>
+              <tr>No of sold <td>{{prod.sold}}</td></tr>
+              <tr>No of views <td>{{prod.view}}</td></tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-default" (click)= "Home()"><i class="fa fa-home"></i> Back Home </button>
+      </div>
+</body>

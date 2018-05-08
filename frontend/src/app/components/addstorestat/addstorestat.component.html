@@ -1,0 +1,22 @@
+<body>
+    <h4> Welcome {{user.username}}  >> you are in {{store.name}}</h4>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <th>Statistics on </th>
+                <th>Type</th>
+                <th>About</th>
+                <th>Add</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stat of stats"> 
+                  <td>{{stat.entity}}</td>
+                  <td>{{stat.attribute}}</td>
+                  <td>{{stat.function}}</td> 
+                  <td><button class="btn btn-info" (click)="AddStoreStat(stat)"><i class="fa fa-add"></i> Add Statistic</button></td> 
+
+                </tr>
+            </tbody>
+          </table>
+        </div>
+</body>

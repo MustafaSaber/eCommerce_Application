@@ -1,0 +1,18 @@
+<body>
+  <h4> Welcome {{user.username}}  >> you are in {{store.name}}</h4>
+  <br>
+  <div class="container">
+      <table class="table table-striped">
+          <thead>
+              <th>Action</th>
+              <th>Undo</th>
+          </thead>
+          <tbody>
+              <tr *ngFor="let action of actions"> 
+                <td>{{action.action_type}} {{action.product_name}} </td>
+                <td><button class="btn btn-danger" (click)="Undo(action.id)"><i class="fa fa-undo"></i> Undo</button></td>
+              </tr>
+          </tbody>
+         </table>
+       </div>
+</body>
