@@ -10,6 +10,11 @@ import { StoreService } from '../../shared-service/store.service';
 import { Store } from '../../store';
 import { Prod } from '../../prod';
 import { ProductService } from '../../shared-service/product.service';
+import { AddToCart } from '../../add-to-cart';
+import { AddToCartService } from '../../shared-service/add-to-cart.service';
+import { Product } from '../../product';
+import { CartService } from '../../shared-service/cart.service';
+import { ProdService } from '../../shared-service/prod.service';
 
 @Component({
   selector:    'app-user-home-page',
@@ -20,12 +25,15 @@ export class UserHomePageComponent implements OnInit {
 
   private user:User; 
   private products:Prod[];
+  private addToCart:AddToCart;
   constructor(private _userService:UserService,private _productService:ProductService, 
                 private _brandService:BrandserviceService,private _storeService:StoreService,
-                     private _modelService:ModelService ,private _router:Router) {}
+                     private _modelService:ModelService ,private _addToCartService:AddToCartService
+                     ,private _cartService:CartService,private _prodService:ProdService, private _router:Router) {}
 
   ngOnInit() {
     this.user = this._userService.getter();
+    this.addToCart = this._addToCartService.getter();
     this._productService.viewproducts().subscribe((prod)=>{
       console.log(prod);
       this.products=prod;
@@ -33,48 +41,62 @@ export class UserHomePageComponent implements OnInit {
       console.log(error);
     })
   }
-  viewProduct(p:Prod,user:User)
+  viewProduct(prod:Prod)
   {
-    console.log(p);
-    console.log(user);
-    this._router.navigate(['/userhome']);
-  }
-  buyProduct(p:Prod,user:User)
-  {
-    console.log(p);
-    console.log(user);
-    this._router.navigate(['/userhome']);
-  }
-  AddBrand()
-  {
-    var ret;
-    this._userService.checkAdmin(this.user).subscribe((ret)=>{
-      console.log(ret);
-      if(ret == true)
-      {
-        let brand = new Brand();
-        this._brandService.setter(brand);
-        this._router.navigate(['/addbrand']);
-      }
-      else
-      {
-        window.alert("You can not use this option !!");
-        this._router.navigate(['/userhome']);
-      }
+    console.log(prod);
+    this._prodService.viewprod(prod).subscribe((ret)=>{
+    console.log(ret);
+    this._prodService.setter(ret);
+    this._router.navigate(['/viewproddetails']);
     },(error)=>{
       console.log(error); 
     })
   }
-  AddModel()
+  viewCart(user)
   {
-    var ret;
+    console.log(user);
+    this._cartService.getMyCart(user).subscribe((ret)=>{
+      console.log(ret);
+      this._cartService.setter(ret);
+      this._router.navigate(['/mycart']);
+      
+    },(error)=>{
+      console.log(error); 
+    })
+
+  }
+  AddToCart(prod:Prod,user:User)
+  {
+    this.addToCart.productid = prod.id;
+    this.addToCart.username = user.username;
+    console.log(this.addToCart);
+    this._addToCartService.AddTOCart(this.addToCart).subscribe((ret)=>{
+    console.log(ret);
+    if(ret.name == "null")
+      {
+        window.alert("This quantity is not avaiable !!");
+        this._router.navigate(['/userhome']);
+      }
+      else
+      {
+        window.alert("This product is added successfully !!");
+        this._router.navigate(['/userhome']);
+      }
+
+    },(error)=>{
+      console.log(error); 
+    })
+
+     
+  }
+   
+  Admin()
+  {
     this._userService.checkAdmin(this.user).subscribe((ret)=>{
       console.log(ret);
       if(ret == true)
       {
-        let model = new Model();
-        this._modelService.setter(model);
-        this._router.navigate(['/addmodel']);
+        this._router.navigate(['/adminhome']);
       }
       else
       {

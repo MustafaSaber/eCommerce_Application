@@ -1,30 +1,29 @@
-<div class="container">
-
-  <h4 ng-value="user"> Welcome {{user.username}}</h4>
-  
-</div>
-
-<div>
-  <button class="btn btn-primary"  (click)="AddBrand()">Add Brand</button>
-  <button class="btn btn-warning"  (click)="AddModel()">Add Model</button>
-  <button class="btn btn-danger"   (click)="AddStore()">Add Store</button>
+<header class="container">
+  <span ng-value="user"> Welcome {{user.username}}</span> 
+  <button class="btn btn-default"  (click)="viewCart(user)">My Cart<i class="fa fa-cart-arrow-down"></i></button>
+  <br>
+  <br>
+  <button class="btn btn-danger"  (click)="Admin()">Admin</button>
+  <button class="btn btn-warning"   (click)="AddStore()">Add Store</button>
   <button class="btn btn-info"     (click)="ViewStores()">View Stores</button>
   <button class="btn btn-success"  (click)="AppStores()">Approve Stores</button>
-</div>
+</header>
 
 <div class="container">
   <table class="table table-striped">
       <thead>
-          <th>Product Name</th>
-          <th>View   </th>
-          <th>Buy </th>
+        <th>Product Name</th>
+        <th>View product  </th>
+        <th>Add to my Cart </th>
+        <th>Quantity </th>
       </thead>
       <tbody>
-          <tr *ngFor="let prod of products"> 
-            <td>{{prod.name}}</td>   
-            <td><button class="btn btn-danger"   (click)="viewProduct(prod,user)">View</button></td>
-            <td><button class="btn btn-success"  (click)="addToCart(prod,user)">Buy</button></td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
+        <tr *ngFor="let prod of products" ng-value="prod"> 
+          <td>{{prod.name}}</td>   
+          <td><button class="btn btn-link" (click)="viewProduct(prod)"><i class="fa fa-book"></i> </button></td>
+          <td><button class="btn btn-link"  (click)="AddToCart(prod,user)"><i class="fa fa-cart-plus"></i></button></td>
+          <td><input type="number" name="Quantity"  style="width: 50px;"  [(ngModel)]="addToCart.quantity"></td>
+      </tr>
+    </tbody> 
+  </table> 
+</div>

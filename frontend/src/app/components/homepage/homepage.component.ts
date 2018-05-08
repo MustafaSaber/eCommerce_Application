@@ -18,12 +18,14 @@ export class HomepageComponent implements OnInit {
 
   login()
     {
+      this._userService.setterUserLoggedIn();
       let user = new User();
       this._userService.setter(user);
       this._router.navigate(['/login']);
     }
     Register()
     {
+      this._userService.setterUserLoggedIn();
       let user = new User();
       this._userService.setter(user);
       this._router.navigate(['/op']);

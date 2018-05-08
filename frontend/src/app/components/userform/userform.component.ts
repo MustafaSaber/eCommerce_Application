@@ -18,26 +18,12 @@ export class UserformComponent implements OnInit {
   processForm(){
     this._userService.createUser(this.user).subscribe((user)=>{
       console.log(user);
-      this._router.navigate(['/getuser']);
+      let userr = new User();
+      this._userService.setter(userr);
+      this._router.navigate(['/login']);
     },(error)=>{
       console.log(error);
     })
-    /*
-    if(this.user.id==undefined)
-    {
-      this._userService.createUser(this.user).subscribe((user)=>{
-        console.log(user);
-        this._router.navigate(['/']);
-      },(error)=>{
-        console.log(error);
-      })
-    }else{
-      this._userService.updateUser(this.user).subscribe((user)=>{
-        console.log(user);
-        this._router.navigate(['/']);
-      },(error)=>{
-        console.log(error);
-      })
-    }*/
+
   }
 }
