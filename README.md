@@ -6,7 +6,7 @@ Building an eCommerce application.
 * [Spring boot](https://projects.spring.io/spring-boot/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Angular 4](https://angular.io/) - Front-end
-* [Mockito](http://site.mockito.org/) - Testing framework for junit testing
+* [Mockito](http://site.mockito.org/) - Testing framework for Unit testing
 * [Selenium](https://www.seleniumhq.org/download/) - Web automated testing
 
 ## Authors
